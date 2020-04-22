@@ -32,6 +32,8 @@ import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 public class    Renderer {
     private int vboId;
 
+    private int colourVboId;
+
     private int vaoId;
 
     private ShaderProgram shaderProgram;
@@ -41,18 +43,25 @@ public class    Renderer {
 
     public void init() throws Exception {
         shaderProgram = new ShaderProgram();
-        shaderProgram.createVertexShader(Utils.loadResource("/vertex.vs"));
-        shaderProgram.createFragmentShader(Utils.loadResource("/fragment.vs"));
+        shaderProgram.createVertexShader(Utils.loadResource("/vertex.frag"));
+        shaderProgram.createFragmentShader(Utils.loadResource("/fragment.frag"));
         shaderProgram.link();
 
         // TODO: delete last 3 if not working
         float[] vertices = new float[]{
-                0.0f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-                -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-                0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f
+                0.0f, 0.5f, 0.0f,
+                -0.5f, -0.5f, 0.0f,
+                0.5f, -0.5f, 0.0f
+        };
+
+        float[] colors = new float[]{
+                1.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f,
+                0.0f, 0.0f, 1.0f
         };
 
         FloatBuffer verticesBuffer = null;
+        FloatBuffer colourBuffer = null;
         try {
             verticesBuffer = MemoryUtil.memAllocFloat(vertices.length);
             verticesBuffer.put(vertices).flip();
@@ -69,6 +78,15 @@ public class    Renderer {
             glEnableVertexAttribArray(0);
             // Define structure of the data
             glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+
+            // TODO: remove this if not working
+            colourVboId = glGenBuffers();
+            colourBuffer = MemoryUtil.memAllocFloat(colors.length);
+            colourBuffer.put(colors).flip();
+            glBindBuffer(GL_ARRAY_BUFFER, colourVboId);
+            glBufferData(GL_ARRAY_BUFFER, colourBuffer, GL_STATIC_DRAW);
+            glEnableVertexAttribArray(1);
+            glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
 
             // Unbind the VBO
             glBindBuffer(GL_ARRAY_BUFFER, 0);
