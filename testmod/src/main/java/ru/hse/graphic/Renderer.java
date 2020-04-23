@@ -56,13 +56,14 @@ public class Renderer {
         shaderProgram.createUniform("projectionMatrix");
         shaderProgram.createUniform("worldMatrix");
 
+        window.setClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     }
 
     public void clear() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    public void render(Window window, Mesh mesh) {
+    public void render(Window window, Model[] models) {
         clear();
 
         if (window.isResized()) {
@@ -71,11 +72,22 @@ public class Renderer {
         }
 
         shaderProgram.bind();
+
+        // Update projection Matrix
+        Matrix4f projectionMatrix = transformation.getProjectionMatrix(FOV, window.getWidth(), window.getHeight(), Z_NEAR, Z_FAR);
         shaderProgram.setUniform("projectionMatrix", projectionMatrix);
 
-        // Draw the mesh
-        glBindVertexArray(mesh.getVaoId());
-        glDrawElements(GL_TRIANGLES, mesh.getVertexCount(), GL_UNSIGNED_INT, 0);
+        // Render each gameItem
+        for (Model model : models) {
+            // Set world matrix for this item
+            Matrix4f worldMatrix = transformation.getWorldMatrix(
+                    model.getPosition(),
+                    model.getRotation(),
+                    model.getScale());
+            shaderProgram.setUniform("worldMatrix", worldMatrix);
+            // Render the mes for this game item
+            model.getMesh().render();
+        }
 
         // Restore state
         glBindVertexArray(0);
