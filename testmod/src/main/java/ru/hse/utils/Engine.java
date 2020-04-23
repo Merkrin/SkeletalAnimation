@@ -31,7 +31,7 @@ public class Engine {
     protected void loop() {
         while (!window.windowShouldClose()) {
             input();
-
+            update(0.0f);
             render();
         }
     }
