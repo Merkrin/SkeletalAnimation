@@ -3,7 +3,7 @@ package ru.hse.utils;
 import ru.hse.jogl.Program;
 import ru.hse.utils.Window;
 
-public class Engine {
+public class Engine{
     public static final int TARGET_FPS = 75;
     public static final int TARGET_UPS = 30;
 
