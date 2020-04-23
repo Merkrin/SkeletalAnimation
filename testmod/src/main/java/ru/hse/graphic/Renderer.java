@@ -54,16 +54,14 @@ public class Renderer {
         float aspectRatio = (float) window.getWidth() / window.getHeight();
         projectionMatrix = new Matrix4f().setPerspective(Renderer.FOV, aspectRatio, Renderer.Z_NEAR, Renderer.Z_FAR);
         shaderProgram.createUniform("projectionMatrix");
-        shaderProgram.createUniform("worldMatrix");
-
-        window.setClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        shaderProgram.createUniform("modelViewMatrix");
     }
 
     public void clear() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    public void render(Window window, Model[] models) {
+    public void render(Window window, Camera camera, Model[] models) {
         clear();
 
         if (window.isResized()) {
@@ -77,14 +75,13 @@ public class Renderer {
         Matrix4f projectionMatrix = transformation.getProjectionMatrix(FOV, window.getWidth(), window.getHeight(), Z_NEAR, Z_FAR);
         shaderProgram.setUniform("projectionMatrix", projectionMatrix);
 
+        Matrix4f viewMatrix = transformation.getViewMatrix(camera);
+
         // Render each gameItem
         for (Model model : models) {
             // Set world matrix for this item
-            Matrix4f worldMatrix = transformation.getWorldMatrix(
-                    model.getPosition(),
-                    model.getRotation(),
-                    model.getScale());
-            shaderProgram.setUniform("worldMatrix", worldMatrix);
+            Matrix4f modelViewMatrix = transformation.getModelViewMatrix(model, viewMatrix);
+            shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             // Render the mes for this game item
             model.getMesh().render();
         }

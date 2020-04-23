@@ -5,16 +5,16 @@ import ru.hse.utils.Window;
 
 public class Engine {
     public static final int TARGET_FPS = 75;
-
     public static final int TARGET_UPS = 30;
 
     private final Window window;
-
     private final Program program;
+    private final MouseInput mouseInput;
 
     public Engine(String windowTitle, int width, int height, boolean vSync, Program program) throws Exception {
         window = new Window(windowTitle, width, height, vSync);
         this.program = program;
+        mouseInput = new MouseInput();
     }
 
     public void run() {
@@ -31,13 +31,14 @@ public class Engine {
     protected void loop() {
         while (!window.windowShouldClose()) {
             input();
-            update(0.0f);
+            update();
             render();
         }
     }
 
     protected void init() throws Exception {
         window.init();
+        mouseInput.init(window);
         program.init(window);
     }
 
@@ -47,11 +48,12 @@ public class Engine {
 
 
     protected void input() {
+        mouseInput.input(window);
         program.input(window);
     }
 
-    protected void update(float interval) {
-        program.update(interval);
+    protected void update() {
+        program.update(mouseInput);
     }
 
     protected void render() {
