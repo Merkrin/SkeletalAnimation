@@ -1,6 +1,7 @@
-package ru.hse.jogl;
+package ru.hse.utils;
 
-import ru.hse.jogl.*;
+import ru.hse.jogl.Program;
+import ru.hse.utils.Window;
 
 public class Engine {
     public static final int TARGET_FPS = 75;
@@ -37,7 +38,7 @@ public class Engine {
 
     protected void init() throws Exception {
         window.init();
-        program.init();
+        program.init(window);
     }
 
     protected void cleanup() {

@@ -9,6 +9,7 @@ allprojects {
 
     group 'ru.hse.jogl'
     group 'ru.hse.utils'
+    group 'ru.hse.graphic'
 
     project.ext.lwjglVersion = "3.2.3"
     project.ext.jomlVersion = "1.9.24"

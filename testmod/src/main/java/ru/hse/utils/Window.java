@@ -1,4 +1,4 @@
-package ru.hse.jogl;
+package ru.hse.utils;
 
 import static org.lwjgl.glfw.GLFW.*;
 

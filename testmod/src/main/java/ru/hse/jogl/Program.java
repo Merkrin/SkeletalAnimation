@@ -1,5 +1,9 @@
 package ru.hse.jogl;
 
+import ru.hse.graphic.Mesh;
+import ru.hse.graphic.Renderer;
+import ru.hse.utils.Window;
+
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_DOWN;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
 
@@ -10,12 +14,32 @@ public class Program {
 
     private final Renderer renderer;
 
+    private Mesh mesh;
+
     public Program() {
         renderer = new Renderer();
     }
 
-    public void init() throws Exception {
-        renderer.init();
+    // Go from engine
+    public void init(Window window) throws Exception {
+        renderer.init(window);
+
+        float[] positions = new float[]{
+                -0.5f, 0.5f, -1.5f,
+                -0.5f, -0.5f, -1.5f,
+                0.5f, -0.5f, -1.5f,
+                0.5f, 0.5f, -1.5f,
+        };
+        float[] colours = new float[]{
+                0.5f, 0.0f, 0.0f,
+                0.0f, 0.5f, 0.0f,
+                0.0f, 0.0f, 0.5f,
+                0.0f, 0.5f, 0.5f,
+        };
+        int[] indices = new int[]{
+                0, 1, 3, 3, 1, 2,
+        };
+        mesh = new Mesh(positions, colours, indices);
     }
 
     public void input(Window window) {
@@ -39,10 +63,11 @@ public class Program {
 
     public void render(Window window) {
         window.setClearColor(color, color, color, 0.0f);
-        renderer.render(window);
+        renderer.render(window, mesh);
     }
 
     public void cleanup() {
         renderer.cleanup();
+        mesh.cleanUp();
     }
 }
