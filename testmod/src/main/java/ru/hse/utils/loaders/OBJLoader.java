@@ -1,4 +1,4 @@
-package ru.hse.utils;
+package ru.hse.utils.loaders;
 
 import ru.hse.graphic.Mesh;
 
@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import ru.hse.utils.Utils;
 
 public class OBJLoader {
     public static Mesh loadMesh(String fileName) throws Exception {

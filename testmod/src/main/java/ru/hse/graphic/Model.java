@@ -3,19 +3,26 @@ package ru.hse.graphic;
 import org.joml.Vector3f;
 
 public class Model {
-    private final Mesh mesh;
+    private Mesh[] meshes;
 
     private final Vector3f position;
-
     private float scale;
-
     private final Vector3f rotation;
 
-    public Model(Mesh mesh) {
-        this.mesh = mesh;
+    public Model() {
         position = new Vector3f();
         scale = 1;
         rotation = new Vector3f();
+    }
+
+    public Model(Mesh mesh){
+        this();
+        meshes = new Mesh[]{mesh};
+    }
+
+    public Model(Mesh[] meshes){
+        this();
+        this.meshes = meshes;
     }
 
     public Vector3f getPosition() {
@@ -47,6 +54,23 @@ public class Model {
     }
 
     public Mesh getMesh() {
-        return mesh;
+        return meshes[0];
+    }
+
+    public Mesh[] getMeshes() {
+        return meshes;
+    }
+
+    public void setMeshes(Mesh[] meshes) {
+        this.meshes = meshes;
+    }
+
+    public void setMesh(Mesh mesh) {
+        if (this.meshes != null) {
+            for (Mesh currMesh : meshes) {
+                currMesh.cleanUp();
+            }
+        }
+        this.meshes = new Mesh[]{mesh};
     }
 }

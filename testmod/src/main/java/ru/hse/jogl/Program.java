@@ -2,10 +2,13 @@ package ru.hse.jogl;
 
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 import ru.hse.graphic.*;
 import ru.hse.utils.MouseInput;
-import ru.hse.utils.OBJLoader;
+import ru.hse.utils.loaders.OBJLoader;
 import ru.hse.utils.Window;
+import ru.hse.utils.loaders.md5.MD5Loader;
+import ru.hse.utils.loaders.md5.MD5Model;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -32,14 +35,21 @@ public class Program {
     public void init(Window window) throws Exception {
         renderer.init(window);
 
-        // Create the Mesh
-        Mesh mesh = OBJLoader.loadMesh("/models/bunny.obj");
-        //Texture texture = new Texture("textures/grassblock.png");
-        //mesh.setTexture(texture);
-        Model model = new Model(mesh);
-        model.setScale(0.5f);
-        model.setPosition(0, 0, -2);
-        models = new Model[] { model };
+        MD5Model md5Meshodel = MD5Model.parse("/models/monster.md5mesh");
+        Model monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
+        monster.setScale(0.05f);
+        monster.setRotation(90, 0, 0);
+        monster.setPosition(0, 0, -2);
+        models = new Model[]{monster};
+
+//        // Create the Mesh
+//        Mesh mesh = OBJLoader.loadMesh("/models/teapot.obj");
+//        //Texture texture = new Texture("/textures/grassblock.jpg");
+//        //mesh.setTexture(texture);
+//        Model model = new Model(mesh);
+//        model.setScale(0.5f);
+//        model.setPosition(0, 0, -2);
+//        models = new Model[] { model };
     }
 
     public void input(Window window) {
@@ -54,9 +64,9 @@ public class Program {
         } else if (window.isKeyPressed(GLFW_KEY_D)) {
             cameraInc.x = 1;
         }
-        if (window.isKeyPressed(GLFW_KEY_Z)) {
+        if (window.isKeyPressed(GLFW_KEY_X)) {
             cameraInc.y = -1;
-        } else if (window.isKeyPressed(GLFW_KEY_X)) {
+        } else if (window.isKeyPressed(GLFW_KEY_SPACE)) {
             cameraInc.y = 1;
         }
     }
