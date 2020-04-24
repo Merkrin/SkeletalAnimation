@@ -111,5 +111,4 @@ public class MD5Model {
                 break;
         }
     }
-
 }

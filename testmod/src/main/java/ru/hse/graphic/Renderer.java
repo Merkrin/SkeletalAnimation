@@ -1,6 +1,8 @@
 package ru.hse.graphic;
 
 import org.joml.Matrix4f;
+import ru.hse.graphic.animation.AnimatedFrame;
+import ru.hse.graphic.animation.AnimatedModel;
 import ru.hse.utils.ShaderProgram;
 import ru.hse.utils.Utils;
 import ru.hse.utils.Window;
@@ -33,12 +35,13 @@ public class Renderer {
         shaderProgram.link();
 
         // Create uniforms for modelView and projection matrices and texture
+        shaderProgram.createUniform("jointsMatrix");
         shaderProgram.createUniform("projectionMatrix");
         shaderProgram.createUniform("modelViewMatrix");
-        shaderProgram.createUniform("texture_sampler");
+        //shaderProgram.createUniform("texture_sampler");
         // Create uniform for default colour and the flag that controls it
-        shaderProgram.createUniform("colour");
-        shaderProgram.createUniform("useColour");
+        //shaderProgram.createUniform("colour");
+        //shaderProgram.createUniform("useColour");
     }
 
     public void clear() {
@@ -62,16 +65,24 @@ public class Renderer {
         // Update view Matrix
         Matrix4f viewMatrix = transformation.getViewMatrix(camera);
 
-        shaderProgram.setUniform("texture_sampler", 0);
+        //shaderProgram.setUniform("texture_sampler", 0);
         // Render each gameItem
         for (Model model : models) {
             Mesh mesh = model.getMesh();
+
             // Set model view matrix for this item
             Matrix4f modelViewMatrix = transformation.getModelViewMatrix(model, viewMatrix);
             shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+
+            if(model instanceof AnimatedModel){
+                AnimatedModel animatedModel = (AnimatedModel)model;
+                AnimatedFrame animatedFrame = animatedModel.getCurrentFrame();
+                shaderProgram.setUniform("jointsMatrix", animatedFrame.getJointMatrices());
+            }
+
             // Render the mesh for this game item
-            shaderProgram.setUniform("colour", mesh.getColour());
-            shaderProgram.setUniform("useColour", mesh.isTextured() ? 0 : 1);
+            //shaderProgram.setUniform("colour", mesh.getColour());
+            //shaderProgram.setUniform("useColour",1);
             mesh.render();
         }
 
