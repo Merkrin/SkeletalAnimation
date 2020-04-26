@@ -18,7 +18,8 @@ public class Renderer {
     private static final float Z_NEAR = 0.01f;
     private static final float Z_FAR = 1000.f;
 
-    private ShaderProgram shaderProgram;
+    //private ShaderProgram shaderProgram;
+    private ShaderProgram sceneShaderProgram;
 
     private final Transformation transformation;
 
@@ -28,16 +29,20 @@ public class Renderer {
 
     // Go from program
     public void init(Window window) throws Exception {
+        setupSceneShader();
+    }
+
+    private void setupSceneShader() throws Exception{
         // Create shader
-        shaderProgram = new ShaderProgram();
-        shaderProgram.createVertexShader(Utils.loadResource("/shaders/vertex.frag"));
-        shaderProgram.createFragmentShader(Utils.loadResource("/shaders/fragment.frag"));
-        shaderProgram.link();
+        sceneShaderProgram = new ShaderProgram();
+        sceneShaderProgram.createVertexShader(Utils.loadResource("/shaders/vertex.frag"));
+        sceneShaderProgram.createFragmentShader(Utils.loadResource("/shaders/fragment.frag"));
+        sceneShaderProgram.link();
 
         // Create uniforms for modelView and projection matrices and texture
-        shaderProgram.createUniform("jointsMatrix");
-        shaderProgram.createUniform("projectionMatrix");
-        shaderProgram.createUniform("modelViewMatrix");
+        sceneShaderProgram.createUniform("jointsMatrix");
+        sceneShaderProgram.createUniform("projectionMatrix");
+        sceneShaderProgram.createUniform("modelViewMatrix");
         //shaderProgram.createUniform("texture_sampler");
         // Create uniform for default colour and the flag that controls it
         //shaderProgram.createUniform("colour");
@@ -56,28 +61,31 @@ public class Renderer {
             window.setResized(false);
         }
 
-        shaderProgram.bind();
+        renderScene(window, camera, models);
+    }
+
+    private void renderScene(Window window, Camera camera, Model[] models){
+        sceneShaderProgram.bind();
 
         // Update projection Matrix
         Matrix4f projectionMatrix = transformation.getProjectionMatrix(FOV, window.getWidth(), window.getHeight(), Z_NEAR, Z_FAR);
-        shaderProgram.setUniform("projectionMatrix", projectionMatrix);
+        sceneShaderProgram.setUniform("projectionMatrix", projectionMatrix);
 
         // Update view Matrix
         Matrix4f viewMatrix = transformation.getViewMatrix(camera);
 
-        //shaderProgram.setUniform("texture_sampler", 0);
         // Render each gameItem
         for (Model model : models) {
             Mesh mesh = model.getMesh();
 
             // Set model view matrix for this item
             Matrix4f modelViewMatrix = transformation.getModelViewMatrix(model, viewMatrix);
-            shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+            sceneShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
 
             if(model instanceof AnimatedModel){
                 AnimatedModel animatedModel = (AnimatedModel)model;
                 AnimatedFrame animatedFrame = animatedModel.getCurrentFrame();
-                shaderProgram.setUniform("jointsMatrix", animatedFrame.getJointMatrices());
+                sceneShaderProgram.setUniform("jointsMatrix", animatedFrame.getJointMatrices());
             }
 
             // Render the mesh for this game item
@@ -86,12 +94,12 @@ public class Renderer {
             mesh.render();
         }
 
-        shaderProgram.unbind();
+        sceneShaderProgram.unbind();
     }
 
     public void cleanup() {
-        if (shaderProgram != null) {
-            shaderProgram.cleanup();
+        if (sceneShaderProgram != null) {
+            sceneShaderProgram.cleanup();
         }
     }
 }

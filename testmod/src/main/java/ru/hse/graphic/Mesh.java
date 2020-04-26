@@ -25,6 +25,8 @@ public class Mesh {
 
     private final int vertexCount;
 
+    private Material material;
+
 //    private static final Vector3f DEFAULT_COLOUR = new Vector3f(1.0f, 1.0f, 1.0f);
 //    private Vector3f colour;
 
@@ -136,6 +138,14 @@ public class Mesh {
         }
     }
 
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
+
     public final int getVaoId() {
         return vaoId;
     }
@@ -159,9 +169,28 @@ public class Mesh {
     public void render() {
         initRender();
 
-            glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
 
         endRender();
+    }
+
+    public void renderWithTexture(){
+        Texture texture = material.getTexture();
+        if (texture != null) {
+            // Activate firs texture bank
+            glActiveTexture(GL_TEXTURE0);
+            // Bind the texture
+            glBindTexture(GL_TEXTURE_2D, texture.getId());
+        }
+
+        // Draw the mesh
+        glBindVertexArray(getVaoId());
+
+        glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
+
+        // Restore state
+        glBindVertexArray(0);
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
 
     public void renderList(List<Model> models, Consumer<Model> consumer) {

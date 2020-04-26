@@ -1,9 +1,8 @@
 package ru.hse.utils;
 
 import ru.hse.jogl.Program;
-import ru.hse.utils.Window;
 
-public class Engine{
+public class Engine {
     public static final int TARGET_FPS = 75;
     public static final int TARGET_UPS = 30;
 
@@ -11,7 +10,11 @@ public class Engine{
     private final Program program;
     private final MouseInput mouseInput;
 
-    public Engine(String windowTitle, int width, int height, boolean vSync, Program program) throws Exception {
+    // TODO: delete width and height 'cause they're counted dynamically.
+    //  Add args here to choose from loading options:
+    //  .obj, only .md5mesh, .md5anim
+    public Engine(String windowTitle, int width, int height,
+                  boolean vSync, Program program) throws Exception {
         window = new Window(windowTitle, width, height, vSync);
         this.program = program;
         mouseInput = new MouseInput();

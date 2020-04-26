@@ -51,7 +51,7 @@ public class Window {
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-        width = vidmode.width()/3*2;
+        width = vidmode.width();///3*2;
         height = vidmode.height();
 
         // Create the window
@@ -76,8 +76,8 @@ public class Window {
 
         // Center our window
         glfwSetWindowPos(
-                windowHandle, width,
-                /*(vidmode.width() - width) / 2,*/
+                windowHandle, //width,
+                (vidmode.width() - width) / 2,
                 (vidmode.height() - height) / 2
         );
 

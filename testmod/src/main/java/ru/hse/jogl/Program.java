@@ -18,15 +18,13 @@ import static org.lwjgl.glfw.GLFW.*;
 public class Program {
     private static final float MOUSE_SENSITIVITY = 0.2f;
 
+    private final Camera camera;
     private final Vector3f cameraInc;
+    private static final float CAMERA_POS_STEP = 0.05f;
 
     private final Renderer renderer;
 
-    private final Camera camera;
-
     private Model[] models;
-
-    private static final float CAMERA_POS_STEP = 0.05f;
 
     private AnimatedModel monster;
 
@@ -40,15 +38,17 @@ public class Program {
     public void init(Window window) throws Exception {
         renderer.init(window);
 
-//        MD5Model md5Meshodel = MD5Model.parse("/models/monster.md5mesh");
-//        Model monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
         MD5Model md5Meshodel = MD5Model.parse("/models/monster.md5mesh");
-        MD5AnimModel md5AnimModel = MD5AnimModel.parse("/models/monster.md5anim");
-        monster = MD5LoaderWAnim.process(md5Meshodel, md5AnimModel, new Vector4f(1, 1, 1, 1));
+        Model monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
+//        MD5Model md5Meshodel = MD5Model.parse("/models/monster.md5mesh");
+//        MD5AnimModel md5AnimModel = MD5AnimModel.parse("/models/test.md5anim");
+//        monster = MD5LoaderWAnim.process(md5Meshodel, md5AnimModel, new Vector4f(1, 1, 1, 1));
 
         monster.setScale(0.05f);
-        monster.setRotation(90, 0, 0);
-        monster.setPosition(0, 0, -20);
+        monster.setRotation(90, 0, 90);
+        monster.setPosition(0, 0, 0);
+//        monster.setRotation(90, 0, 90);
+//        monster.setPosition(0, -2, -5);
         models = new Model[]{monster};
 
 //        // Create the Mesh
@@ -61,6 +61,7 @@ public class Program {
 //        models = new Model[] { model };
     }
 
+    // TODO: make input options different for different files opened.
     public void input(Window window) {
         cameraInc.set(0, 0, 0);
         if (window.isKeyPressed(GLFW_KEY_W)) {
@@ -78,19 +79,23 @@ public class Program {
         } else if (window.isKeyPressed(GLFW_KEY_SPACE)) {
             cameraInc.y = 1;
         }
-        if (window.isKeyPressed(GLFW_KEY_P) ) {
+        if (window.isKeyPressed(GLFW_KEY_P)) {
             monster.nextFrame();
         }
     }
 
     public void update(MouseInput mouseInput) {
         // Update camera position
-        camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);
+        camera.movePosition(cameraInc.x * CAMERA_POS_STEP,
+                cameraInc.y * CAMERA_POS_STEP,
+                cameraInc.z * CAMERA_POS_STEP);
 
         // Update camera based on mouse
         if (mouseInput.isRightButtonPressed()) {
             Vector2f rotVec = mouseInput.getDisplVec();
-            camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY, rotVec.y * MOUSE_SENSITIVITY, 0);
+            camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY,
+                    rotVec.y * MOUSE_SENSITIVITY,
+                    0);
         }
     }
 

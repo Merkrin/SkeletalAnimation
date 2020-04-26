@@ -10,6 +10,7 @@ allprojects {
     group 'ru.hse.jogl'
     group 'ru.hse.utils'
     group 'ru.hse.graphic'
+    group 'ru.hse.gui'
 
     project.ext.lwjglVersion = "3.2.3"
     project.ext.jomlVersion = "1.9.24"
@@ -62,12 +63,9 @@ allprojects {
 }
 
 subprojects {
-
     task printDependencies(type: DependencyReportTask) {}
 }
 
 project(':testmod') {
-    dependencies {
-
-    }
+    dependencies {}
 }
