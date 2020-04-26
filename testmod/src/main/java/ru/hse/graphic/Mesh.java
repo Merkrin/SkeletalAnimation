@@ -170,6 +170,7 @@ public class Mesh {
         initRender();
 
         glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
+        //glDrawElements(GL_LINE_LOOP, getVertexCount(), GL_UNSIGNED_INT, 0);
 
         endRender();
     }

@@ -30,7 +30,7 @@ public class Window {
         this.resized = false;
     }
 
-    public void init() {
+    public void init(boolean isPolygon) {
         // Setup an error callback. The default implementation
         // will print the error message in System.err.
         GLFWErrorCallback.createPrint(System.err).set();
@@ -98,7 +98,9 @@ public class Window {
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
         glEnable(GL_DEPTH_TEST);
-        glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+        if(isPolygon)
+            glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+        //glPolygonMode( GL_BACK, GL_LINE );
     }
 
     public long getWindowHandle() {

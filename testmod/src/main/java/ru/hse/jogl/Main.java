@@ -4,6 +4,8 @@ import ru.hse.utils.Engine;
 
 public class Main {
     public static void main(String[] args) {
+        System.setProperty("java.awt.headless", "true");
+
         try {
             Program program = new Program();
 
@@ -13,7 +15,14 @@ public class Main {
                     600,
                     480,
                     true,
-                    program);
+                    program, false);
+            engine.run();
+
+            engine = new Engine("Skeletal animation",
+                    600,
+                    480,
+                    true,
+                    program, true);
             engine.run();
         } catch (Exception exc) {
             System.out.println(exc.getMessage());

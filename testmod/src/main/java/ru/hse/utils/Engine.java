@@ -10,14 +10,18 @@ public class Engine {
     private final Program program;
     private final MouseInput mouseInput;
 
+    private boolean isPolygon;
+
     // TODO: delete width and height 'cause they're counted dynamically.
     //  Add args here to choose from loading options:
     //  .obj, only .md5mesh, .md5anim
     public Engine(String windowTitle, int width, int height,
-                  boolean vSync, Program program) throws Exception {
+                  boolean vSync, Program program, boolean isPolygon) throws Exception {
         window = new Window(windowTitle, width, height, vSync);
         this.program = program;
         mouseInput = new MouseInput();
+
+        this.isPolygon = isPolygon;
     }
 
     public void run() {
@@ -40,7 +44,7 @@ public class Engine {
     }
 
     protected void init() throws Exception {
-        window.init();
+        window.init(isPolygon);
         mouseInput.init(window);
         program.init(window);
     }

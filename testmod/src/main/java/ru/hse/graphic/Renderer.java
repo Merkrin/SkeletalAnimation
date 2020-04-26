@@ -1,6 +1,7 @@
 package ru.hse.graphic;
 
 import org.joml.Matrix4f;
+import ru.hse.graphic.HUD.IHud;
 import ru.hse.graphic.animation.AnimatedFrame;
 import ru.hse.graphic.animation.AnimatedModel;
 import ru.hse.utils.ShaderProgram;
@@ -18,7 +19,7 @@ public class Renderer {
     private static final float Z_NEAR = 0.01f;
     private static final float Z_FAR = 1000.f;
 
-    //private ShaderProgram shaderProgram;
+    private ShaderProgram hudShaderProgram;
     private ShaderProgram sceneShaderProgram;
 
     private final Transformation transformation;
@@ -30,6 +31,7 @@ public class Renderer {
     // Go from program
     public void init(Window window) throws Exception {
         setupSceneShader();
+        setupHudShader();
     }
 
     private void setupSceneShader() throws Exception{
@@ -49,6 +51,18 @@ public class Renderer {
         //shaderProgram.createUniform("useColour");
     }
 
+    private void setupHudShader() throws Exception {
+        hudShaderProgram = new ShaderProgram();
+        hudShaderProgram.createVertexShader(Utils.loadResource("/shaders/hudVertex.frag"));
+        hudShaderProgram.createFragmentShader(Utils.loadResource("/shaders/hudFragment.frag"));
+        hudShaderProgram.link();
+
+        // Create uniforms for Orthographic-model projection matrix and base colour
+        hudShaderProgram.createUniform("projModelMatrix");
+        hudShaderProgram.createUniform("colour");
+        hudShaderProgram.createUniform("hasTexture");
+    }
+
     public void clear() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
@@ -62,6 +76,20 @@ public class Renderer {
         }
 
         renderScene(window, camera, models);
+    }
+    public void render(Window window, Camera camera, Model[] models,
+                       IHud hud) {
+
+        clear();
+
+        if (window.isResized()) {
+            glViewport(0, 0, window.getWidth(), window.getHeight());
+            window.setResized(false);
+        }
+
+        renderScene(window, camera, models);
+
+        renderHud(window, hud);
     }
 
     private void renderScene(Window window, Camera camera, Model[] models){
@@ -95,6 +123,26 @@ public class Renderer {
         }
 
         sceneShaderProgram.unbind();
+    }
+
+    private void renderHud(Window window, IHud hud) {
+
+        hudShaderProgram.bind();
+
+        Matrix4f ortho = transformation.getOrthoProjectionMatrix(0, window.getWidth(), window.getHeight(), 0);
+        for (Model model : hud.getModels()) {
+            Mesh mesh = model.getMesh();
+            // Set orthographic and model matrix for this HUD item
+            Matrix4f projModelMatrix = transformation.getOrtoProjModelMatrix(model, ortho);
+            hudShaderProgram.setUniform("projModelMatrix", projModelMatrix);
+            hudShaderProgram.setUniform("colour", model.getMesh().getMaterial().getAmbientColour());
+            hudShaderProgram.setUniform("hasTexture", model.getMesh().getMaterial().isTextured() ? 1 : 0);
+
+            // Render the mesh for this HUD item
+            mesh.renderWithTexture();
+        }
+
+        hudShaderProgram.unbind();
     }
 
     public void cleanup() {

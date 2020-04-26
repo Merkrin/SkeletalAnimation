@@ -4,6 +4,7 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import ru.hse.graphic.*;
+import ru.hse.graphic.HUD.Hud;
 import ru.hse.graphic.animation.AnimatedModel;
 import ru.hse.utils.MouseInput;
 import ru.hse.utils.loaders.OBJLoader;
@@ -27,6 +28,7 @@ public class Program {
     private Model[] models;
 
     private AnimatedModel monster;
+    private Hud hud;
 
     public Program() {
         renderer = new Renderer();
@@ -50,6 +52,8 @@ public class Program {
 //        monster.setRotation(90, 0, 90);
 //        monster.setPosition(0, -2, -5);
         models = new Model[]{monster};
+
+        hud = new Hud("DEMO");
 
 //        // Create the Mesh
 //        Mesh mesh = OBJLoader.loadMesh("/models/teapot.obj");
@@ -100,7 +104,8 @@ public class Program {
     }
 
     public void render(Window window) {
-        renderer.render(window, camera, models);
+        hud.updateSize(window);
+        renderer.render(window, camera, models, hud);
     }
 
     public void cleanup() {
@@ -108,5 +113,6 @@ public class Program {
         for (Model model : models) {
             model.getMesh().cleanUp();
         }
+        hud.cleanup();
     }
 }
