@@ -27,7 +27,8 @@ public class Program {
 
     private Model[] models;
 
-    private AnimatedModel monster;
+    //private AnimatedModel monster;
+    private Model monster;
     private Hud hud;
 
     public Program() {
@@ -40,6 +41,9 @@ public class Program {
     public void init(Window window) throws Exception {
         renderer.init(window);
 
+//        Mesh mesh = OBJLoader.loadMesh("/models/teapot.obj");
+//        monster = new Model(mesh);
+
         MD5Model md5Meshodel = MD5Model.parse("/models/monster.md5mesh");
         Model monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
 //        MD5Model md5Meshodel = MD5Model.parse("/models/monster.md5mesh");
@@ -47,13 +51,13 @@ public class Program {
 //        monster = MD5LoaderWAnim.process(md5Meshodel, md5AnimModel, new Vector4f(1, 1, 1, 1));
 
         monster.setScale(0.05f);
-        monster.setRotation(90, 0, 90);
+        monster.setRotation(0, 0, 0);
         monster.setPosition(0, 0, 0);
 //        monster.setRotation(90, 0, 90);
 //        monster.setPosition(0, -2, -5);
         models = new Model[]{monster};
 
-        hud = new Hud("DEMO");
+//        hud = new Hud("Here is long\nmultiline help\ni hope.");
 
 //        // Create the Mesh
 //        Mesh mesh = OBJLoader.loadMesh("/models/teapot.obj");
@@ -84,8 +88,18 @@ public class Program {
             cameraInc.y = 1;
         }
         if (window.isKeyPressed(GLFW_KEY_P)) {
-            monster.nextFrame();
+            //monster.nextFrame();
         }
+//        if(window.isKeyPressed(GLFW_KEY_R)){
+//            try {
+//
+//                MD5Model md5Meshodel = MD5Model.parse("/models/monster.md5mesh");
+//                monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
+//                models = new Model[]{monster};
+//            }catch(Exception e){
+//                System.out.println(e.getMessage());
+//            }
+//        }
     }
 
     public void update(MouseInput mouseInput) {
@@ -104,8 +118,9 @@ public class Program {
     }
 
     public void render(Window window) {
-        hud.updateSize(window);
+        //hud.updateSize(window);
         renderer.render(window, camera, models, hud);
+        //renderer.render(window, camera, models);
     }
 
     public void cleanup() {
@@ -113,6 +128,6 @@ public class Program {
         for (Model model : models) {
             model.getMesh().cleanUp();
         }
-        hud.cleanup();
+        //hud.cleanup();
     }
 }

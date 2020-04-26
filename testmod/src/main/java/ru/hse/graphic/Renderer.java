@@ -31,7 +31,7 @@ public class Renderer {
     // Go from program
     public void init(Window window) throws Exception {
         setupSceneShader();
-        setupHudShader();
+        //setupHudShader();
     }
 
     private void setupSceneShader() throws Exception{
@@ -67,29 +67,28 @@ public class Renderer {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    public void render(Window window, Camera camera, Model[] models) {
+    public void render(Window window, Camera camera, IHud hud) {
         clear();
 
         if (window.isResized()) {
             glViewport(0, 0, window.getWidth(), window.getHeight());
             window.setResized(false);
         }
-
-        renderScene(window, camera, models);
-    }
-    public void render(Window window, Camera camera, Model[] models,
-                       IHud hud) {
-
-        clear();
-
-        if (window.isResized()) {
-            glViewport(0, 0, window.getWidth(), window.getHeight());
-            window.setResized(false);
-        }
-
-        renderScene(window, camera, models);
 
         renderHud(window, hud);
+    }
+    public void render(Window window, Camera camera, Model[] models, IHud hud) {
+
+        clear();
+
+        if (window.isResized()) {
+            glViewport(0, 0, window.getWidth(), window.getHeight());
+            window.setResized(false);
+        }
+
+        renderScene(window, camera, models);
+
+        //renderHud(window, hud);
     }
 
     private void renderScene(Window window, Camera camera, Model[] models){

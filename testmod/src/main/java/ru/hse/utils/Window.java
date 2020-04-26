@@ -22,15 +22,15 @@ public class Window {
 
     private boolean vSync;
 
-    public Window(String title, int width, int height, boolean vSync) {
+    boolean isPolygon = false;
+
+    public Window(String title, boolean vSync) {
         this.title = title;
-        this.width = width;
-        this.height = height;
         this.vSync = vSync;
         this.resized = false;
     }
 
-    public void init(boolean isPolygon) {
+    public void init() {
         // Setup an error callback. The default implementation
         // will print the error message in System.err.
         GLFWErrorCallback.createPrint(System.err).set();
@@ -98,7 +98,7 @@ public class Window {
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
         glEnable(GL_DEPTH_TEST);
-        if(isPolygon)
+        //if(isPolygon)
             glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
         //glPolygonMode( GL_BACK, GL_LINE );
     }
@@ -151,4 +151,9 @@ public class Window {
         glfwSwapBuffers(windowHandle);
         glfwPollEvents();
     }
+
+//    public void reversePolygon(){
+//        isPolygon = !isPolygon;
+//        init();
+//    }
 }

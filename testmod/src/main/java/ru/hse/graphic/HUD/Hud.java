@@ -35,6 +35,7 @@ public class Hud implements IHud {
     }
 
     public void updateSize(Window window) {
-        this.statusTextItem.setPosition(10f, window.getHeight() - 50f, 0);
+        //this.statusTextItem.setPosition(10f, window.getHeight() - 50f, 0);
+        this.statusTextItem.setPosition(10, 10, 0);
     }
 }
