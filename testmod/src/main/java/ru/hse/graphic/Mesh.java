@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import org.joml.Vector3f;
+import org.lwjgl.opengl.GLUtil;
 import org.lwjgl.system.MemoryUtil;
 
 import static org.lwjgl.opengl.GL30.*;
@@ -21,7 +22,15 @@ public class Mesh {
     public static final int MAX_WEIGHTS = 4;
 
     private final int vaoId;
-    private final List<Integer> vboIdList;
+    private List<Integer> vboIdList;
+
+    private int posVboId;
+
+    private int colourVboId;
+
+    private int idxVboId;
+
+    private boolean isSquare = false;
 
     private final int vertexCount;
 
@@ -60,16 +69,6 @@ public class Mesh {
             glBufferData(GL_ARRAY_BUFFER, posBuffer, GL_STATIC_DRAW);
             glEnableVertexAttribArray(0);
             glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
-
-            // Texture coordinates VBO
-            vboId = glGenBuffers();
-            vboIdList.add(vboId);
-            textCoordsBuffer = MemoryUtil.memAllocFloat(textCoords.length);
-            textCoordsBuffer.put(textCoords).flip();
-            glBindBuffer(GL_ARRAY_BUFFER, vboId);
-            glBufferData(GL_ARRAY_BUFFER, textCoordsBuffer, GL_STATIC_DRAW);
-            glEnableVertexAttribArray(1);
-            glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, 0);
 
             // Vertex normals VBO
             vboId = glGenBuffers();
@@ -138,6 +137,47 @@ public class Mesh {
         }
     }
 
+    public Mesh(float[] positions, int[] indices) {
+        FloatBuffer posBuffer = null;
+        FloatBuffer colourBuffer = null;
+        IntBuffer indicesBuffer = null;
+        try {
+            vertexCount = indices.length;
+
+            vaoId = glGenVertexArrays();
+            glBindVertexArray(vaoId);
+
+            // Position VBO
+            posVboId = glGenBuffers();
+            posBuffer = MemoryUtil.memAllocFloat(positions.length);
+            posBuffer.put(positions).flip();
+            glBindBuffer(GL_ARRAY_BUFFER, posVboId);
+            glBufferData(GL_ARRAY_BUFFER, posBuffer, GL_STATIC_DRAW);
+            glEnableVertexAttribArray(0);
+            glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+
+            // Index VBO
+            idxVboId = glGenBuffers();
+            indicesBuffer = MemoryUtil.memAllocInt(indices.length);
+            indicesBuffer.put(indices).flip();
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idxVboId);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL_STATIC_DRAW);
+
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            glBindVertexArray(0);
+        } finally {
+            if (posBuffer != null) {
+                MemoryUtil.memFree(posBuffer);
+            }
+            if (colourBuffer != null) {
+                MemoryUtil.memFree(colourBuffer);
+            }
+            if (indicesBuffer != null) {
+                MemoryUtil.memFree(indicesBuffer);
+            }
+        }
+    }
+
     public Material getMaterial() {
         return material;
     }
@@ -170,20 +210,11 @@ public class Mesh {
         initRender();
 
         glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
-        //glDrawElements(GL_LINE_LOOP, getVertexCount(), GL_UNSIGNED_INT, 0);
 
         endRender();
     }
 
-    public void renderWithTexture(){
-        Texture texture = material.getTexture();
-        if (texture != null) {
-            // Activate firs texture bank
-            glActiveTexture(GL_TEXTURE0);
-            // Bind the texture
-            glBindTexture(GL_TEXTURE_2D, texture.getId());
-        }
-
+    public void renderSquare() {
         // Draw the mesh
         glBindVertexArray(getVaoId());
 
@@ -191,7 +222,6 @@ public class Mesh {
 
         // Restore state
         glBindVertexArray(0);
-        glBindTexture(GL_TEXTURE_2D, 0);
     }
 
     public void renderList(List<Model> models, Consumer<Model> consumer) {
@@ -246,6 +276,17 @@ public class Mesh {
     }
 
     public Vector3f getColour(){
-        return new Vector3f(1.0f, 1.0f, 1.0f);
+        if(isSquare)
+            return new Vector3f(1f, 0f, 0f);
+        else
+            return new Vector3f(0.196f, 0.804f, 0.196f);
+    }
+
+    public boolean getIsSquare(){
+        return isSquare;
+    }
+
+    public void setIsSquare(boolean isSquare){
+        this.isSquare = isSquare;
     }
 }

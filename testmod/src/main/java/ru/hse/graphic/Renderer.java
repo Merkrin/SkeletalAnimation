@@ -7,6 +7,9 @@ import ru.hse.graphic.animation.AnimatedModel;
 import ru.hse.utils.ShaderProgram;
 import ru.hse.utils.Utils;
 import ru.hse.utils.Window;
+import ru.hse.utils.loaders.md5.MD5JointInfo;
+
+import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
@@ -47,7 +50,7 @@ public class Renderer {
         sceneShaderProgram.createUniform("modelViewMatrix");
         //shaderProgram.createUniform("texture_sampler");
         // Create uniform for default colour and the flag that controls it
-        //shaderProgram.createUniform("colour");
+        sceneShaderProgram.createUniform("colour");
         //shaderProgram.createUniform("useColour");
     }
 
@@ -67,18 +70,7 @@ public class Renderer {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    public void render(Window window, Camera camera, IHud hud) {
-        clear();
-
-        if (window.isResized()) {
-            glViewport(0, 0, window.getWidth(), window.getHeight());
-            window.setResized(false);
-        }
-
-        renderHud(window, hud);
-    }
-    public void render(Window window, Camera camera, Model[] models, IHud hud) {
-
+    public void render(Window window, Camera camera, Model[] models) {
         clear();
 
         if (window.isResized()) {
@@ -87,8 +79,6 @@ public class Renderer {
         }
 
         renderScene(window, camera, models);
-
-        //renderHud(window, hud);
     }
 
     private void renderScene(Window window, Camera camera, Model[] models){
@@ -109,39 +99,25 @@ public class Renderer {
             Matrix4f modelViewMatrix = transformation.getModelViewMatrix(model, viewMatrix);
             sceneShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
 
+            sceneShaderProgram.setUniform("colour", mesh.getColour());
+
             if(model instanceof AnimatedModel){
                 AnimatedModel animatedModel = (AnimatedModel)model;
                 AnimatedFrame animatedFrame = animatedModel.getCurrentFrame();
                 sceneShaderProgram.setUniform("jointsMatrix", animatedFrame.getJointMatrices());
             }
 
+            if(mesh.getIsSquare())
+                mesh.renderSquare();
+            else
+                mesh.render();
             // Render the mesh for this game item
             //shaderProgram.setUniform("colour", mesh.getColour());
             //shaderProgram.setUniform("useColour",1);
-            mesh.render();
+            //mesh.render();
         }
 
         sceneShaderProgram.unbind();
-    }
-
-    private void renderHud(Window window, IHud hud) {
-
-        hudShaderProgram.bind();
-
-        Matrix4f ortho = transformation.getOrthoProjectionMatrix(0, window.getWidth(), window.getHeight(), 0);
-        for (Model model : hud.getModels()) {
-            Mesh mesh = model.getMesh();
-            // Set orthographic and model matrix for this HUD item
-            Matrix4f projModelMatrix = transformation.getOrtoProjModelMatrix(model, ortho);
-            hudShaderProgram.setUniform("projModelMatrix", projModelMatrix);
-            hudShaderProgram.setUniform("colour", model.getMesh().getMaterial().getAmbientColour());
-            hudShaderProgram.setUniform("hasTexture", model.getMesh().getMaterial().isTextured() ? 1 : 0);
-
-            // Render the mesh for this HUD item
-            mesh.renderWithTexture();
-        }
-
-        hudShaderProgram.unbind();
     }
 
     public void cleanup() {

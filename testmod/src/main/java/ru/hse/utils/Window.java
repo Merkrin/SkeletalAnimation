@@ -99,7 +99,7 @@ public class Window {
 
         glEnable(GL_DEPTH_TEST);
         //if(isPolygon)
-            glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+        glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
         //glPolygonMode( GL_BACK, GL_LINE );
     }
 

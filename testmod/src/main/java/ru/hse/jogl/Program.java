@@ -9,10 +9,11 @@ import ru.hse.graphic.animation.AnimatedModel;
 import ru.hse.utils.MouseInput;
 import ru.hse.utils.loaders.OBJLoader;
 import ru.hse.utils.Window;
-import ru.hse.utils.loaders.md5.MD5AnimModel;
-import ru.hse.utils.loaders.md5.MD5Loader;
-import ru.hse.utils.loaders.md5.MD5LoaderWAnim;
-import ru.hse.utils.loaders.md5.MD5Model;
+import ru.hse.utils.loaders.md5.*;
+
+
+
+import java.util.List;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -29,7 +30,9 @@ public class Program {
 
     //private AnimatedModel monster;
     private Model monster;
-    private Hud hud;
+
+    private MD5JointInfo jointInfo;
+    private MD5Model md5Meshodel;
 
     public Program() {
         renderer = new Renderer();
@@ -44,18 +47,26 @@ public class Program {
 //        Mesh mesh = OBJLoader.loadMesh("/models/teapot.obj");
 //        monster = new Model(mesh);
 
-        MD5Model md5Meshodel = MD5Model.parse("/models/monster.md5mesh");
+        md5Meshodel = MD5Model.parse("/models/monster.md5mesh");
         Model monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
 //        MD5Model md5Meshodel = MD5Model.parse("/models/monster.md5mesh");
-//        MD5AnimModel md5AnimModel = MD5AnimModel.parse("/models/test.md5anim");
+//        MD5AnimModel md5AnimModel = MD5AnimModel.parse("/models/monster.md5anim");
 //        monster = MD5LoaderWAnim.process(md5Meshodel, md5AnimModel, new Vector4f(1, 1, 1, 1));
 
         monster.setScale(0.05f);
-        monster.setRotation(0, 0, 0);
+        monster.setRotation(90, 0, 0);
         monster.setPosition(0, 0, 0);
-//        monster.setRotation(90, 0, 90);
-//        monster.setPosition(0, -2, -5);
-        models = new Model[]{monster};
+
+
+        Mesh square1 = OBJLoader.loadMesh("/models/kub.obj");
+
+        square1.setIsSquare(true);
+        Model model = new Model(square1);
+        model.setScale(0.0005f);
+        model.setPosition(0,0,0);
+        models = new Model[]{monster, model};
+
+//        jointInfo = md5Meshodel.getJointInfo();
 
 //        hud = new Hud("Here is long\nmultiline help\ni hope.");
 
@@ -90,16 +101,27 @@ public class Program {
         if (window.isKeyPressed(GLFW_KEY_P)) {
             //monster.nextFrame();
         }
-//        if(window.isKeyPressed(GLFW_KEY_R)){
-//            try {
-//
+        if(window.isKeyPressed(GLFW_KEY_R)){
+            try {
 //                MD5Model md5Meshodel = MD5Model.parse("/models/monster.md5mesh");
+                List<MD5JointInfo.MD5JointData> tmp = jointInfo.getJoints();
+                tmp.get(12).setPosition(new Vector3f(100,100,-100));
+                jointInfo.setJoints(tmp);
+                md5Meshodel.setJointInfo(jointInfo);
+                Model monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
+                monster.setScale(0.05f);
+                monster.setRotation(90, 0, 0);
+                monster.setPosition(0, 0, 0);
+                models[0] = monster;
+
 //                monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
+//                Mesh mesh = OBJLoader.loadMesh("/models/teapot.obj");
+//                models[0] = new Model(mesh);
 //                models = new Model[]{monster};
-//            }catch(Exception e){
-//                System.out.println(e.getMessage());
-//            }
-//        }
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     public void update(MouseInput mouseInput) {
@@ -118,9 +140,8 @@ public class Program {
     }
 
     public void render(Window window) {
-        //hud.updateSize(window);
-        renderer.render(window, camera, models, hud);
-        //renderer.render(window, camera, models);
+        renderer.render(window, camera, models);
+        //renderer.render(window, camera, models, jointInfo.getJoints());
     }
 
     public void cleanup() {
@@ -128,6 +149,5 @@ public class Program {
         for (Model model : models) {
             model.getMesh().cleanUp();
         }
-        //hud.cleanup();
     }
 }
