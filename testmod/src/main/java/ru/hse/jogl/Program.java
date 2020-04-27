@@ -12,7 +12,6 @@ import ru.hse.utils.Window;
 import ru.hse.utils.loaders.md5.*;
 
 
-
 import java.util.List;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -28,10 +27,13 @@ public class Program {
 
     private Model[] models;
 
-    //private AnimatedModel monster;
+    //private AnimatedModel animatedMonster;
     private Model monster;
 
     private MD5JointInfo jointInfo;
+    private int currentActiveJoint = 0;
+    private int jointsAmount;
+
     private MD5Model md5Meshodel;
 
     public Program() {
@@ -51,22 +53,42 @@ public class Program {
         Model monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
 //        MD5Model md5Meshodel = MD5Model.parse("/models/monster.md5mesh");
 //        MD5AnimModel md5AnimModel = MD5AnimModel.parse("/models/monster.md5anim");
-//        monster = MD5LoaderWAnim.process(md5Meshodel, md5AnimModel, new Vector4f(1, 1, 1, 1));
+//        animatedMonster = MD5LoaderWAnim.process(md5Meshodel, md5AnimModel, new Vector4f(1, 1, 1, 1));
 
-        monster.setScale(0.05f);
-        monster.setRotation(90, 0, 0);
-        monster.setPosition(0, 0, 0);
+        //monster.setScale(0.05f);
+        //monster.setRotation(90, 0, 0);
+        //monster.setPosition(0, 0, 0);
 
+        jointInfo = md5Meshodel.getJointInfo();
+        jointsAmount = jointInfo.getJoints().size();
+        models = new Model[jointsAmount + 1];
+        models[0] = monster;
 
-        Mesh square1 = OBJLoader.loadMesh("/models/kub.obj");
+        MD5JointInfo.MD5JointData joint;
+        for (int i = 0; i < jointInfo.getJoints().size(); i++) {
+            Mesh mesh = OBJLoader.loadMesh("/models/kub1.obj");
+            mesh.setIsSquare(true);
+            if (i == 0)
+                mesh.swapActive();
+            Model model = new Model(mesh);
 
-        square1.setIsSquare(true);
-        Model model = new Model(square1);
-        model.setScale(0.0005f);
-        model.setPosition(0,0,0);
-        models = new Model[]{monster, model};
+            joint = jointInfo.getJoints().get(i);
 
-//        jointInfo = md5Meshodel.getJointInfo();
+            model.setPosition(joint.getPosition().x,
+                    joint.getPosition().y,
+                    joint.getPosition().z);
+            model.setScale(0.0005f);
+
+            models[i + 1] = model;
+        }
+
+//        Mesh square1 = OBJLoader.loadMesh("/models/kub.obj");
+//
+//        square1.setIsSquare(true);
+//        Model model = new Model(square1);
+//        model.setScale(0.0005f);
+//        model.setPosition(20, 0, 0);
+//        models = new Model[]{monster, model};
 
 //        hud = new Hud("Here is long\nmultiline help\ni hope.");
 
@@ -101,26 +123,63 @@ public class Program {
         if (window.isKeyPressed(GLFW_KEY_P)) {
             //monster.nextFrame();
         }
-        if(window.isKeyPressed(GLFW_KEY_R)){
-            try {
-//                MD5Model md5Meshodel = MD5Model.parse("/models/monster.md5mesh");
-                List<MD5JointInfo.MD5JointData> tmp = jointInfo.getJoints();
-                tmp.get(12).setPosition(new Vector3f(100,100,-100));
-                jointInfo.setJoints(tmp);
+        if (window.isKeyPressed(GLFW_KEY_TAB)) {
+            models[currentActiveJoint+1].getMesh().swapActive();
+            currentActiveJoint = (currentActiveJoint + 1) % jointsAmount;
+            models[currentActiveJoint+1].getMesh().swapActive();
+        }
+        // TODO: try to avoid repeating
+        try {
+            if (window.isKeyPressed(GLFW_KEY_UP)) {
+                Vector3f position = jointInfo.getJoints().get(currentActiveJoint).getPosition();
+                position.y += 1;
+                jointInfo.getJoints().get(currentActiveJoint).setPosition(position);
                 md5Meshodel.setJointInfo(jointInfo);
                 Model monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
-                monster.setScale(0.05f);
-                monster.setRotation(90, 0, 0);
-                monster.setPosition(0, 0, 0);
                 models[0] = monster;
-
-//                monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
-//                Mesh mesh = OBJLoader.loadMesh("/models/teapot.obj");
-//                models[0] = new Model(mesh);
-//                models = new Model[]{monster};
-            }catch(Exception e){
-                System.out.println(e.getMessage());
             }
+            if (window.isKeyPressed(GLFW_KEY_DOWN)) {
+                Vector3f position = jointInfo.getJoints().get(currentActiveJoint).getPosition();
+                position.y -= 1;
+                jointInfo.getJoints().get(currentActiveJoint).setPosition(position);
+                md5Meshodel.setJointInfo(jointInfo);
+                Model monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
+                models[0] = monster;
+            }
+            if (window.isKeyPressed(GLFW_KEY_RIGHT)) {
+                Vector3f position = jointInfo.getJoints().get(currentActiveJoint).getPosition();
+                position.x += 1;
+                jointInfo.getJoints().get(currentActiveJoint).setPosition(position);
+                md5Meshodel.setJointInfo(jointInfo);
+                Model monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
+                models[0] = monster;
+            }
+            if (window.isKeyPressed(GLFW_KEY_LEFT)) {
+                Vector3f position = jointInfo.getJoints().get(currentActiveJoint).getPosition();
+                position.x -= 1;
+                jointInfo.getJoints().get(currentActiveJoint).setPosition(position);
+                md5Meshodel.setJointInfo(jointInfo);
+                Model monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
+                models[0] = monster;
+            }
+            if (window.isKeyPressed(GLFW_KEY_SEMICOLON)) {
+                Vector3f position = jointInfo.getJoints().get(currentActiveJoint).getPosition();
+                position.z += 1;
+                jointInfo.getJoints().get(currentActiveJoint).setPosition(position);
+                md5Meshodel.setJointInfo(jointInfo);
+                Model monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
+                models[0] = monster;
+            }
+            if (window.isKeyPressed(GLFW_KEY_SLASH)) {
+                Vector3f position = jointInfo.getJoints().get(currentActiveJoint).getPosition();
+                position.z -= 1;
+                jointInfo.getJoints().get(currentActiveJoint).setPosition(position);
+                md5Meshodel.setJointInfo(jointInfo);
+                Model monster = MD5Loader.process(md5Meshodel, new Vector4f(1, 1, 1, 1));
+                models[0] = monster;
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
     }
 

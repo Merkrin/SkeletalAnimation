@@ -24,17 +24,13 @@ public class Mesh {
     private final int vaoId;
     private List<Integer> vboIdList;
 
-    private int posVboId;
-
-    private int colourVboId;
-
-    private int idxVboId;
-
     private boolean isSquare = false;
 
     private final int vertexCount;
 
     private Material material;
+
+    private boolean isActive = false;
 
 //    private static final Vector3f DEFAULT_COLOUR = new Vector3f(1.0f, 1.0f, 1.0f);
 //    private Vector3f colour;
@@ -130,47 +126,6 @@ public class Mesh {
             }
             if (jointIndicesBuffer != null) {
                 MemoryUtil.memFree(jointIndicesBuffer);
-            }
-            if (indicesBuffer != null) {
-                MemoryUtil.memFree(indicesBuffer);
-            }
-        }
-    }
-
-    public Mesh(float[] positions, int[] indices) {
-        FloatBuffer posBuffer = null;
-        FloatBuffer colourBuffer = null;
-        IntBuffer indicesBuffer = null;
-        try {
-            vertexCount = indices.length;
-
-            vaoId = glGenVertexArrays();
-            glBindVertexArray(vaoId);
-
-            // Position VBO
-            posVboId = glGenBuffers();
-            posBuffer = MemoryUtil.memAllocFloat(positions.length);
-            posBuffer.put(positions).flip();
-            glBindBuffer(GL_ARRAY_BUFFER, posVboId);
-            glBufferData(GL_ARRAY_BUFFER, posBuffer, GL_STATIC_DRAW);
-            glEnableVertexAttribArray(0);
-            glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
-
-            // Index VBO
-            idxVboId = glGenBuffers();
-            indicesBuffer = MemoryUtil.memAllocInt(indices.length);
-            indicesBuffer.put(indices).flip();
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, idxVboId);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesBuffer, GL_STATIC_DRAW);
-
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-            glBindVertexArray(0);
-        } finally {
-            if (posBuffer != null) {
-                MemoryUtil.memFree(posBuffer);
-            }
-            if (colourBuffer != null) {
-                MemoryUtil.memFree(colourBuffer);
             }
             if (indicesBuffer != null) {
                 MemoryUtil.memFree(indicesBuffer);
@@ -276,7 +231,9 @@ public class Mesh {
     }
 
     public Vector3f getColour(){
-        if(isSquare)
+        if(isSquare && !isActive)
+            return new Vector3f(1f, 1f, 1f);
+        else if(isSquare && isActive)
             return new Vector3f(1f, 0f, 0f);
         else
             return new Vector3f(0.196f, 0.804f, 0.196f);
@@ -288,5 +245,13 @@ public class Mesh {
 
     public void setIsSquare(boolean isSquare){
         this.isSquare = isSquare;
+    }
+
+    public boolean getIsActive(){
+        return isActive;
+    }
+
+    public void swapActive(){
+        isActive = !isActive;
     }
 }
