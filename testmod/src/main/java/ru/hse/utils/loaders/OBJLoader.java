@@ -9,8 +9,8 @@ import org.joml.Vector3f;
 import ru.hse.utils.Utils;
 
 public class OBJLoader {
-    public static Mesh loadMesh(String fileName) throws Exception {
-        List<String> lines = Utils.readAllLines(fileName);
+    public static Mesh loadMesh(String fileName, boolean isAbsolutePath) throws Exception {
+        List<String> lines = Utils.readAllLines(fileName, isAbsolutePath);
 
         List<Vector3f> vertices = new ArrayList<>();
         List<Vector2f> textures = new ArrayList<>();

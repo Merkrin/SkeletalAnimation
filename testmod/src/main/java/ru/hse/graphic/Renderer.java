@@ -1,7 +1,6 @@
 package ru.hse.graphic;
 
 import org.joml.Matrix4f;
-import ru.hse.graphic.HUD.IHud;
 import ru.hse.graphic.animation.AnimatedFrame;
 import ru.hse.graphic.animation.AnimatedModel;
 import ru.hse.utils.ShaderProgram;

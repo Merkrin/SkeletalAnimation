@@ -75,7 +75,7 @@ public class MD5AnimModel {
     }
 
     public static MD5AnimModel parse(String animFile) throws Exception {
-        List<String> lines = Utils.readAllLines(animFile);
+        List<String> lines = Utils.readAllLines(animFile, true);
 
         MD5AnimModel result = new MD5AnimModel();
 
