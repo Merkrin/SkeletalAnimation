@@ -13,12 +13,9 @@ public class MD5Loader {
     private static final String NORMAL_FILE_SUFFIX = "_normal";
 
     public static Model process(MD5Model md5Model, Vector4f defaultColour) throws Exception {
-        List<MD5Mesh> md5MeshList = md5Model.getMeshes();
-
         List<Mesh> list = new ArrayList<>();
         for (MD5Mesh md5Mesh : md5Model.getMeshes()) {
             Mesh mesh = generateMesh(md5Model, md5Mesh, defaultColour);
-            //handleTexture(mesh, md5Mesh, defaultColour);
             list.add(mesh);
         }
         Mesh[] meshes = new Mesh[list.size()];

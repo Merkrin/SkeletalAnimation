@@ -22,6 +22,9 @@ public class Main {
         int pathLength = path.length();
         int endingLength = 4;
 
+        if (pathLength <= endingLength)
+            return -1;
+
         String ending = path.substring(pathLength - endingLength, pathLength);
 
         if (ending.equalsIgnoreCase(".obj"))
@@ -76,7 +79,7 @@ public class Main {
 
                     if (fileOption != -1)
                         filePaths = new String[]{args[0]};
-                } else {
+                } else if(argsLength == 2) {
                     if (getFileOption(args[0]) == 1 && getFileOption(args[1]) == 2) {
                         fileOption = 2;
 
@@ -97,6 +100,9 @@ public class Main {
             } catch (Exception exc) {
                 System.out.println(exc.getMessage());
             }
+        }else{
+            System.out.println("Something went wrong in your input." +
+                    " Please check arguments.");
         }
     }
 }

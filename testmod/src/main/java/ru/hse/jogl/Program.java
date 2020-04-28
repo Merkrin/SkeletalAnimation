@@ -161,13 +161,16 @@ public class Program {
                     List<MD5JointInfo.MD5JointData> joints = jointInfo.getJoints();
                     Vector3f currentJoint;
 
-                    for (int i = 0; i < firstJoints.size(); i++) {
+                    for (int i = 0; i < jointsAmount; i++) {
                         currentJoint = firstJoints.get(i).getPosition();
                         joints.get(i).setPosition(new Vector3f(currentJoint.x, currentJoint.y, currentJoint.z));
+
+                        models[i+1].setPosition(currentJoint.x, currentJoint.y, currentJoint.z);
                     }
+
                     jointInfo.setJoints(joints);
                     md5MeshModel.setJointInfo(jointInfo);
-                    //jointInfo.setJoints(firstJointsInfo.getJoints());
+
                     Model monster = MD5Loader.process(md5MeshModel, new Vector4f(1, 1, 1, 1));
                     models[0] = monster;
                 }
