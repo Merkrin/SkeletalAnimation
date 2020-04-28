@@ -6,6 +6,8 @@ import java.util.List;
 import ru.hse.utils.*;
 
 public class MD5Model {
+    private List<String> lines;
+
     private MD5JointInfo jointInfo;
 
     private MD5ModelHeader header;
@@ -42,7 +44,7 @@ public class MD5Model {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder("MD5MeshModel: " + System.lineSeparator());
+        StringBuilder str = new StringBuilder();//"MD5MeshModel: " + System.lineSeparator());
         str.append(getHeader()).append(System.lineSeparator());
         str.append(getJointInfo()).append(System.lineSeparator());
 

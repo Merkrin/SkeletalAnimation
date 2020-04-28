@@ -84,7 +84,7 @@ public class Program {
 
     private void initMd5Mesh() throws Exception {
         md5MeshModel = MD5Model.parse(filePaths[0]);
-        mainModel = MD5Loader.process(md5MeshModel, new Vector4f(1, 1, 1, 1));
+        mainModel = MD5Loader.process(md5MeshModel);
 
         jointInfo = md5MeshModel.getJointInfo();
         firstJointsInfo = MD5Model.parse(filePaths[0]).getJointInfo();
@@ -156,7 +156,6 @@ public class Program {
             }
             try {
                 if (window.isKeyPressed(GLFW_KEY_R)) {
-                    // TODO: dismiss changes
                     List<MD5JointInfo.MD5JointData> firstJoints = firstJointsInfo.getJoints();
                     List<MD5JointInfo.MD5JointData> joints = jointInfo.getJoints();
                     Vector3f currentJoint;
@@ -171,8 +170,11 @@ public class Program {
                     jointInfo.setJoints(joints);
                     md5MeshModel.setJointInfo(jointInfo);
 
-                    Model monster = MD5Loader.process(md5MeshModel, new Vector4f(1, 1, 1, 1));
+                    Model monster = MD5Loader.process(md5MeshModel);
                     models[0] = monster;
+                }
+                if(window.isKeyPressed(GLFW_KEY_F)){
+                    MD5Saver.save(md5MeshModel);
                 }
                 if (window.isKeyPressed(GLFW_KEY_UP)) {
                     Vector3f position = jointInfo.getJoints().get(currentActiveJoint).getPosition();
@@ -213,7 +215,7 @@ public class Program {
     private void renewJointsPositions(Vector3f position) throws Exception {
         jointInfo.getJoints().get(currentActiveJoint).setPosition(position);
         md5MeshModel.setJointInfo(jointInfo);
-        Model monster = MD5Loader.process(md5MeshModel, new Vector4f(1, 1, 1, 1));
+        Model monster = MD5Loader.process(md5MeshModel);
         models[0] = monster;
         models[currentActiveJoint + 1].setPosition(position.x, position.y, position.z);
     }

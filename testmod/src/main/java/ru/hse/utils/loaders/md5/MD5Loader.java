@@ -12,10 +12,10 @@ import ru.hse.utils.*;
 public class MD5Loader {
     private static final String NORMAL_FILE_SUFFIX = "_normal";
 
-    public static Model process(MD5Model md5Model, Vector4f defaultColour) throws Exception {
+    public static Model process(MD5Model md5Model) throws Exception {
         List<Mesh> list = new ArrayList<>();
         for (MD5Mesh md5Mesh : md5Model.getMeshes()) {
-            Mesh mesh = generateMesh(md5Model, md5Mesh, defaultColour);
+            Mesh mesh = generateMesh(md5Model, md5Mesh);
             list.add(mesh);
         }
         Mesh[] meshes = new Mesh[list.size()];
@@ -25,7 +25,7 @@ public class MD5Loader {
         return model;
     }
 
-    private static Mesh generateMesh(MD5Model md5Model, MD5Mesh md5Mesh, Vector4f defaultColour) throws Exception {
+    private static Mesh generateMesh(MD5Model md5Model, MD5Mesh md5Mesh) throws Exception {
         List<VertexInfo> vertexInfoList = new ArrayList<>();
         List<Float> textCoords = new ArrayList<>();
         List<Integer> indices = new ArrayList<>();
@@ -88,29 +88,6 @@ public class MD5Loader {
 
         return mesh;
     }
-
-//    private static void handleTexture(Mesh mesh, MD5Mesh md5Mesh, Vector4f defaultColour) throws Exception {
-//        String texturePath = md5Mesh.getTexture();
-//        if (texturePath != null && texturePath.length() > 0) {
-//            Texture texture = new Texture(texturePath);
-//            Material material = new Material(texture);
-//
-//            // Handle normal Maps;
-//            int pos = texturePath.lastIndexOf(".");
-//            if (pos > 0) {
-//                String basePath = texturePath.substring(0, pos);
-//                String extension = texturePath.substring(pos, texturePath.length());
-//                String normalMapFileName = basePath + NORMAL_FILE_SUFFIX + extension;
-//                if (Utils.existsResourceFile(normalMapFileName)) {
-//                    Texture normalMap = new Texture(normalMapFileName);
-//                    material.setNormalMap(normalMap);
-//                }
-//            }
-//            mesh.setMaterial(material);
-//        } else {
-//            mesh.setMaterial(new Material(defaultColour, 1));
-//        }
-//    }
 
     private static class VertexInfo {
 

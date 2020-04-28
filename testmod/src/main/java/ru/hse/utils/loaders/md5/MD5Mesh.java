@@ -2,8 +2,10 @@ package ru.hse.utils.loaders.md5;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
@@ -16,7 +18,7 @@ public class MD5Mesh {
     private static final Pattern PATTERN_TRI = Pattern.compile("\\s*tri\\s*(\\d+)\\s*(\\d+)\\s*(\\d+)\\s*(\\d+)");
 
     private static final Pattern PATTERN_WEIGHT = Pattern.compile("\\s*weight\\s*(\\d+)\\s*(\\d+)\\s*" +
-            "(" + MD5Utils.FLOAT_REGEXP + ")\\s*" + MD5Utils.VECTOR3_REGEXP );
+            "(" + MD5Utils.FLOAT_REGEXP + ")\\s*" + MD5Utils.VECTOR3_REGEXP);
 
     private String texture;
 
@@ -34,26 +36,27 @@ public class MD5Mesh {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder("mesh [" + System.lineSeparator());
-        str.append("texture: ").append(texture).append(System.lineSeparator());
+        //StringBuilder str = new StringBuilder("mesh [" + System.lineSeparator());
+        StringBuilder str = new StringBuilder("mesh {" + System.lineSeparator());
+        str.append("\tshader \"").append(texture).append("\"").append(System.lineSeparator());
 
-        str.append("vertices [").append(System.lineSeparator());
+        str.append("\n\tnumverts " + vertices.size()).append(System.lineSeparator());
         for (MD5Vertex vertex : vertices) {
             str.append(vertex).append(System.lineSeparator());
         }
-        str.append("]").append(System.lineSeparator());
+        //str.append("]").append(System.lineSeparator());
 
-        str.append("triangles [").append(System.lineSeparator());
+        str.append("\n\tnumtris " + triangles.size()).append(System.lineSeparator());
         for (MD5Triangle triangle : triangles) {
             str.append(triangle).append(System.lineSeparator());
         }
-        str.append("]").append(System.lineSeparator());
+        //str.append("]").append(System.lineSeparator());
 
-        str.append("weights [").append(System.lineSeparator());
+        str.append("\n\tnumweights " + weights.size()).append(System.lineSeparator());
         for (MD5Weight weight : weights) {
             str.append(weight).append(System.lineSeparator());
         }
-        str.append("]").append(System.lineSeparator());
+        str.append("}").append(System.lineSeparator());
 
         return str.toString();
     }
@@ -187,8 +190,12 @@ public class MD5Mesh {
 
         @Override
         public String toString() {
-            return "[index: " + index + ", textCoods: " + textCoords
-                    + ", startWeight: " + startWeight + ", weightCount: " + weightCount + "]";
+//            return "[index: " + index + ", textCoods: " + textCoords
+//                    + ", startWeight: " + startWeight + ", weightCount: " + weightCount + "]";
+            return "\tvert " + index + " ( " +
+                    textCoords.x + " " +
+                    textCoords.y + " ) " +
+                    startWeight + " " + weightCount;
         }
     }
 
@@ -236,8 +243,11 @@ public class MD5Mesh {
 
         @Override
         public String toString() {
-            return "[index: " + index + ", vertex0: " + vertex0
-                    + ", vertex1: " + vertex1 + ", vertex2: " + vertex2 + "]";
+            return "\ttri " + index + " " +
+                    vertex0
+                    + " " +
+                    vertex1 + " " +
+                    vertex2;
         }
     }
 
@@ -285,8 +295,14 @@ public class MD5Mesh {
 
         @Override
         public String toString() {
-            return "[index: " + index + ", jointIndex: " + jointIndex
-                    + ", bias: " + bias + ", position: " + position + "]";
+//            return "[index: " + index + ", jointIndex: " + jointIndex
+//                    + ", bias: " + bias + ", position: " + position + "]";
+            return "\tweight " + index + " " + jointIndex
+                    + " " +
+                    bias+ " ( " +
+                    position.x + " " +
+                    position.y + " " +
+                    position.z + " )";
         }
     }
 }

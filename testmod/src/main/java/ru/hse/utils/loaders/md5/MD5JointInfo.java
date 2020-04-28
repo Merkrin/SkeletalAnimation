@@ -2,8 +2,10 @@ package ru.hse.utils.loaders.md5;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -20,11 +22,14 @@ public class MD5JointInfo {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder("joints [" + System.lineSeparator());
-        for (MD5JointData joint : joints) {
-            str.append(joint).append(System.lineSeparator());
-        }
-        str.append("]").append(System.lineSeparator());
+        StringBuilder str = new StringBuilder("joints {" + System.lineSeparator());
+
+        for (int i = 0; i < joints.size(); i++)
+            str.append(joints.get(i)).append(System.lineSeparator());
+//        for (MD5JointData joint : joints) {
+//            str.append(joint).append(System.lineSeparator());
+//        }
+        str.append("}").append(System.lineSeparator());
         return str.toString();
     }
 
@@ -35,6 +40,8 @@ public class MD5JointInfo {
             MD5JointData jointData = MD5JointData.parseLine(line);
             if (jointData != null) {
                 joints.add(jointData);
+            } else {
+                System.out.println("Could not parse: " + line);
             }
         }
         result.setJoints(joints);
@@ -94,7 +101,14 @@ public class MD5JointInfo {
 
         @Override
         public String toString() {
-            return "[name: " + name + ", parentIndex: " + parentIndex + ", position: " + position + ", orientation: " + orientation + "]";
+//            return "[name: " + name + ", parentIndex: " + parentIndex + ", position: " + position + ", orientation: " + orientation + "]";
+            return "\t\"" + name + "\"\t" + parentIndex + " ( " +
+                    String.format(Locale.ENGLISH, "%.10f", position.x) + " " +
+                    String.format(Locale.ENGLISH, "%.10f", position.y) + " " +
+                    String.format(Locale.ENGLISH, "%.10f", position.z) + " ) ( " +
+                    String.format(Locale.ENGLISH, "%.10f", orientation.x) + " " +
+                    String.format(Locale.ENGLISH, "%.10f", orientation.y) + " " +
+                    String.format(Locale.ENGLISH, "%.10f", orientation.z) + " )\t\t//";
         }
 
         public static MD5JointData parseLine(String line) {

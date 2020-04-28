@@ -45,8 +45,11 @@ public class MD5ModelHeader {
 
     @Override
     public String toString() {
-        return "[version: " + version + ", commandLine: " + commandLine +
-                ", numJoints: " + numJoints + ", numMeshes: " + numMeshes + "]";
+//        return "[version: " + version + ", commandLine: " + commandLine +
+//                ", numJoints: " + numJoints + ", numMeshes: " + numMeshes + "]";
+
+        return "MD5Version " + version + "\ncommandLine \"add your command-line here\"" +
+                "\n\nnumJoints " + numJoints + "\nnumMeshes " + numMeshes + "\n";
     }
 
     public static MD5ModelHeader parse(List<String> lines) throws Exception {
