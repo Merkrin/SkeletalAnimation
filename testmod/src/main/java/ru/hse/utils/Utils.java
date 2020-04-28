@@ -16,7 +16,6 @@ public class Utils {
         return result;
     }
 
-    // TODO: check absolute file path
     public static List<String> readAllLines(String fileName, boolean isAbsolutePath) throws Exception {
         List<String> list = new ArrayList<>();
         if (isAbsolutePath) {

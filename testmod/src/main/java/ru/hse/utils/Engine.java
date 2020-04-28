@@ -17,6 +17,7 @@ public class Engine {
                   boolean vSync, Program program) throws Exception {
         window = new Window(windowTitle,vSync);
         this.program = program;
+        this.program.setWindow(window);
         mouseInput = new MouseInput();
     }
 

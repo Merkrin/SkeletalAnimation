@@ -5,7 +5,8 @@ import ru.hse.utils.Engine;
 public class Main {
     private static void printHelp() {
         System.out.println("Use yor keyboard keys <W>, <S>, <A>, <D>, <X>" +
-                " and <SPACE> to move and right mouse button to rotate camera.");
+                " and <SPACE> to move and right mouse button to rotate camera.\n" +
+                "Use <I> to save a picture (note that it may be scaled!).");
         System.out.println("If you choose .obj file:\n" +
                 "\t-You will only be able to move and rotate camera.");
         System.out.println("If you choose only .md5mesh file:\n" +

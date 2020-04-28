@@ -51,7 +51,7 @@ public class Window {
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
-        width = vidmode.width();///3*2;
+        width = vidmode.width();
         height = vidmode.height();
 
         // Create the window

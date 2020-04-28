@@ -3,6 +3,8 @@ package ru.hse.jogl;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
 import ru.hse.graphic.*;
 import ru.hse.graphic.animation.AnimatedModel;
 import ru.hse.utils.MouseInput;
@@ -10,9 +12,13 @@ import ru.hse.utils.loaders.OBJLoader;
 import ru.hse.utils.Window;
 import ru.hse.utils.loaders.md5.*;
 
-
-import java.util.Arrays;
-import java.util.List;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -35,6 +41,8 @@ public class Program {
     private int jointsAmount;
 
     private MD5Model md5MeshModel;
+
+    private Window window;
 
     private final String[] filePaths;
     /*
@@ -125,6 +133,9 @@ public class Program {
         } else if (window.isKeyPressed(GLFW_KEY_SPACE)) {
             cameraInc.y = 1;
         }
+        if(window.isKeyPressed(GLFW_KEY_I)){
+            saveImage();
+        }
         if (window.isKeyPressed(GLFW_KEY_P) && fileType == 2) {
             animatedModel.nextFrame();
         }
@@ -201,7 +212,44 @@ public class Program {
 
     public void render(Window window) {
         renderer.render(window, camera, models);
-        //renderer.render(window, camera, models, jointInfo.getJoints());
+    }
+
+    private void saveImage(){
+        GL11.glReadBuffer(GL11.GL_FRONT);
+
+        int height = window.getHeight();
+        int width = window.getWidth();
+
+        int bpp = 4;
+        ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
+        GL11.glReadPixels(0, 0, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer );
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
+        LocalDateTime now = LocalDateTime.now();
+
+        File file = new File(dtf.format(now) + ".png");
+        String format = "PNG";
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+        for(int x = 0; x < width; x++)
+        {
+            for(int y = 0; y < height; y++)
+            {
+                int i = (x + (width * y)) * bpp;
+                int r = buffer.get(i) & 0xFF;
+                int g = buffer.get(i + 1) & 0xFF;
+                int b = buffer.get(i + 2) & 0xFF;
+                image.setRGB(x, height - (y + 1), (0xFF << 24) | (r << 16) | (g << 8) | b);
+            }
+        }
+
+        try {
+            ImageIO.write(image, format, file);
+        } catch (IOException e) { e.printStackTrace(); }
+    }
+
+    public void setWindow(Window window){
+        this.window = window;
     }
 
     public void cleanup() {
