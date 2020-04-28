@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -37,6 +38,8 @@ public class Program {
     private Model mainModel;
 
     private MD5JointInfo jointInfo;
+    private MD5JointInfo firstJointsInfo;
+
     private int currentActiveJoint = 0;
     private int jointsAmount;
 
@@ -84,6 +87,7 @@ public class Program {
         mainModel = MD5Loader.process(md5MeshModel, new Vector4f(1, 1, 1, 1));
 
         jointInfo = md5MeshModel.getJointInfo();
+        firstJointsInfo = MD5Model.parse(filePaths[0]).getJointInfo();
         jointsAmount = jointInfo.getJoints().size();
         models = new Model[jointsAmount + 1];
         models[0] = mainModel;
@@ -133,7 +137,7 @@ public class Program {
         } else if (window.isKeyPressed(GLFW_KEY_SPACE)) {
             cameraInc.y = 1;
         }
-        if(window.isKeyPressed(GLFW_KEY_I)){
+        if (window.isKeyPressed(GLFW_KEY_I)) {
             saveImage();
         }
         if (window.isKeyPressed(GLFW_KEY_P) && fileType == 2) {
@@ -151,6 +155,22 @@ public class Program {
                 models[currentActiveJoint + 1].getMesh().swapActive();
             }
             try {
+                if (window.isKeyPressed(GLFW_KEY_R)) {
+                    // TODO: dismiss changes
+                    List<MD5JointInfo.MD5JointData> firstJoints = firstJointsInfo.getJoints();
+                    List<MD5JointInfo.MD5JointData> joints = jointInfo.getJoints();
+                    Vector3f currentJoint;
+
+                    for (int i = 0; i < firstJoints.size(); i++) {
+                        currentJoint = firstJoints.get(i).getPosition();
+                        joints.get(i).setPosition(new Vector3f(currentJoint.x, currentJoint.y, currentJoint.z));
+                    }
+                    jointInfo.setJoints(joints);
+                    md5MeshModel.setJointInfo(jointInfo);
+                    //jointInfo.setJoints(firstJointsInfo.getJoints());
+                    Model monster = MD5Loader.process(md5MeshModel, new Vector4f(1, 1, 1, 1));
+                    models[0] = monster;
+                }
                 if (window.isKeyPressed(GLFW_KEY_UP)) {
                     Vector3f position = jointInfo.getJoints().get(currentActiveJoint).getPosition();
                     position.y += 1;
@@ -214,7 +234,7 @@ public class Program {
         renderer.render(window, camera, models);
     }
 
-    private void saveImage(){
+    private void saveImage() {
         GL11.glReadBuffer(GL11.GL_FRONT);
 
         int height = window.getHeight();
@@ -222,7 +242,7 @@ public class Program {
 
         int bpp = 4;
         ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
-        GL11.glReadPixels(0, 0, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer );
+        GL11.glReadPixels(0, 0, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
         LocalDateTime now = LocalDateTime.now();
@@ -231,10 +251,8 @@ public class Program {
         String format = "PNG";
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        for(int x = 0; x < width; x++)
-        {
-            for(int y = 0; y < height; y++)
-            {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
                 int i = (x + (width * y)) * bpp;
                 int r = buffer.get(i) & 0xFF;
                 int g = buffer.get(i + 1) & 0xFF;
@@ -245,10 +263,12 @@ public class Program {
 
         try {
             ImageIO.write(image, format, file);
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setWindow(Window window){
+    public void setWindow(Window window) {
         this.window = window;
     }
 

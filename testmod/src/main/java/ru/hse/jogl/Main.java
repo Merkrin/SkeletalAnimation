@@ -13,7 +13,7 @@ public class Main {
                 "\t-Use <TAB> to choose next joint;\n" +
                 "\t-Use <TAB>+<LEFT_SHIFT> to choose previous joint;\n" +
                 "\t-Use arrows on your keyboard, <;> and </> to change joint's position;\n" +
-                "\t-Use <X> to dismiss changes.");
+                "\t-Use <R> to dismiss changes.");
         System.out.println("If you choose .md5mesh and .md5anim files:\n" +
                 "\t-Use <P> to show next frame.");
     }
