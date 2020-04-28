@@ -21,7 +21,6 @@ public class Renderer {
     private static final float Z_NEAR = 0.01f;
     private static final float Z_FAR = 1000.f;
 
-    private ShaderProgram hudShaderProgram;
     private ShaderProgram sceneShaderProgram;
 
     private final Transformation transformation;
@@ -33,7 +32,6 @@ public class Renderer {
     // Go from program
     public void init(Window window) throws Exception {
         setupSceneShader();
-        //setupHudShader();
     }
 
     private void setupSceneShader() throws Exception{
@@ -47,22 +45,9 @@ public class Renderer {
         sceneShaderProgram.createUniform("jointsMatrix");
         sceneShaderProgram.createUniform("projectionMatrix");
         sceneShaderProgram.createUniform("modelViewMatrix");
-        //shaderProgram.createUniform("texture_sampler");
-        // Create uniform for default colour and the flag that controls it
+
+        // Create uniform for default colour
         sceneShaderProgram.createUniform("colour");
-        //shaderProgram.createUniform("useColour");
-    }
-
-    private void setupHudShader() throws Exception {
-        hudShaderProgram = new ShaderProgram();
-        hudShaderProgram.createVertexShader(Utils.loadResource("/shaders/hudVertex.frag"));
-        hudShaderProgram.createFragmentShader(Utils.loadResource("/shaders/hudFragment.frag"));
-        hudShaderProgram.link();
-
-        // Create uniforms for Orthographic-model projection matrix and base colour
-        hudShaderProgram.createUniform("projModelMatrix");
-        hudShaderProgram.createUniform("colour");
-        hudShaderProgram.createUniform("hasTexture");
     }
 
     public void clear() {

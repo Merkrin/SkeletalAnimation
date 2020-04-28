@@ -114,12 +114,12 @@ public class Program {
     private void initMd5Anim() throws Exception {
         MD5Model md5MeshModel = MD5Model.parse(filePaths[0]);
         MD5AnimModel md5AnimModel = MD5AnimModel.parse(filePaths[1]);
-        animatedModel = MD5LoaderWAnim.process(md5MeshModel, md5AnimModel, new Vector4f(1, 1, 1, 1));
+        animatedModel = MD5LoaderWAnim.process(md5MeshModel, md5AnimModel,
+                new Vector4f(1, 1, 1, 1));
 
         models = new Model[]{animatedModel};
     }
 
-    // TODO: make input options different for different files opened.
     public void input(Window window) {
         cameraInc.set(0, 0, 0);
         if (window.isKeyPressed(GLFW_KEY_W)) {
@@ -144,27 +144,34 @@ public class Program {
             animatedModel.nextFrame();
         }
         if (fileType == 1) {
-            if (window.isKeyPressed(GLFW_KEY_TAB) && !window.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
+            if (window.isKeyPressed(GLFW_KEY_TAB) &&
+                    !window.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
                 models[currentActiveJoint + 1].getMesh().swapActive();
                 currentActiveJoint = (currentActiveJoint + 1) % jointsAmount;
                 models[currentActiveJoint + 1].getMesh().swapActive();
             }
-            if (window.isKeyPressed(GLFW_KEY_TAB) && window.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
+            if (window.isKeyPressed(GLFW_KEY_TAB) &&
+                    window.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
                 models[currentActiveJoint + 1].getMesh().swapActive();
-                currentActiveJoint = (currentActiveJoint - 1) >= 0 ? currentActiveJoint - 1 : jointsAmount - 1;
+                currentActiveJoint = (currentActiveJoint - 1) >= 0 ?
+                        currentActiveJoint - 1 : jointsAmount - 1;
                 models[currentActiveJoint + 1].getMesh().swapActive();
             }
             try {
                 if (window.isKeyPressed(GLFW_KEY_R)) {
-                    List<MD5JointInfo.MD5JointData> firstJoints = firstJointsInfo.getJoints();
-                    List<MD5JointInfo.MD5JointData> joints = jointInfo.getJoints();
+                    List<MD5JointInfo.MD5JointData> firstJoints =
+                            firstJointsInfo.getJoints();
+                    List<MD5JointInfo.MD5JointData> joints =
+                            jointInfo.getJoints();
                     Vector3f currentJoint;
 
                     for (int i = 0; i < jointsAmount; i++) {
                         currentJoint = firstJoints.get(i).getPosition();
-                        joints.get(i).setPosition(new Vector3f(currentJoint.x, currentJoint.y, currentJoint.z));
+                        joints.get(i).setPosition(new Vector3f(currentJoint.x,
+                                currentJoint.y, currentJoint.z));
 
-                        models[i+1].setPosition(currentJoint.x, currentJoint.y, currentJoint.z);
+                        models[i + 1].setPosition(currentJoint.x,
+                                currentJoint.y, currentJoint.z);
                     }
 
                     jointInfo.setJoints(joints);
@@ -173,36 +180,42 @@ public class Program {
                     Model monster = MD5Loader.process(md5MeshModel);
                     models[0] = monster;
                 }
-                if(window.isKeyPressed(GLFW_KEY_F)){
+                if (window.isKeyPressed(GLFW_KEY_F)) {
                     MD5Saver.save(md5MeshModel);
                 }
                 if (window.isKeyPressed(GLFW_KEY_UP)) {
-                    Vector3f position = jointInfo.getJoints().get(currentActiveJoint).getPosition();
+                    Vector3f position =
+                            jointInfo.getJoints().get(currentActiveJoint).getPosition();
                     position.y += 1;
                     renewJointsPositions(position);
                 }
                 if (window.isKeyPressed(GLFW_KEY_DOWN)) {
-                    Vector3f position = jointInfo.getJoints().get(currentActiveJoint).getPosition();
+                    Vector3f position =
+                            jointInfo.getJoints().get(currentActiveJoint).getPosition();
                     position.y -= 1;
                     renewJointsPositions(position);
                 }
                 if (window.isKeyPressed(GLFW_KEY_RIGHT)) {
-                    Vector3f position = jointInfo.getJoints().get(currentActiveJoint).getPosition();
+                    Vector3f position =
+                            jointInfo.getJoints().get(currentActiveJoint).getPosition();
                     position.x += 1;
                     renewJointsPositions(position);
                 }
                 if (window.isKeyPressed(GLFW_KEY_LEFT)) {
-                    Vector3f position = jointInfo.getJoints().get(currentActiveJoint).getPosition();
+                    Vector3f position =
+                            jointInfo.getJoints().get(currentActiveJoint).getPosition();
                     position.x -= 1;
                     renewJointsPositions(position);
                 }
                 if (window.isKeyPressed(GLFW_KEY_SEMICOLON)) {
-                    Vector3f position = jointInfo.getJoints().get(currentActiveJoint).getPosition();
+                    Vector3f position =
+                            jointInfo.getJoints().get(currentActiveJoint).getPosition();
                     position.z += 1;
                     renewJointsPositions(position);
                 }
                 if (window.isKeyPressed(GLFW_KEY_SLASH)) {
-                    Vector3f position = jointInfo.getJoints().get(currentActiveJoint).getPosition();
+                    Vector3f position =
+                            jointInfo.getJoints().get(currentActiveJoint).getPosition();
                     position.z -= 1;
                     renewJointsPositions(position);
                 }
@@ -246,15 +259,19 @@ public class Program {
         int width = window.getWidth();
 
         int bpp = 4;
-        ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
-        GL11.glReadPixels(0, 0, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
+        ByteBuffer buffer =
+                BufferUtils.createByteBuffer(width * height * bpp);
+        GL11.glReadPixels(0, 0, width, height,
+                GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
+        DateTimeFormatter dtf =
+                DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
         LocalDateTime now = LocalDateTime.now();
 
         File file = new File(dtf.format(now) + ".png");
         String format = "PNG";
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = new BufferedImage(width, height,
+                BufferedImage.TYPE_INT_RGB);
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -262,7 +279,8 @@ public class Program {
                 int r = buffer.get(i) & 0xFF;
                 int g = buffer.get(i + 1) & 0xFF;
                 int b = buffer.get(i + 2) & 0xFF;
-                image.setRGB(x, height - (y + 1), (0xFF << 24) | (r << 16) | (g << 8) | b);
+                image.setRGB(x, height - (y + 1),
+                        (0xFF << 24) | (r << 16) | (g << 8) | b);
             }
         }
 

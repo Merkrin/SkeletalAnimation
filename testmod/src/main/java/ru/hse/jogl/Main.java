@@ -13,7 +13,8 @@ public class Main {
                 "\t-Use <TAB> to choose next joint;\n" +
                 "\t-Use <TAB>+<LEFT_SHIFT> to choose previous joint;\n" +
                 "\t-Use arrows on your keyboard, <;> and </> to change joint's position;\n" +
-                "\t-Use <R> to dismiss changes.");
+                "\t-Use <R> to dismiss changes;\n" +
+                "\t-Use <F> to save .md5mesh.");
         System.out.println("If you choose .md5mesh and .md5anim files:\n" +
                 "\t-Use <P> to show next frame.");
     }
@@ -42,9 +43,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        //System.setProperty("java.awt.headless", "true");
-
-        // TODO:
         String[] filePaths = null;
         byte fileOption = -1;
 
@@ -79,7 +77,7 @@ public class Main {
 
                     if (fileOption != -1)
                         filePaths = new String[]{args[0]};
-                } else if(argsLength == 2) {
+                } else if (argsLength == 2) {
                     if (getFileOption(args[0]) == 1 && getFileOption(args[1]) == 2) {
                         fileOption = 2;
 
@@ -100,7 +98,7 @@ public class Main {
             } catch (Exception exc) {
                 System.out.println(exc.getMessage());
             }
-        }else{
+        } else {
             System.out.println("Something went wrong in your input." +
                     " Please check arguments.");
         }

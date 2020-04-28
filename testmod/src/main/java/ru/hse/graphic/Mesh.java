@@ -28,14 +28,7 @@ public class Mesh {
 
     private final int vertexCount;
 
-    private Material material;
-
     private boolean isActive = false;
-
-//    private static final Vector3f DEFAULT_COLOUR = new Vector3f(1.0f, 1.0f, 1.0f);
-//    private Vector3f colour;
-
-//    private Texture texture;
 
     public Mesh(float[] positions, float[] textCoords, float[] normals, int[] indices) {
         this(positions, textCoords, normals, indices, Mesh.createEmptyIntArray(Mesh.MAX_WEIGHTS * positions.length / 3, 0), Mesh.createEmptyFloatArray(Mesh.MAX_WEIGHTS * positions.length / 3, 0));
@@ -133,14 +126,6 @@ public class Mesh {
         }
     }
 
-    public Material getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(Material material) {
-        this.material = material;
-    }
-
     public final int getVaoId() {
         return vaoId;
     }
@@ -177,19 +162,6 @@ public class Mesh {
 
         // Restore state
         glBindVertexArray(0);
-    }
-
-    public void renderList(List<Model> models, Consumer<Model> consumer) {
-        initRender();
-
-        for (Model model : models) {
-            // Set up data required by GameItem
-            consumer.accept(model);
-            // Render this game item
-            glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
-        }
-
-        endRender();
     }
 
     public void cleanUp() {

@@ -15,9 +15,7 @@ public class MD5Saver {
         FileOutputStream fos = new FileOutputStream(fout);
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
 
-        // TODO: write line by line
         bw.write(md5Model.toString());
-
         bw.close();
 
         System.out.println("Saving completed!");
