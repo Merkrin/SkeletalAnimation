@@ -5,13 +5,10 @@ import org.joml.Vector3f;
 
 public class AnimatedVertex {
     public Vector3f position;
-
     public Vector2f textCoords;
-
     public final Vector3f normal;
 
     public float[] weights;
-
     public int[] jointIndices;
 
     public AnimatedVertex() {

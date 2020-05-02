@@ -27,7 +27,7 @@ public class MD5LoaderWAnim {
         Mesh[] meshes = new Mesh[list.size()];
         meshes = list.toArray(meshes);
 
-        return new AnimatedModel(meshes, animatedFrames, invJointMatrices);
+        return new AnimatedModel(meshes, animatedFrames);
     }
 
     private static List<Matrix4f> calcInJointMatrices(MD5Model md5Model) {
