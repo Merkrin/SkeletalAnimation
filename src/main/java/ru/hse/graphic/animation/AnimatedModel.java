@@ -11,7 +11,7 @@ public class AnimatedModel extends Model {
 
     private List<AnimatedFrame> frames;
 
-    private List<Matrix4f> invJointMatrices;
+    private final List<Matrix4f> invJointMatrices;
 
     public AnimatedModel(Mesh[] meshes,
                          List<AnimatedFrame> frames,

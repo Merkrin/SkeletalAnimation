@@ -26,9 +26,7 @@ public class MouseInput {
             currentPosition.y = ypos;
         });
 
-        glfwSetCursorEnterCallback(window.getWindowHandle(), (windowHandle, entered) -> {
-            isInWindow = entered;
-        });
+        glfwSetCursorEnterCallback(window.getWindowHandle(), (windowHandle, entered) -> isInWindow = entered);
 
         glfwSetMouseButtonCallback(window.getWindowHandle(), (windowHandle, button, action, mode) -> {
             isLeftButtonPressed = button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS;

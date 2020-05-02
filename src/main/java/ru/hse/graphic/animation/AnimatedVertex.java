@@ -8,7 +8,7 @@ public class AnimatedVertex {
 
     public Vector2f textCoords;
 
-    public Vector3f normal;
+    public final Vector3f normal;
 
     public float[] weights;
 

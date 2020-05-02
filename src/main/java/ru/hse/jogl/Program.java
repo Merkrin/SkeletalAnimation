@@ -2,7 +2,6 @@ package ru.hse.jogl;
 
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import ru.hse.graphic.*;
@@ -58,7 +57,7 @@ public class Program {
     private boolean canMoveForward = true;
     private boolean canMoveBackward = true;
 
-    public Program(String[] filePaths, byte fileType) {
+    Program(String[] filePaths, byte fileType) {
         renderer = new Renderer();
         camera = new Camera();
         cameraInc = new Vector3f();

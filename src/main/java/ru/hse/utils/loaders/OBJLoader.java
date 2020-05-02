@@ -76,8 +76,8 @@ public class OBJLoader {
         float[] normArr = new float[posList.size() * 3];
 
         for (Face face : facesList) {
-            IdxGroup[] faceVertexIndices = face.getFaceVertexIndices();
-            for (IdxGroup indValue : faceVertexIndices) {
+            IndexGroup[] faceVertexIndices = face.getFaceVertexIndices();
+            for (IndexGroup indValue : faceVertexIndices) {
                 processFaceVertex(indValue, textCoordList, normList,
                         indices, textCoordArr, normArr);
             }
@@ -87,7 +87,7 @@ public class OBJLoader {
         return new Mesh(posArr, textCoordArr, normArr, indicesArr);
     }
 
-    private static void processFaceVertex(IdxGroup indices,
+    private static void processFaceVertex(IndexGroup indices,
                                           List<Vector2f> textCoordList,
                                           List<Vector3f> normList,
                                           List<Integer> indicesList,
@@ -116,10 +116,10 @@ public class OBJLoader {
 
     protected static class Face {
         // List of idxGroup groups for a face triangle (3 vertices per face).
-        private final IdxGroup[] idxGroups;
+        private final IndexGroup[] idxGroups;
 
         public Face(String v1, String v2, String v3) {
-            idxGroups = new IdxGroup[3];
+            idxGroups = new IndexGroup[3];
 
             // Parse the lines
             idxGroups[0] = parseLine(v1);
@@ -127,8 +127,8 @@ public class OBJLoader {
             idxGroups[2] = parseLine(v3);
         }
 
-        private IdxGroup parseLine(String line) {
-            IdxGroup idxGroup = new IdxGroup();
+        private IndexGroup parseLine(String line) {
+            IndexGroup idxGroup = new IndexGroup();
 
             String[] lineTokens = line.split("/");
             int length = lineTokens.length;
@@ -138,7 +138,7 @@ public class OBJLoader {
                 // It can be empty if the obj does not define text coords
                 String textCoord = lineTokens[1];
                 idxGroup.idxTextCoord = textCoord.length() > 0 ?
-                        Integer.parseInt(textCoord) - 1 : IdxGroup.NO_VALUE;
+                        Integer.parseInt(textCoord) - 1 : IndexGroup.NO_VALUE;
 
                 if (length > 2)
                     idxGroup.idxVecNormal = Integer.parseInt(lineTokens[2]) - 1;
@@ -147,18 +147,18 @@ public class OBJLoader {
             return idxGroup;
         }
 
-        public IdxGroup[] getFaceVertexIndices() {
+        public IndexGroup[] getFaceVertexIndices() {
             return idxGroups;
         }
     }
 
-    protected static class IdxGroup {
+    protected static class IndexGroup {
         public static final int NO_VALUE = -1;
         public int idxPos;
         public int idxTextCoord;
         public int idxVecNormal;
 
-        public IdxGroup() {
+        public IndexGroup() {
             idxPos = NO_VALUE;
             idxTextCoord = NO_VALUE;
             idxVecNormal = NO_VALUE;

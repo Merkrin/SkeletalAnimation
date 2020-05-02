@@ -2,7 +2,6 @@ package ru.hse.utils.loaders.md5;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

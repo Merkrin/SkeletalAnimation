@@ -19,12 +19,11 @@ public class MD5Loader {
         }
         Mesh[] meshes = new Mesh[list.size()];
         meshes = list.toArray(meshes);
-        Model model = new Model(meshes);
 
-        return model;
+        return new Model(meshes);
     }
 
-    private static Mesh generateMesh(MD5Model md5Model, MD5Mesh md5Mesh) throws Exception {
+    private static Mesh generateMesh(MD5Model md5Model, MD5Mesh md5Mesh) {
         List<VertexInfo> vertexInfoList = new ArrayList<>();
         List<Float> textCoords = new ArrayList<>();
         List<Integer> indices = new ArrayList<>();
@@ -83,16 +82,15 @@ public class MD5Loader {
         float[] textCoordsArr = Utils.listToArray(textCoords);
         float[] normalsArr = VertexInfo.toNormalArr(vertexInfoList);
         int[] indicesArr = indices.stream().mapToInt(i -> i).toArray();
-        Mesh mesh = new Mesh(positionsArr, textCoordsArr, normalsArr, indicesArr);
 
-        return mesh;
+        return new Mesh(positionsArr, textCoordsArr, normalsArr, indicesArr);
     }
 
     private static class VertexInfo {
 
-        public Vector3f position;
+        public final Vector3f position;
 
-        public Vector3f normal;
+        public final Vector3f normal;
 
         public VertexInfo(Vector3f position) {
             this.position = position;

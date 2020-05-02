@@ -101,8 +101,7 @@ public class MD5Model {
 
     private static void parseBlock(MD5Model model,
                                    String blockId,
-                                   List<String> blockBody)
-            throws Exception {
+                                   List<String> blockBody) {
         switch (blockId) {
             case "joints":
                 MD5JointInfo jointInfo = MD5JointInfo.parse(blockBody);

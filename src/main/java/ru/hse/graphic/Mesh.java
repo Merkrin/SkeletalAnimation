@@ -5,10 +5,8 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 
 import org.joml.Vector3f;
-import org.lwjgl.opengl.GLUtil;
 import org.lwjgl.system.MemoryUtil;
 
 import static org.lwjgl.opengl.GL30.*;
@@ -22,7 +20,7 @@ public class Mesh {
     public static final int MAX_WEIGHTS = 4;
 
     private final int vaoId;
-    private List<Integer> vboIdList;
+    private final List<Integer> vboIdList;
 
     private boolean isSquare = false;
 
