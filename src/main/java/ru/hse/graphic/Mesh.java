@@ -155,16 +155,6 @@ public class Mesh {
         endRender();
     }
 
-    void renderSquare() {
-        // Draw the mesh
-        glBindVertexArray(getVaoId());
-
-        glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
-
-        // Restore state
-        glBindVertexArray(0);
-    }
-
     public void cleanUp() {
         glDisableVertexAttribArray(0);
 
@@ -181,13 +171,17 @@ public class Mesh {
 
     private static float[] createEmptyFloatArray(int length) {
         float[] result = new float[length];
+
         Arrays.fill(result, (float) 0);
+
         return result;
     }
 
     private static int[] createEmptyIntArray(int length) {
         int[] result = new int[length];
+
         Arrays.fill(result, 0);
+
         return result;
     }
 
@@ -198,10 +192,6 @@ public class Mesh {
             return new Vector3f(1f, 0f, 0f);
         else
             return new Vector3f(0.196f, 0.804f, 0.196f);
-    }
-
-    boolean getIsSquare(){
-        return isSquare;
     }
 
     public void setIsSquare(boolean isSquare){

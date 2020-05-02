@@ -93,10 +93,7 @@ public class Renderer {
                         animatedFrame.getJointMatrices());
             }
 
-            if (mesh.getIsSquare())
-                mesh.renderSquare();
-            else
-                mesh.render();
+            mesh.render();
         }
 
         sceneShaderProgram.unbind();
