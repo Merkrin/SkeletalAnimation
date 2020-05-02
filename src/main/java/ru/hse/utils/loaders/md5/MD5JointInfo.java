@@ -72,7 +72,7 @@ public class MD5JointInfo {
             return name;
         }
 
-        public void setName(String name) {
+        void setName(String name) {
             this.name = name;
         }
 
@@ -80,7 +80,7 @@ public class MD5JointInfo {
             return parentIndex;
         }
 
-        public void setParentIndex(int parentIndex) {
+        void setParentIndex(int parentIndex) {
             this.parentIndex = parentIndex;
         }
 
@@ -96,7 +96,7 @@ public class MD5JointInfo {
             return orientation;
         }
 
-        public void setOrientation(Vector3f vec) {
+        void setOrientation(Vector3f vec) {
             this.orientation = MD5Utils.calculateQuaternion(vec);
         }
 
@@ -111,7 +111,7 @@ public class MD5JointInfo {
                     String.format(Locale.ENGLISH, "%.10f", orientation.z) + " )\t\t//";
         }
 
-        public static MD5JointData parseLine(String line) {
+        static MD5JointData parseLine(String line) {
             MD5JointData result = null;
             Matcher matcher = PATTERN_JOINT.matcher(line);
             if (matcher.matches()) {

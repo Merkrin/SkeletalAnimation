@@ -3,7 +3,7 @@ package ru.hse.utils.loaders.md5;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
-public class MD5Utils {
+class MD5Utils {
     public static final String FLOAT_REGEXP = "[+-]?\\d*\\.?\\d*";
 
     public static final String VECTOR3_REGEXP = "\\(\\s*(" + FLOAT_REGEXP +

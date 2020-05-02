@@ -114,11 +114,11 @@ public class OBJLoader {
         }
     }
 
-    protected static class Face {
+    static class Face {
         // List of idxGroup groups for a face triangle (3 vertices per face).
         private final IndexGroup[] idxGroups;
 
-        public Face(String v1, String v2, String v3) {
+        Face(String v1, String v2, String v3) {
             idxGroups = new IndexGroup[3];
 
             // Parse the lines
@@ -147,18 +147,18 @@ public class OBJLoader {
             return idxGroup;
         }
 
-        public IndexGroup[] getFaceVertexIndices() {
+        IndexGroup[] getFaceVertexIndices() {
             return idxGroups;
         }
     }
 
     protected static class IndexGroup {
-        public static final int NO_VALUE = -1;
-        public int idxPos;
-        public int idxTextCoord;
-        public int idxVecNormal;
+        static final int NO_VALUE = -1;
+        int idxPos;
+        int idxTextCoord;
+        int idxVecNormal;
 
-        public IndexGroup() {
+        IndexGroup() {
             idxPos = NO_VALUE;
             idxTextCoord = NO_VALUE;
             idxVecNormal = NO_VALUE;

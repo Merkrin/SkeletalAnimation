@@ -14,7 +14,7 @@ public class MD5Model {
 
     private List<MD5Mesh> meshes;
 
-    public MD5Model() {
+    private MD5Model() {
         meshes = new ArrayList<>();
     }
 
@@ -26,11 +26,11 @@ public class MD5Model {
         this.jointInfo = jointInfo;
     }
 
-    public MD5ModelHeader getHeader() {
+    private MD5ModelHeader getHeader() {
         return header;
     }
 
-    public void setHeader(MD5ModelHeader header) {
+    private void setHeader(MD5ModelHeader header) {
         this.header = header;
     }
 

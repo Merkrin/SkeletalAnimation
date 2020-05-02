@@ -19,7 +19,7 @@ public class MD5AnimHeader {
         return version;
     }
 
-    public void setVersion(String version) {
+    private void setVersion(String version) {
         this.version = version;
     }
 
@@ -27,7 +27,7 @@ public class MD5AnimHeader {
         return commandLine;
     }
 
-    public void setCommandLine(String commandLine) {
+    private void setCommandLine(String commandLine) {
         this.commandLine = commandLine;
     }
 
@@ -35,7 +35,7 @@ public class MD5AnimHeader {
         return numFrames;
     }
 
-    public void setNumFrames(int numFrames) {
+    private void setNumFrames(int numFrames) {
         this.numFrames = numFrames;
     }
 
@@ -43,7 +43,7 @@ public class MD5AnimHeader {
         return numJoints;
     }
 
-    public void setNumJoints(int numJoints) {
+    private void setNumJoints(int numJoints) {
         this.numJoints = numJoints;
     }
 
@@ -51,7 +51,7 @@ public class MD5AnimHeader {
         return frameRate;
     }
 
-    public void setFrameRate(int frameRate) {
+    private void setFrameRate(int frameRate) {
         this.frameRate = frameRate;
     }
 
@@ -59,7 +59,7 @@ public class MD5AnimHeader {
         return numAnimatedComponents;
     }
 
-    public void setNumAnimatedComponents(int numAnimatedComponents) {
+    private void setNumAnimatedComponents(int numAnimatedComponents) {
         this.numAnimatedComponents = numAnimatedComponents;
     }
 

@@ -20,13 +20,13 @@ public class Window {
 
     private boolean vSync;
 
-    public Window(String title, boolean vSync) {
+    Window(String title, boolean vSync) {
         this.title = title;
         this.vSync = vSync;
         this.isResized = false;
     }
 
-    public void init() {
+    void init() {
         // Setup an error callback. The default implementation
         // will print the error message in System.err.
         GLFWErrorCallback.createPrint(System.err).set();
@@ -97,7 +97,7 @@ public class Window {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     }
 
-    public long getWindowHandle() {
+    long getWindowHandle() {
         return windowHandle;
     }
 
@@ -109,7 +109,7 @@ public class Window {
         return glfwGetKey(windowHandle, keyCode) == GLFW_RELEASE;
     }
 
-    public boolean windowShouldClose() {
+    boolean windowShouldClose() {
         return glfwWindowShouldClose(windowHandle);
     }
 
@@ -133,7 +133,7 @@ public class Window {
         this.isResized = resized;
     }
 
-    public boolean isvSync() {
+    private boolean isvSync() {
         return vSync;
     }
 
@@ -141,7 +141,7 @@ public class Window {
         this.vSync = vSync;
     }
 
-    public void update() {
+    void update() {
         glfwSwapBuffers(windowHandle);
         glfwPollEvents();
     }

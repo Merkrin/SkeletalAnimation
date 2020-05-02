@@ -26,7 +26,7 @@ public class Engine {
         }
     }
 
-    protected void loop() {
+    private void loop() {
         while (!window.windowShouldClose()) {
             input();
             update();
@@ -34,27 +34,27 @@ public class Engine {
         }
     }
 
-    protected void init() throws Exception {
+    private void init() throws Exception {
         window.init();
         mouseInput.init(window);
         program.init(window);
     }
 
-    protected void cleanup() {
+    private void cleanup() {
         program.cleanup();
     }
 
 
-    protected void input() {
+    private void input() {
         mouseInput.input();
         program.input(window);
     }
 
-    protected void update() {
+    private void update() {
         program.update(mouseInput);
     }
 
-    protected void render() {
+    private void render() {
         program.render(window);
         window.update();
     }

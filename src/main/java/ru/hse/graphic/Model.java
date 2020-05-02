@@ -9,7 +9,7 @@ public class Model {
     private float scale;
     private final Vector3f rotation;
 
-    public Model() {
+    protected Model() {
         position = new Vector3f();
         scale = 1;
         rotation = new Vector3f();

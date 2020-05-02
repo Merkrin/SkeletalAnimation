@@ -2,7 +2,7 @@ package ru.hse.jogl;
 
 import ru.hse.utils.Engine;
 
-public class Main {
+class Main {
     static private String[] filePaths;
     /*
      * Set option to 0 for .obj, 1 for mesh and 2 for anim.

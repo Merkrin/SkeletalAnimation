@@ -12,7 +12,7 @@ public class MD5Hierarchy {
         return hierarchyDataList;
     }
 
-    public void setHierarchyDataList(List<MD5HierarchyData> hierarchyDataList) {
+    private void setHierarchyDataList(List<MD5HierarchyData> hierarchyDataList) {
         this.hierarchyDataList = hierarchyDataList;
     }
 
@@ -56,7 +56,7 @@ public class MD5Hierarchy {
             return name;
         }
 
-        public void setName(String name) {
+        void setName(String name) {
             this.name = name;
         }
 
@@ -64,7 +64,7 @@ public class MD5Hierarchy {
             return parentIndex;
         }
 
-        public void setParentIndex(int parentIndex) {
+        void setParentIndex(int parentIndex) {
             this.parentIndex = parentIndex;
         }
 
@@ -72,7 +72,7 @@ public class MD5Hierarchy {
             return flags;
         }
 
-        public void setFlags(int flags) {
+        void setFlags(int flags) {
             this.flags = flags;
         }
 
@@ -80,7 +80,7 @@ public class MD5Hierarchy {
             return startIndex;
         }
 
-        public void setStartIndex(int startIndex) {
+        void setStartIndex(int startIndex) {
             this.startIndex = startIndex;
         }
 
@@ -92,7 +92,7 @@ public class MD5Hierarchy {
                     ", startIndex: " + startIndex + "]";
         }
 
-        public static MD5HierarchyData parseLine(String line) {
+        static MD5HierarchyData parseLine(String line) {
             MD5HierarchyData result = null;
             Matcher matcher = PATTERN_HIERARCHY.matcher(line);
             if (matcher.matches()) {

@@ -14,7 +14,7 @@ public class MD5Frame {
         return id;
     }
 
-    public void setId(int id) {
+    private void setId(int id) {
         this.id = id;
     }
 
@@ -22,7 +22,7 @@ public class MD5Frame {
         return frameData;
     }
 
-    public void setFrameData(float[] frameData) {
+    private void setFrameData(float[] frameData) {
         this.frameData = frameData;
     }
 

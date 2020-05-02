@@ -129,11 +129,11 @@ public class Mesh {
         }
     }
 
-    public final int getVaoId() {
+    private int getVaoId() {
         return vaoId;
     }
 
-    public int getVertexCount() {
+    private int getVertexCount() {
         return vertexCount;
     }
 

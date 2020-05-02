@@ -4,7 +4,7 @@ import java.util.Arrays;
 import org.joml.Matrix4f;
 
 public class AnimatedFrame {
-    public static final int MAX_JOINTS = 150;
+    private static final int MAX_JOINTS = 150;
 
     private static final Matrix4f IDENTITY_MATRIX = new Matrix4f();
 

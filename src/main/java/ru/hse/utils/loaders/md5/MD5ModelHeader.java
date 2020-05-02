@@ -15,7 +15,7 @@ public class MD5ModelHeader {
         return version;
     }
 
-    public void setVersion(String version) {
+    private void setVersion(String version) {
         this.version = version;
     }
 
@@ -23,7 +23,7 @@ public class MD5ModelHeader {
         return commandLine;
     }
 
-    public void setCommandLine(String commandLine) {
+    private void setCommandLine(String commandLine) {
         this.commandLine = commandLine;
     }
 
@@ -31,7 +31,7 @@ public class MD5ModelHeader {
         return numJoints;
     }
 
-    public void setNumJoints(int numJoints) {
+    private void setNumJoints(int numJoints) {
         this.numJoints = numJoints;
     }
 
@@ -39,7 +39,7 @@ public class MD5ModelHeader {
         return numMeshes;
     }
 
-    public void setNumMeshes(int numMeshes) {
+    private void setNumMeshes(int numMeshes) {
         this.numMeshes = numMeshes;
     }
 

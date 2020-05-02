@@ -34,7 +34,7 @@ public class MD5Mesh {
 
     private List<MD5Weight> weights;
 
-    public MD5Mesh() {
+    private MD5Mesh() {
         this.vertices = new ArrayList<>();
         this.triangles = new ArrayList<>();
         this.weights = new ArrayList<>();
@@ -121,7 +121,7 @@ public class MD5Mesh {
         return texture;
     }
 
-    public void setTexture(String texture) {
+    private void setTexture(String texture) {
         this.texture = texture;
     }
 
@@ -163,7 +163,7 @@ public class MD5Mesh {
             return index;
         }
 
-        public void setIndex(int index) {
+        void setIndex(int index) {
             this.index = index;
         }
 
@@ -171,7 +171,7 @@ public class MD5Mesh {
             return textCoords;
         }
 
-        public void setTextCoords(Vector2f textCoords) {
+        void setTextCoords(Vector2f textCoords) {
             this.textCoords = textCoords;
         }
 
@@ -179,7 +179,7 @@ public class MD5Mesh {
             return startWeight;
         }
 
-        public void setStartWeight(int startWeight) {
+        void setStartWeight(int startWeight) {
             this.startWeight = startWeight;
         }
 
@@ -187,7 +187,7 @@ public class MD5Mesh {
             return weightCount;
         }
 
-        public void setWeightCount(int weightCount) {
+        void setWeightCount(int weightCount) {
             this.weightCount = weightCount;
         }
 
@@ -214,7 +214,7 @@ public class MD5Mesh {
             return index;
         }
 
-        public void setIndex(int index) {
+        void setIndex(int index) {
             this.index = index;
         }
 
@@ -222,7 +222,7 @@ public class MD5Mesh {
             return vertex0;
         }
 
-        public void setVertex0(int vertex0) {
+        void setVertex0(int vertex0) {
             this.vertex0 = vertex0;
         }
 
@@ -230,7 +230,7 @@ public class MD5Mesh {
             return vertex1;
         }
 
-        public void setVertex1(int vertex1) {
+        void setVertex1(int vertex1) {
             this.vertex1 = vertex1;
         }
 
@@ -238,7 +238,7 @@ public class MD5Mesh {
             return vertex2;
         }
 
-        public void setVertex2(int vertex2) {
+        void setVertex2(int vertex2) {
             this.vertex2 = vertex2;
         }
 
@@ -266,7 +266,7 @@ public class MD5Mesh {
             return index;
         }
 
-        public void setIndex(int index) {
+        void setIndex(int index) {
             this.index = index;
         }
 
@@ -274,7 +274,7 @@ public class MD5Mesh {
             return jointIndex;
         }
 
-        public void setJointIndex(int jointIndex) {
+        void setJointIndex(int jointIndex) {
             this.jointIndex = jointIndex;
         }
 
@@ -282,7 +282,7 @@ public class MD5Mesh {
             return bias;
         }
 
-        public void setBias(float bias) {
+        void setBias(float bias) {
             this.bias = bias;
         }
 
@@ -290,7 +290,7 @@ public class MD5Mesh {
             return position;
         }
 
-        public void setPosition(Vector3f position) {
+        void setPosition(Vector3f position) {
             this.position = position;
         }
 

@@ -14,7 +14,7 @@ public class MD5BoundInfo {
         return bounds;
     }
 
-    public void setBounds(List<MD5Bound> bounds) {
+    private void setBounds(List<MD5Bound> bounds) {
         this.bounds = bounds;
     }
 
@@ -54,7 +54,7 @@ public class MD5BoundInfo {
             return minBound;
         }
 
-        public void setMinBound(Vector3f minBound) {
+        void setMinBound(Vector3f minBound) {
             this.minBound = minBound;
         }
 
@@ -62,7 +62,7 @@ public class MD5BoundInfo {
             return maxBound;
         }
 
-        public void setMaxBound(Vector3f maxBound) {
+        void setMaxBound(Vector3f maxBound) {
             this.maxBound = maxBound;
         }
 
@@ -71,7 +71,7 @@ public class MD5BoundInfo {
             return "[minBound: " + minBound + ", maxBound: " + maxBound + "]";
         }
 
-        public static MD5Bound parseLine(String line) {
+        static MD5Bound parseLine(String line) {
             MD5Bound result = null;
             Matcher matcher = PATTERN_BOUND.matcher(line);
             if (matcher.matches()) {

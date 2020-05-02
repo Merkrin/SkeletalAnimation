@@ -88,11 +88,11 @@ public class MD5Loader {
 
     private static class VertexInfo {
 
-        public final Vector3f position;
+        final Vector3f position;
 
-        public final Vector3f normal;
+        final Vector3f normal;
 
-        public VertexInfo(Vector3f position) {
+        VertexInfo(Vector3f position) {
             this.position = position;
             normal = new Vector3f();
         }
@@ -102,7 +102,7 @@ public class MD5Loader {
             normal = new Vector3f();
         }
 
-        public static float[] toPositionsArr(List<VertexInfo> list) {
+        static float[] toPositionsArr(List<VertexInfo> list) {
             int length = list != null ? list.size() * 3 : 0;
             float[] result = new float[length];
             int i = 0;
@@ -115,7 +115,7 @@ public class MD5Loader {
             return result;
         }
 
-        public static float[] toNormalArr(List<VertexInfo> list) {
+        static float[] toNormalArr(List<VertexInfo> list) {
             int length = list != null ? list.size() * 3 : 0;
             float[] result = new float[length];
             int i = 0;

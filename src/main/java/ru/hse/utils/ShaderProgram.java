@@ -75,7 +75,7 @@ public class ShaderProgram {
         fragmentShaderId = createShader(shaderCode, GL_FRAGMENT_SHADER);
     }
 
-    protected int createShader(String shaderCode, int shaderType) throws Exception {
+    private int createShader(String shaderCode, int shaderType) throws Exception {
         int shaderId = glCreateShader(shaderType);
         if (shaderId == 0)
             throw new Exception("Error creating shader. Type: " + shaderType);

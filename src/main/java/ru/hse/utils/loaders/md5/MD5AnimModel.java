@@ -16,15 +16,15 @@ public class MD5AnimModel {
 
     private List<MD5Frame> frames;
 
-    public MD5AnimModel() {
+    private MD5AnimModel() {
         frames = new ArrayList<>();
     }
 
-    public MD5AnimHeader getHeader() {
+    private MD5AnimHeader getHeader() {
         return header;
     }
 
-    public void setHeader(MD5AnimHeader header) {
+    private void setHeader(MD5AnimHeader header) {
         this.header = header;
     }
 
@@ -32,15 +32,15 @@ public class MD5AnimModel {
         return hierarchy;
     }
 
-    public void setHierarchy(MD5Hierarchy hierarchy) {
+    private void setHierarchy(MD5Hierarchy hierarchy) {
         this.hierarchy = hierarchy;
     }
 
-    public MD5BoundInfo getBoundInfo() {
+    private MD5BoundInfo getBoundInfo() {
         return boundInfo;
     }
 
-    public void setBoundInfo(MD5BoundInfo boundInfo) {
+    private void setBoundInfo(MD5BoundInfo boundInfo) {
         this.boundInfo = boundInfo;
     }
 
@@ -48,7 +48,7 @@ public class MD5AnimModel {
         return baseFrame;
     }
 
-    public void setBaseFrame(MD5BaseFrame baseFrame) {
+    private void setBaseFrame(MD5BaseFrame baseFrame) {
         this.baseFrame = baseFrame;
     }
 

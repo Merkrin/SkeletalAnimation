@@ -15,7 +15,7 @@ public class MD5BaseFrame {
         return frameDataList;
     }
 
-    public void setFrameDataList(List<MD5BaseFrameData> frameDataList) {
+    private void setFrameDataList(List<MD5BaseFrameData> frameDataList) {
         this.frameDataList = frameDataList;
     }
 
@@ -60,7 +60,7 @@ public class MD5BaseFrame {
             return position;
         }
 
-        public void setPosition(Vector3f position) {
+        void setPosition(Vector3f position) {
             this.position = position;
         }
 
@@ -68,7 +68,7 @@ public class MD5BaseFrame {
             return orientation;
         }
 
-        public void setOrientation(Vector3f vec) {
+        void setOrientation(Vector3f vec) {
             this.orientation = MD5Utils.calculateQuaternion(vec);
         }
 
@@ -77,7 +77,7 @@ public class MD5BaseFrame {
             return "[position: " + position + ", orientation: " + orientation + "]";
         }
 
-        public static MD5BaseFrameData parseLine(String line) {
+        static MD5BaseFrameData parseLine(String line) {
             Matcher matcher = PATTERN_BASEFRAME.matcher(line);
             MD5BaseFrameData result = null;
             if (matcher.matches()) {
