@@ -84,7 +84,7 @@ public class OBJLoader {
         }
         int[] indicesArr;
         indicesArr = indices.stream().mapToInt((Integer v) -> v).toArray();
-        return new Mesh(posArr, textCoordArr, normArr, indicesArr);
+        return new Mesh(posArr, normArr, indicesArr);
     }
 
     private static void processFaceVertex(IndexGroup indices,

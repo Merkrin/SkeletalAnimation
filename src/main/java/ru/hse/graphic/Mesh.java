@@ -23,26 +23,24 @@ public class Mesh {
     private final List<Integer> vboIdList;
 
     private boolean isSquare = false;
+    private boolean isActive = false;
 
     private final int vertexCount;
 
-    private boolean isActive = false;
-
-    public Mesh(float[] positions, float[] textCoords,
+    public Mesh(float[] positions,
                 float[] normals,
                 int[] indices) {
-        this(positions, textCoords, normals, indices,
-                Mesh.createEmptyIntArray(Mesh.MAX_WEIGHTS * positions.length / 3,
-                        0),
-                Mesh.createEmptyFloatArray(Mesh.MAX_WEIGHTS * positions.length / 3,
-                        0));
+        this(positions, normals, indices,
+                Mesh.createEmptyIntArray(Mesh.MAX_WEIGHTS * positions.length / 3
+                ),
+                Mesh.createEmptyFloatArray(Mesh.MAX_WEIGHTS * positions.length / 3
+                ));
     }
 
-    public Mesh(float[] positions, float[] textCoords,
+    public Mesh(float[] positions,
                 float[] normals, int[] indices,
                 int[] jointIndices, float[] weights) {
         FloatBuffer posBuffer = null;
-        FloatBuffer textCoordsBuffer = null;
         FloatBuffer vecNormalsBuffer = null;
         FloatBuffer weightsBuffer = null;
         IntBuffer jointIndicesBuffer = null;
@@ -149,7 +147,7 @@ public class Mesh {
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
-    public void render() {
+    void render() {
         initRender();
 
         glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
@@ -157,7 +155,7 @@ public class Mesh {
         endRender();
     }
 
-    public void renderSquare() {
+    void renderSquare() {
         // Draw the mesh
         glBindVertexArray(getVaoId());
 
@@ -181,31 +179,19 @@ public class Mesh {
         glDeleteVertexArrays(vaoId);
     }
 
-    public void deleteBuffers() {
-        // Delete the VBOs
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        for (int vboId : vboIdList) {
-            glDeleteBuffers(vboId);
-        }
-
-        // Delete the VAO
-        glBindVertexArray(0);
-        glDeleteVertexArrays(vaoId);
-    }
-
-    private static float[] createEmptyFloatArray(int length, float defaultValue) {
+    private static float[] createEmptyFloatArray(int length) {
         float[] result = new float[length];
-        Arrays.fill(result, defaultValue);
+        Arrays.fill(result, (float) 0);
         return result;
     }
 
-    private static int[] createEmptyIntArray(int length, int defaultValue) {
+    private static int[] createEmptyIntArray(int length) {
         int[] result = new int[length];
-        Arrays.fill(result, defaultValue);
+        Arrays.fill(result, 0);
         return result;
     }
 
-    public Vector3f getColour(){
+    Vector3f getColour(){
         if(isSquare && !isActive)
             return new Vector3f(1f, 1f, 1f);
         else if(isSquare)
@@ -214,16 +200,12 @@ public class Mesh {
             return new Vector3f(0.196f, 0.804f, 0.196f);
     }
 
-    public boolean getIsSquare(){
+    boolean getIsSquare(){
         return isSquare;
     }
 
     public void setIsSquare(boolean isSquare){
         this.isSquare = isSquare;
-    }
-
-    public boolean getIsActive(){
-        return isActive;
     }
 
     public void swapActive(){

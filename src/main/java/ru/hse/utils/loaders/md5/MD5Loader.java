@@ -81,7 +81,7 @@ public class MD5Loader {
         float[] normalsArr = VertexInfo.toNormalArr(vertexInfoList);
         int[] indicesArr = indices.stream().mapToInt(i -> i).toArray();
 
-        return new Mesh(positionsArr, textCoordsArr, normalsArr, indicesArr);
+        return new Mesh(positionsArr, normalsArr, indicesArr);
     }
 
     private static class VertexInfo {

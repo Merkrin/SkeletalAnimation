@@ -213,6 +213,6 @@ public class MD5LoaderWAnim {
         int[] jointIndicesArr = Utils.listIntToArray(jointIndices);
         float[] weightsArr = Utils.listToArray(weights);
 
-        return new Mesh(positionsArr, textCoordsArr, normalsArr, indicesArr, jointIndicesArr, weightsArr);
+        return new Mesh(positionsArr, normalsArr, indicesArr, jointIndicesArr, weightsArr);
     }
 }
