@@ -41,7 +41,8 @@ public class MD5Hierarchy {
 
     public static class MD5HierarchyData {
 
-        private static final Pattern PATTERN_HIERARCHY = Pattern.compile("\\s*\\\"([^\\\"]+)\\\"\\s*([-]?\\d+)\\s*(\\d+)\\s*(\\d+).*");
+        private static final Pattern PATTERN_HIERARCHY =
+                Pattern.compile("\\s*\\\"([^\\\"]+)\\\"\\s*([-]?\\d+)\\s*(\\d+)\\s*(\\d+).*");
 
         private String name;
 
@@ -85,7 +86,10 @@ public class MD5Hierarchy {
 
         @Override
         public String toString() {
-            return "[name: " + name + ", parentIndex: " + parentIndex + ", flags: " + flags + ", startIndex: " + startIndex + "]";
+            return "[name: " + name +
+                    ", parentIndex: " + parentIndex +
+                    ", flags: " + flags +
+                    ", startIndex: " + startIndex + "]";
         }
 
         public static MD5HierarchyData parseLine(String line) {

@@ -6,17 +6,11 @@ import ru.hse.graphic.animation.AnimatedModel;
 import ru.hse.utils.ShaderProgram;
 import ru.hse.utils.Utils;
 import ru.hse.utils.Window;
-import ru.hse.utils.loaders.md5.MD5JointInfo;
-
-import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
 
 public class Renderer {
-    /**
-     * Field of View in Radians
-     */
+    // Field of View in Radians
     private static final float FOV = (float) Math.toRadians(60.0f);
     private static final float Z_NEAR = 0.01f;
     private static final float Z_FAR = 1000.f;
@@ -34,11 +28,13 @@ public class Renderer {
         setupSceneShader();
     }
 
-    private void setupSceneShader() throws Exception{
+    private void setupSceneShader() throws Exception {
         // Create shader
         sceneShaderProgram = new ShaderProgram();
-        sceneShaderProgram.createVertexShader(Utils.loadResource("/shaders/vertex.frag"));
-        sceneShaderProgram.createFragmentShader(Utils.loadResource("/shaders/fragment.frag"));
+        sceneShaderProgram.createVertexShader(Utils.
+                loadResource("/shaders/vertex.frag"));
+        sceneShaderProgram.createFragmentShader(Utils.
+                loadResource("/shaders/fragment.frag"));
         sceneShaderProgram.link();
 
         // Create uniforms for modelView and projection matrices and texture
@@ -65,11 +61,15 @@ public class Renderer {
         renderScene(window, camera, models);
     }
 
-    private void renderScene(Window window, Camera camera, Model[] models){
+    private void renderScene(Window window, Camera camera, Model[] models) {
         sceneShaderProgram.bind();
 
         // Update projection Matrix
-        Matrix4f projectionMatrix = transformation.getProjectionMatrix(FOV, window.getWidth(), window.getHeight(), Z_NEAR, Z_FAR);
+        Matrix4f projectionMatrix = transformation
+                .getProjectionMatrix(FOV,
+                        window.getWidth(),
+                        window.getHeight(),
+                        Z_NEAR, Z_FAR);
         sceneShaderProgram.setUniform("projectionMatrix", projectionMatrix);
 
         // Update view Matrix
@@ -80,25 +80,23 @@ public class Renderer {
             Mesh mesh = model.getMesh();
 
             // Set model view matrix for this item
-            Matrix4f modelViewMatrix = transformation.getModelViewMatrix(model, viewMatrix);
+            Matrix4f modelViewMatrix = transformation
+                    .getModelViewMatrix(model, viewMatrix);
             sceneShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
 
             sceneShaderProgram.setUniform("colour", mesh.getColour());
 
-            if(model instanceof AnimatedModel){
-                AnimatedModel animatedModel = (AnimatedModel)model;
+            if (model instanceof AnimatedModel) {
+                AnimatedModel animatedModel = (AnimatedModel) model;
                 AnimatedFrame animatedFrame = animatedModel.getCurrentFrame();
-                sceneShaderProgram.setUniform("jointsMatrix", animatedFrame.getJointMatrices());
+                sceneShaderProgram.setUniform("jointsMatrix",
+                        animatedFrame.getJointMatrices());
             }
 
-            if(mesh.getIsSquare())
+            if (mesh.getIsSquare())
                 mesh.renderSquare();
             else
                 mesh.render();
-            // Render the mesh for this game item
-            //shaderProgram.setUniform("colour", mesh.getColour());
-            //shaderProgram.setUniform("useColour",1);
-            //mesh.render();
         }
 
         sceneShaderProgram.unbind();

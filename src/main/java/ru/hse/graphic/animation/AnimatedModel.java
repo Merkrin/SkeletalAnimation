@@ -3,6 +3,7 @@ package ru.hse.graphic.animation;
 import ru.hse.graphic.*;
 
 import java.util.List;
+
 import org.joml.Matrix4f;
 
 public class AnimatedModel extends Model {
@@ -12,7 +13,9 @@ public class AnimatedModel extends Model {
 
     private List<Matrix4f> invJointMatrices;
 
-    public AnimatedModel(Mesh[] meshes, List<AnimatedFrame> frames, List<Matrix4f> invJointMatrices) {
+    public AnimatedModel(Mesh[] meshes,
+                         List<AnimatedFrame> frames,
+                         List<Matrix4f> invJointMatrices) {
         super(meshes);
         this.frames = frames;
         this.invJointMatrices = invJointMatrices;
@@ -33,7 +36,7 @@ public class AnimatedModel extends Model {
 
     public AnimatedFrame getNextFrame() {
         int nextFrame = currentFrame + 1;
-        if ( nextFrame > frames.size() - 1) {
+        if (nextFrame > frames.size() - 1) {
             nextFrame = 0;
         }
         return this.frames.get(nextFrame);
@@ -41,7 +44,7 @@ public class AnimatedModel extends Model {
 
     public void nextFrame() {
         int nextFrame = currentFrame + 1;
-        if ( nextFrame > frames.size() - 1) {
+        if (nextFrame > frames.size() - 1) {
             currentFrame = 0;
         } else {
             currentFrame = nextFrame;

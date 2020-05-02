@@ -10,15 +10,22 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class MD5Mesh {
-    private static final Pattern PATTERN_SHADER = Pattern.compile("\\s*shader\\s*\\\"([^\\\"]+)\\\"");
+    private static final Pattern PATTERN_SHADER =
+            Pattern.compile("\\s*shader\\s*\\\"([^\\\"]+)\\\"");
 
-    private static final Pattern PATTERN_VERTEX = Pattern.compile("\\s*vert\\s*(\\d+)\\s*\\(\\s*("
-            + MD5Utils.FLOAT_REGEXP + ")\\s*(" + MD5Utils.FLOAT_REGEXP + ")\\s*\\)\\s*(\\d+)\\s*(\\d+)");
+    private static final Pattern PATTERN_VERTEX =
+            Pattern.compile("\\s*vert\\s*(\\d+)\\s*\\(\\s*("
+                    + MD5Utils.FLOAT_REGEXP + ")\\s*("
+                    + MD5Utils.FLOAT_REGEXP
+                    + ")\\s*\\)\\s*(\\d+)\\s*(\\d+)");
 
-    private static final Pattern PATTERN_TRI = Pattern.compile("\\s*tri\\s*(\\d+)\\s*(\\d+)\\s*(\\d+)\\s*(\\d+)");
+    private static final Pattern PATTERN_TRI =
+            Pattern.compile("\\s*tri\\s*(\\d+)\\s*(\\d+)\\s*(\\d+)\\s*(\\d+)");
 
-    private static final Pattern PATTERN_WEIGHT = Pattern.compile("\\s*weight\\s*(\\d+)\\s*(\\d+)\\s*" +
-            "(" + MD5Utils.FLOAT_REGEXP + ")\\s*" + MD5Utils.VECTOR3_REGEXP);
+    private static final Pattern PATTERN_WEIGHT =
+            Pattern.compile("\\s*weight\\s*(\\d+)\\s*(\\d+)\\s*" +
+                    "(" + MD5Utils.FLOAT_REGEXP + ")\\s*" +
+                    MD5Utils.VECTOR3_REGEXP);
 
     private String texture;
 
@@ -36,7 +43,6 @@ public class MD5Mesh {
 
     @Override
     public String toString() {
-        //StringBuilder str = new StringBuilder("mesh [" + System.lineSeparator());
         StringBuilder str = new StringBuilder("mesh {" + System.lineSeparator());
         str.append("\tshader \"").append(texture).append("\"").append(System.lineSeparator());
 
@@ -44,13 +50,11 @@ public class MD5Mesh {
         for (MD5Vertex vertex : vertices) {
             str.append(vertex).append(System.lineSeparator());
         }
-        //str.append("]").append(System.lineSeparator());
 
         str.append("\n\tnumtris " + triangles.size()).append(System.lineSeparator());
         for (MD5Triangle triangle : triangles) {
             str.append(triangle).append(System.lineSeparator());
         }
-        //str.append("]").append(System.lineSeparator());
 
         str.append("\n\tnumweights " + weights.size()).append(System.lineSeparator());
         for (MD5Weight weight : weights) {
@@ -190,8 +194,6 @@ public class MD5Mesh {
 
         @Override
         public String toString() {
-//            return "[index: " + index + ", textCoods: " + textCoords
-//                    + ", startWeight: " + startWeight + ", weightCount: " + weightCount + "]";
             return "\tvert " + index + " ( " +
                     textCoords.x + " " +
                     textCoords.y + " ) " +
@@ -295,11 +297,9 @@ public class MD5Mesh {
 
         @Override
         public String toString() {
-//            return "[index: " + index + ", jointIndex: " + jointIndex
-//                    + ", bias: " + bias + ", position: " + position + "]";
             return "\tweight " + index + " " + jointIndex
                     + " " +
-                    bias+ " ( " +
+                    bias + " ( " +
                     position.x + " " +
                     position.y + " " +
                     position.z + " )";

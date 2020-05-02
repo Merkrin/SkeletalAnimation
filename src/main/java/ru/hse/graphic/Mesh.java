@@ -30,11 +30,19 @@ public class Mesh {
 
     private boolean isActive = false;
 
-    public Mesh(float[] positions, float[] textCoords, float[] normals, int[] indices) {
-        this(positions, textCoords, normals, indices, Mesh.createEmptyIntArray(Mesh.MAX_WEIGHTS * positions.length / 3, 0), Mesh.createEmptyFloatArray(Mesh.MAX_WEIGHTS * positions.length / 3, 0));
+    public Mesh(float[] positions, float[] textCoords,
+                float[] normals,
+                int[] indices) {
+        this(positions, textCoords, normals, indices,
+                Mesh.createEmptyIntArray(Mesh.MAX_WEIGHTS * positions.length / 3,
+                        0),
+                Mesh.createEmptyFloatArray(Mesh.MAX_WEIGHTS * positions.length / 3,
+                        0));
     }
 
-    public Mesh(float[] positions, float[] textCoords, float[] normals, int[] indices, int[] jointIndices, float[] weights) {
+    public Mesh(float[] positions, float[] textCoords,
+                float[] normals, int[] indices,
+                int[] jointIndices, float[] weights) {
         FloatBuffer posBuffer = null;
         FloatBuffer textCoordsBuffer = null;
         FloatBuffer vecNormalsBuffer = null;
@@ -107,9 +115,6 @@ public class Mesh {
         } finally {
             if (posBuffer != null) {
                 MemoryUtil.memFree(posBuffer);
-            }
-            if (textCoordsBuffer != null) {
-                MemoryUtil.memFree(textCoordsBuffer);
             }
             if (vecNormalsBuffer != null) {
                 MemoryUtil.memFree(vecNormalsBuffer);
@@ -205,7 +210,7 @@ public class Mesh {
     public Vector3f getColour(){
         if(isSquare && !isActive)
             return new Vector3f(1f, 1f, 1f);
-        else if(isSquare && isActive)
+        else if(isSquare)
             return new Vector3f(1f, 0f, 0f);
         else
             return new Vector3f(0.196f, 0.804f, 0.196f);

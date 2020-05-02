@@ -13,21 +13,17 @@ public class Window {
     private final String title;
 
     private int width;
-
     private int height;
-
     private long windowHandle;
 
-    private boolean resized;
+    private boolean isResized;
 
     private boolean vSync;
-
-    boolean isPolygon = false;
 
     public Window(String title, boolean vSync) {
         this.title = title;
         this.vSync = vSync;
-        this.resized = false;
+        this.isResized = false;
     }
 
     public void init() {
@@ -98,21 +94,19 @@ public class Window {
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
         glEnable(GL_DEPTH_TEST);
-        //if(isPolygon)
-        glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
-        //glPolygonMode( GL_BACK, GL_LINE );
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     }
 
     public long getWindowHandle() {
         return windowHandle;
     }
 
-    public void setClearColor(float r, float g, float b, float alpha) {
-        glClearColor(r, g, b, alpha);
-    }
-
     public boolean isKeyPressed(int keyCode) {
         return glfwGetKey(windowHandle, keyCode) == GLFW_PRESS;
+    }
+
+    public boolean isKeyReleased(int keyCode) {
+        return glfwGetKey(windowHandle, keyCode) == GLFW_RELEASE;
     }
 
     public boolean windowShouldClose() {
@@ -132,11 +126,11 @@ public class Window {
     }
 
     public boolean isResized() {
-        return resized;
+        return isResized;
     }
 
     public void setResized(boolean resized) {
-        this.resized = resized;
+        this.isResized = resized;
     }
 
     public boolean isvSync() {
@@ -151,9 +145,4 @@ public class Window {
         glfwSwapBuffers(windowHandle);
         glfwPollEvents();
     }
-
-//    public void reversePolygon(){
-//        isPolygon = !isPolygon;
-//        init();
-//    }
 }

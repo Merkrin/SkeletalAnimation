@@ -8,8 +8,8 @@ public class Engine {
     private final MouseInput mouseInput;
 
     public Engine(String windowTitle,
-                  boolean vSync, Program program){
-        window = new Window(windowTitle,vSync);
+                  boolean vSync, Program program) {
+        window = new Window(windowTitle, vSync);
         this.program = program;
         this.program.setWindow(window);
         mouseInput = new MouseInput();
@@ -20,8 +20,7 @@ public class Engine {
             init();
             loop();
         } catch (Exception excp) {
-            // TODO: don't do this
-            excp.printStackTrace();
+            System.out.println(excp.getMessage());
         } finally {
             cleanup();
         }
@@ -47,7 +46,7 @@ public class Engine {
 
 
     protected void input() {
-        mouseInput.input(window);
+        mouseInput.input();
         program.input(window);
     }
 

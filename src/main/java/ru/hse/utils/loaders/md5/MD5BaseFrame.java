@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
@@ -46,7 +47,10 @@ public class MD5BaseFrame {
 
     public static class MD5BaseFrameData {
 
-        private static final Pattern PATTERN_BASEFRAME = Pattern.compile("\\s*" + MD5Utils.VECTOR3_REGEXP + "\\s*" + MD5Utils.VECTOR3_REGEXP + ".*");
+        private static final Pattern PATTERN_BASEFRAME =
+                Pattern.compile("\\s*"
+                        + MD5Utils.VECTOR3_REGEXP + "\\s*"
+                        + MD5Utils.VECTOR3_REGEXP + ".*");
 
         private Vector3f position;
 

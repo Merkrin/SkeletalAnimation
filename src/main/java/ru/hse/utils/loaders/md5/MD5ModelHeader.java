@@ -45,9 +45,6 @@ public class MD5ModelHeader {
 
     @Override
     public String toString() {
-//        return "[version: " + version + ", commandLine: " + commandLine +
-//                ", numJoints: " + numJoints + ", numMeshes: " + numMeshes + "]";
-
         return "MD5Version " + version + "\ncommandLine \"add your command-line here\"" +
                 "\n\nnumJoints " + numJoints + "\nnumMeshes " + numMeshes + "\n";
     }
@@ -63,7 +60,9 @@ public class MD5ModelHeader {
         for (int i = 0; i < numLines && !finishHeader; i++) {
             String line = lines.get(i);
             String[] tokens = line.split("\\s+");
+
             int numTokens = tokens != null ? tokens.length : 0;
+
             if (numTokens > 1) {
                 String paramName = tokens[0];
                 String paramValue = tokens[1];

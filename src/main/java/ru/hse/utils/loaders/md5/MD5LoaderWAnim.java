@@ -13,9 +13,11 @@ import ru.hse.graphic.animation.*;
 import ru.hse.utils.Utils;
 
 public class MD5LoaderWAnim {
-    public static AnimatedModel process(MD5Model md5Model, MD5AnimModel animModel, Vector4f defaultColour) throws Exception {
+    public static AnimatedModel process(MD5Model md5Model,
+                                        MD5AnimModel animModel){
         List<Matrix4f> invJointMatrices = calcInJointMatrices(md5Model);
-        List<AnimatedFrame> animatedFrames = processAnimationFrames(md5Model, animModel, invJointMatrices);
+        List<AnimatedFrame> animatedFrames =
+                processAnimationFrames(md5Model, animModel, invJointMatrices);
 
         List<Mesh> list = new ArrayList<>();
         for (MD5Mesh md5Mesh : md5Model.getMeshes()) {
@@ -26,8 +28,7 @@ public class MD5LoaderWAnim {
         Mesh[] meshes = new Mesh[list.size()];
         meshes = list.toArray(meshes);
 
-        AnimatedModel result = new AnimatedModel(meshes, animatedFrames, invJointMatrices);
-        return result;
+        return new AnimatedModel(meshes, animatedFrames, invJointMatrices);
     }
 
     private static List<Matrix4f> calcInJointMatrices(MD5Model md5Model) {
@@ -35,16 +36,13 @@ public class MD5LoaderWAnim {
 
         List<MD5JointInfo.MD5JointData> joints = md5Model.getJointInfo().getJoints();
         for (MD5JointInfo.MD5JointData joint : joints) {
-            // Calculate translation matrix using joint position
-            // Calculates rotation matrix using joint orientation
-            // Gets transformation matrix bu multiplying translation matrix by rotation matrix
-            // Instead of multiplying we can apply rotation which is optimized internally
             Matrix4f mat = new Matrix4f()
                     .translate(joint.getPosition())
                     .rotate(joint.getOrientation())
                     .invert();
             result.add(mat);
         }
+
         return result;
     }
 
@@ -107,8 +105,7 @@ public class MD5LoaderWAnim {
             v.normal.normalize();
         }
 
-        Mesh mesh = createMesh(vertices, indices);
-        return mesh;
+        return createMesh(vertices, indices);
     }
 
     private static List<AnimatedFrame> processAnimationFrames(MD5Model md5Model, MD5AnimModel animModel, List<Matrix4f> invJointMatrices) {
@@ -216,8 +213,6 @@ public class MD5LoaderWAnim {
         int[] jointIndicesArr = Utils.listIntToArray(jointIndices);
         float[] weightsArr = Utils.listToArray(weights);
 
-        Mesh result = new Mesh(positionsArr, textCoordsArr, normalsArr, indicesArr, jointIndicesArr, weightsArr);
-
-        return result;
+        return new Mesh(positionsArr, textCoordsArr, normalsArr, indicesArr, jointIndicesArr, weightsArr);
     }
 }

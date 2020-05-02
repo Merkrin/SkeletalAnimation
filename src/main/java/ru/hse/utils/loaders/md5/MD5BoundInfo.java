@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.joml.Vector3f;
 
 public class MD5BoundInfo {
@@ -42,10 +43,11 @@ public class MD5BoundInfo {
 
     private static class MD5Bound {
 
-        private static final Pattern PATTERN_BOUND = Pattern.compile("\\s*" + MD5Utils.VECTOR3_REGEXP + "\\s*" + MD5Utils.VECTOR3_REGEXP + ".*");
+        private static final Pattern PATTERN_BOUND =
+                Pattern.compile("\\s*" + MD5Utils.VECTOR3_REGEXP +
+                        "\\s*" + MD5Utils.VECTOR3_REGEXP + ".*");
 
         private Vector3f minBound;
-
         private Vector3f maxBound;
 
         public Vector3f getMinBound() {

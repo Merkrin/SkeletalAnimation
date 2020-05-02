@@ -55,6 +55,9 @@ public class Program {
      */
     private final byte fileType;
 
+    private boolean canMoveForward = true;
+    private boolean canMoveBackward = true;
+
     public Program(String[] filePaths, byte fileType) {
         renderer = new Renderer();
         camera = new Camera();
@@ -114,8 +117,7 @@ public class Program {
     private void initMd5Anim() throws Exception {
         MD5Model md5MeshModel = MD5Model.parse(filePaths[0]);
         MD5AnimModel md5AnimModel = MD5AnimModel.parse(filePaths[1]);
-        animatedModel = MD5LoaderWAnim.process(md5MeshModel, md5AnimModel,
-                new Vector4f(1, 1, 1, 1));
+        animatedModel = MD5LoaderWAnim.process(md5MeshModel, md5AnimModel);
 
         models = new Model[]{animatedModel};
     }
@@ -144,18 +146,30 @@ public class Program {
             animatedModel.nextFrame();
         }
         if (fileType == 1) {
-            if (window.isKeyPressed(GLFW_KEY_TAB) &&
-                    !window.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
-                models[currentActiveJoint + 1].getMesh().swapActive();
-                currentActiveJoint = (currentActiveJoint + 1) % jointsAmount;
-                models[currentActiveJoint + 1].getMesh().swapActive();
+            if (window.isKeyPressed(GLFW_KEY_TAB)) {
+                if (canMoveForward) {
+                    canMoveForward = false;
+
+                    models[currentActiveJoint + 1].getMesh().swapActive();
+                    currentActiveJoint = (currentActiveJoint + 1) % jointsAmount;
+                    models[currentActiveJoint + 1].getMesh().swapActive();
+                }
             }
-            if (window.isKeyPressed(GLFW_KEY_TAB) &&
-                    window.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
-                models[currentActiveJoint + 1].getMesh().swapActive();
-                currentActiveJoint = (currentActiveJoint - 1) >= 0 ?
-                        currentActiveJoint - 1 : jointsAmount - 1;
-                models[currentActiveJoint + 1].getMesh().swapActive();
+            if (window.isKeyReleased(GLFW_KEY_TAB)) {
+                canMoveForward = true;
+            }
+            if (window.isKeyPressed(GLFW_KEY_LEFT_SHIFT)) {
+                if (canMoveBackward) {
+                    canMoveBackward = false;
+
+                    models[currentActiveJoint + 1].getMesh().swapActive();
+                    currentActiveJoint = (currentActiveJoint - 1) >= 0 ?
+                            currentActiveJoint - 1 : jointsAmount - 1;
+                    models[currentActiveJoint + 1].getMesh().swapActive();
+                }
+            }
+            if (window.isKeyReleased(GLFW_KEY_LEFT_SHIFT)) {
+                canMoveBackward = true;
             }
             try {
                 if (window.isKeyPressed(GLFW_KEY_R)) {
@@ -241,7 +255,7 @@ public class Program {
 
         // Update camera based on mouse
         if (mouseInput.isRightButtonPressed()) {
-            Vector2f rotVec = mouseInput.getDisplVec();
+            Vector2f rotVec = mouseInput.getDisplayVector();
             camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY,
                     rotVec.y * MOUSE_SENSITIVITY,
                     0);

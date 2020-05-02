@@ -24,11 +24,9 @@ public class MD5JointInfo {
     public String toString() {
         StringBuilder str = new StringBuilder("joints {" + System.lineSeparator());
 
-        for (int i = 0; i < joints.size(); i++)
-            str.append(joints.get(i)).append(System.lineSeparator());
-//        for (MD5JointData joint : joints) {
-//            str.append(joint).append(System.lineSeparator());
-//        }
+        for (MD5JointData joint : joints)
+            str.append(joint).append(System.lineSeparator());
+
         str.append("}").append(System.lineSeparator());
         return str.toString();
     }
@@ -54,8 +52,11 @@ public class MD5JointInfo {
 
         private static final String NAME_REGEXP = "\\\"([^\\\"]+)\\\"";
 
-        private static final String JOINT_REGEXP = "\\s*" + NAME_REGEXP + "\\s*" + PARENT_INDEX_REGEXP + "\\s*"
-                + MD5Utils.VECTOR3_REGEXP + "\\s*" + MD5Utils.VECTOR3_REGEXP + ".*";
+        private static final String JOINT_REGEXP = "\\s*" +
+                NAME_REGEXP + "\\s*" + PARENT_INDEX_REGEXP +
+                "\\s*"
+                + MD5Utils.VECTOR3_REGEXP + "\\s*" +
+                MD5Utils.VECTOR3_REGEXP + ".*";
 
         private static final Pattern PATTERN_JOINT = Pattern.compile(JOINT_REGEXP);
 
@@ -101,7 +102,6 @@ public class MD5JointInfo {
 
         @Override
         public String toString() {
-//            return "[name: " + name + ", parentIndex: " + parentIndex + ", position: " + position + ", orientation: " + orientation + "]";
             return "\t\"" + name + "\"\t" + parentIndex + " ( " +
                     String.format(Locale.ENGLISH, "%.10f", position.x) + " " +
                     String.format(Locale.ENGLISH, "%.10f", position.y) + " " +

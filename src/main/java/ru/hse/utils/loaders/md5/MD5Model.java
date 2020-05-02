@@ -44,7 +44,7 @@ public class MD5Model {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder();//"MD5MeshModel: " + System.lineSeparator());
+        StringBuilder str = new StringBuilder();
         str.append(getHeader()).append(System.lineSeparator());
         str.append(getJointInfo()).append(System.lineSeparator());
 
@@ -99,7 +99,10 @@ public class MD5Model {
         return result;
     }
 
-    private static void parseBlock(MD5Model model, String blockId, List<String> blockBody) throws Exception {
+    private static void parseBlock(MD5Model model,
+                                   String blockId,
+                                   List<String> blockBody)
+            throws Exception {
         switch (blockId) {
             case "joints":
                 MD5JointInfo jointInfo = MD5JointInfo.parse(blockBody);

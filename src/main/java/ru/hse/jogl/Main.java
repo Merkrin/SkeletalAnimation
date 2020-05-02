@@ -3,6 +3,12 @@ package ru.hse.jogl;
 import ru.hse.utils.Engine;
 
 public class Main {
+    static private String[] filePaths;
+    /*
+     * Set option to 0 for .obj, 1 for mesh and 2 for anim.
+     * */
+    static private byte fileOption = -1;
+
     private static void printHelp() {
         System.out.println("Use yor keyboard keys <W>, <S>, <A>, <D>, <X>" +
                 " and <SPACE> to move and right mouse button to rotate camera.\n" +
@@ -42,18 +48,7 @@ public class Main {
                 : ending.equalsIgnoreCase(".md5anim") ? 2 : -1);
     }
 
-    public static void main(String[] args) {
-        String[] filePaths = null;
-
-        /*
-        * Set option to 0 for .obj, 1 for mesh and 2 for anim.
-        * */
-        byte fileOption = -1;
-
-        int argsLength = args.length;
-
-        System.out.println("Welcome to the Skeletal Animation Editor!");
-
+    private static void setRunningOptions(String[] args, int argsLength) {
         if (argsLength > 0 && argsLength <= 3) {
             if (args[0].equalsIgnoreCase("help")) {
                 printHelp();
@@ -91,6 +86,13 @@ public class Main {
                 }
             }
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Welcome to the Skeletal Animation Editor!");
+
+        int argsLength = args.length;
+        setRunningOptions(args, argsLength);
 
         if (filePaths != null && fileOption != -1 && fileOption != 3) {
             try {
@@ -101,10 +103,12 @@ public class Main {
                         program);
                 engine.run();
             } catch (Exception exc) {
-                System.out.println("En error occured! Terminating...");
-                System.out.println(exc.getMessage());
+                if(exc.getMessage()!=null)
+                    System.out.println(exc.getMessage());
+            } finally {
+                System.out.println("Exit...");
             }
-        }else if(!(argsLength == 1 && args[0].equalsIgnoreCase("help"))){
+        } else if (!(argsLength == 1 && args[0].equalsIgnoreCase("help"))) {
             System.out.println("Something went wrong in your input." +
                     " Please check arguments.");
         }
