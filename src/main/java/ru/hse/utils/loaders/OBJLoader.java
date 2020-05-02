@@ -95,19 +95,19 @@ public class OBJLoader {
                                           float[] normArr) {
 
         // Set index for vertex coordinates
-        int posIndex = indices.idxPos;
+        int posIndex = indices.positionIndex;
         indicesList.add(posIndex);
 
         // Reorder texture coordinates
-        if (indices.idxTextCoord >= 0) {
-            Vector2f textCoord = textCoordList.get(indices.idxTextCoord);
+        if (indices.coordinateIndex >= 0) {
+            Vector2f textCoord = textCoordList.get(indices.coordinateIndex);
             texCoordArr[posIndex * 2] = textCoord.x;
             texCoordArr[posIndex * 2 + 1] = 1 - textCoord.y;
         }
 
-        if (indices.idxVecNormal >= 0) {
+        if (indices.normalVectorIndex >= 0) {
             // Reorder vector normals
-            Vector3f vecNorm = normList.get(indices.idxVecNormal);
+            Vector3f vecNorm = normList.get(indices.normalVectorIndex);
             normArr[posIndex * 3] = vecNorm.x;
             normArr[posIndex * 3 + 1] = vecNorm.y;
             normArr[posIndex * 3 + 2] = vecNorm.z;
@@ -116,52 +116,52 @@ public class OBJLoader {
 
     static class Face {
         // List of idxGroup groups for a face triangle (3 vertices per face).
-        private final IndexGroup[] idxGroups;
+        private final IndexGroup[] indexGroups;
 
         Face(String v1, String v2, String v3) {
-            idxGroups = new IndexGroup[3];
+            indexGroups = new IndexGroup[3];
 
             // Parse the lines
-            idxGroups[0] = parseLine(v1);
-            idxGroups[1] = parseLine(v2);
-            idxGroups[2] = parseLine(v3);
+            indexGroups[0] = parseLine(v1);
+            indexGroups[1] = parseLine(v2);
+            indexGroups[2] = parseLine(v3);
         }
 
         private IndexGroup parseLine(String line) {
-            IndexGroup idxGroup = new IndexGroup();
+            IndexGroup indexGroup = new IndexGroup();
 
             String[] lineTokens = line.split("/");
             int length = lineTokens.length;
-            idxGroup.idxPos = Integer.parseInt(lineTokens[0]) - 1;
+            indexGroup.positionIndex = Integer.parseInt(lineTokens[0]) - 1;
 
             if (length > 1) {
                 // It can be empty if the obj does not define text coords
                 String textCoord = lineTokens[1];
-                idxGroup.idxTextCoord = textCoord.length() > 0 ?
+                indexGroup.coordinateIndex = textCoord.length() > 0 ?
                         Integer.parseInt(textCoord) - 1 : IndexGroup.NO_VALUE;
 
                 if (length > 2)
-                    idxGroup.idxVecNormal = Integer.parseInt(lineTokens[2]) - 1;
+                    indexGroup.normalVectorIndex = Integer.parseInt(lineTokens[2]) - 1;
             }
 
-            return idxGroup;
+            return indexGroup;
         }
 
         IndexGroup[] getFaceVertexIndices() {
-            return idxGroups;
+            return indexGroups;
         }
     }
 
     protected static class IndexGroup {
         static final int NO_VALUE = -1;
-        int idxPos;
-        int idxTextCoord;
-        int idxVecNormal;
+        int positionIndex;
+        int coordinateIndex;
+        int normalVectorIndex;
 
         IndexGroup() {
-            idxPos = NO_VALUE;
-            idxTextCoord = NO_VALUE;
-            idxVecNormal = NO_VALUE;
+            positionIndex = NO_VALUE;
+            coordinateIndex = NO_VALUE;
+            normalVectorIndex = NO_VALUE;
         }
     }
 }

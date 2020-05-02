@@ -18,7 +18,7 @@ public class MD5Frame {
         this.id = id;
     }
 
-    public float[] getFrameData() {
+    float[] getFrameData() {
         return frameData;
     }
 

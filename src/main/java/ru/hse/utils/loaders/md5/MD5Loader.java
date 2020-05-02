@@ -9,9 +9,7 @@ import ru.hse.graphic.*;
 import ru.hse.utils.*;
 
 public class MD5Loader {
-    private static final String NORMAL_FILE_SUFFIX = "_normal";
-
-    public static Model process(MD5Model md5Model) throws Exception {
+    public static Model process(MD5Model md5Model){
         List<Mesh> list = new ArrayList<>();
         for (MD5Mesh md5Mesh : md5Model.getMeshes()) {
             Mesh mesh = generateMesh(md5Model, md5Mesh);
@@ -89,7 +87,6 @@ public class MD5Loader {
     private static class VertexInfo {
 
         final Vector3f position;
-
         final Vector3f normal;
 
         VertexInfo(Vector3f position) {
@@ -106,6 +103,7 @@ public class MD5Loader {
             int length = list != null ? list.size() * 3 : 0;
             float[] result = new float[length];
             int i = 0;
+
             for (VertexInfo v : list) {
                 result[i] = v.position.x;
                 result[i + 1] = v.position.y;
@@ -119,6 +117,7 @@ public class MD5Loader {
             int length = list != null ? list.size() * 3 : 0;
             float[] result = new float[length];
             int i = 0;
+
             for (VertexInfo v : list) {
                 result[i] = v.normal.x;
                 result[i + 1] = v.normal.y;

@@ -14,13 +14,13 @@ public class MouseInput {
     private boolean isLeftButtonPressed = false;
     private boolean isRightButtonPressed = false;
 
-    public MouseInput() {
+    MouseInput() {
         previousPosition = new Vector2d(-1, -1);
         currentPosition = new Vector2d(0, 0);
         displayVector = new Vector2f();
     }
 
-    public void init(Window window) {
+    void init(Window window) {
         glfwSetCursorPosCallback(window.getWindowHandle(), (windowHandle, xpos, ypos) -> {
             currentPosition.x = xpos;
             currentPosition.y = ypos;
@@ -38,7 +38,7 @@ public class MouseInput {
         return displayVector;
     }
 
-    public void input() {
+    void input() {
         displayVector.x = 0;
         displayVector.y = 0;
 

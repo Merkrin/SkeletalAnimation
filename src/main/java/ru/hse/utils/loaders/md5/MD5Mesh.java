@@ -125,7 +125,7 @@ public class MD5Mesh {
         this.texture = texture;
     }
 
-    public List<MD5Vertex> getVertices() {
+    List<MD5Vertex> getVertices() {
         return vertices;
     }
 
@@ -133,7 +133,7 @@ public class MD5Mesh {
         this.vertices = vertices;
     }
 
-    public List<MD5Triangle> getTriangles() {
+    List<MD5Triangle> getTriangles() {
         return triangles;
     }
 
@@ -141,7 +141,7 @@ public class MD5Mesh {
         this.triangles = triangles;
     }
 
-    public List<MD5Weight> getWeights() {
+    List<MD5Weight> getWeights() {
         return weights;
     }
 
@@ -156,7 +156,6 @@ public class MD5Mesh {
         private Vector2f textCoords;
 
         private int startWeight;
-
         private int weightCount;
 
         public int getIndex() {
@@ -167,7 +166,7 @@ public class MD5Mesh {
             this.index = index;
         }
 
-        public Vector2f getTextCoords() {
+        Vector2f getTextCoords() {
             return textCoords;
         }
 
@@ -175,7 +174,7 @@ public class MD5Mesh {
             this.textCoords = textCoords;
         }
 
-        public int getStartWeight() {
+        int getStartWeight() {
             return startWeight;
         }
 
@@ -183,7 +182,7 @@ public class MD5Mesh {
             this.startWeight = startWeight;
         }
 
-        public int getWeightCount() {
+        int getWeightCount() {
             return weightCount;
         }
 
@@ -203,11 +202,8 @@ public class MD5Mesh {
     public static class MD5Triangle {
 
         private int index;
-
         private int vertex0;
-
         private int vertex1;
-
         private int vertex2;
 
         public int getIndex() {
@@ -218,7 +214,7 @@ public class MD5Mesh {
             this.index = index;
         }
 
-        public int getVertex0() {
+        int getVertex0() {
             return vertex0;
         }
 
@@ -226,7 +222,7 @@ public class MD5Mesh {
             this.vertex0 = vertex0;
         }
 
-        public int getVertex1() {
+        int getVertex1() {
             return vertex1;
         }
 
@@ -234,7 +230,7 @@ public class MD5Mesh {
             this.vertex1 = vertex1;
         }
 
-        public int getVertex2() {
+        int getVertex2() {
             return vertex2;
         }
 
@@ -253,11 +249,8 @@ public class MD5Mesh {
     }
 
     public static class MD5Weight {
-
         private int index;
-
         private int jointIndex;
-
         private float bias;
 
         private Vector3f position;
@@ -270,7 +263,7 @@ public class MD5Mesh {
             this.index = index;
         }
 
-        public int getJointIndex() {
+        int getJointIndex() {
             return jointIndex;
         }
 
@@ -278,7 +271,7 @@ public class MD5Mesh {
             this.jointIndex = jointIndex;
         }
 
-        public float getBias() {
+        float getBias() {
             return bias;
         }
 

@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class MD5Hierarchy {
     private List<MD5HierarchyData> hierarchyDataList;
 
-    public List<MD5HierarchyData> getHierarchyDataList() {
+    List<MD5HierarchyData> getHierarchyDataList() {
         return hierarchyDataList;
     }
 
@@ -47,10 +47,8 @@ public class MD5Hierarchy {
         private String name;
 
         private int parentIndex;
-
-        private int flags;
-
         private int startIndex;
+        private int flags;
 
         public String getName() {
             return name;
@@ -68,7 +66,7 @@ public class MD5Hierarchy {
             this.parentIndex = parentIndex;
         }
 
-        public int getFlags() {
+        int getFlags() {
             return flags;
         }
 
@@ -76,7 +74,7 @@ public class MD5Hierarchy {
             this.flags = flags;
         }
 
-        public int getStartIndex() {
+        int getStartIndex() {
             return startIndex;
         }
 

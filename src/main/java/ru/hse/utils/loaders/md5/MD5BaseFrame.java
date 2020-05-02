@@ -11,7 +11,7 @@ import org.joml.Vector3f;
 public class MD5BaseFrame {
     private List<MD5BaseFrameData> frameDataList;
 
-    public List<MD5BaseFrameData> getFrameDataList() {
+    List<MD5BaseFrameData> getFrameDataList() {
         return frameDataList;
     }
 
@@ -53,7 +53,6 @@ public class MD5BaseFrame {
                         + MD5Utils.VECTOR3_REGEXP + ".*");
 
         private Vector3f position;
-
         private Quaternionf orientation;
 
         public Vector3f getPosition() {
@@ -64,7 +63,7 @@ public class MD5BaseFrame {
             this.position = position;
         }
 
-        public Quaternionf getOrientation() {
+        Quaternionf getOrientation() {
             return orientation;
         }
 

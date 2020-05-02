@@ -4,12 +4,10 @@ import java.util.List;
 
 public class MD5ModelHeader {
     private String version;
-
     private String commandLine;
 
-    private int numJoints;
-
-    private int numMeshes;
+    private int jointsAmount;
+    private int meshesAmount;
 
     public String getVersion() {
         return version;
@@ -27,31 +25,32 @@ public class MD5ModelHeader {
         this.commandLine = commandLine;
     }
 
-    public int getNumJoints() {
-        return numJoints;
+    public int getJointsAmount() {
+        return jointsAmount;
     }
 
-    private void setNumJoints(int numJoints) {
-        this.numJoints = numJoints;
+    private void setJointsAmount(int jointsAmount) {
+        this.jointsAmount = jointsAmount;
     }
 
-    public int getNumMeshes() {
-        return numMeshes;
+    public int getMeshesAmount() {
+        return meshesAmount;
     }
 
-    private void setNumMeshes(int numMeshes) {
-        this.numMeshes = numMeshes;
+    private void setMeshesAmount(int meshesAmount) {
+        this.meshesAmount = meshesAmount;
     }
 
     @Override
     public String toString() {
         return "MD5Version " + version + "\ncommandLine \"add your command-line here\"" +
-                "\n\nnumJoints " + numJoints + "\nnumMeshes " + numMeshes + "\n";
+                "\n\nnumJoints " + jointsAmount + "\nnumMeshes " + meshesAmount + "\n";
     }
 
     public static MD5ModelHeader parse(List<String> lines) throws Exception {
         MD5ModelHeader header = new MD5ModelHeader();
         int numLines = lines != null ? lines.size() : 0;
+
         if (numLines == 0) {
             throw new Exception("Cannot parse empty file");
         }
@@ -75,10 +74,10 @@ public class MD5ModelHeader {
                         header.setCommandLine(paramValue);
                         break;
                     case "numJoints":
-                        header.setNumJoints(Integer.parseInt(paramValue));
+                        header.setJointsAmount(Integer.parseInt(paramValue));
                         break;
                     case "numMeshes":
-                        header.setNumMeshes(Integer.parseInt(paramValue));
+                        header.setMeshesAmount(Integer.parseInt(paramValue));
                         break;
                     case "joints":
                         finishHeader = true;

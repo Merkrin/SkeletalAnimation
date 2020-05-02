@@ -43,15 +43,13 @@ public class MD5JointInfo {
             }
         }
         result.setJoints(joints);
+
         return result;
     }
 
     public static class MD5JointData {
-
         private static final String PARENT_INDEX_REGEXP = "([-]?\\d+)";
-
         private static final String NAME_REGEXP = "\\\"([^\\\"]+)\\\"";
-
         private static final String JOINT_REGEXP = "\\s*" +
                 NAME_REGEXP + "\\s*" + PARENT_INDEX_REGEXP +
                 "\\s*"
@@ -65,7 +63,6 @@ public class MD5JointInfo {
         private int parentIndex;
 
         private Vector3f position;
-
         private Quaternionf orientation;
 
         public String getName() {

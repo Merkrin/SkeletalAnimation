@@ -4,16 +4,13 @@ import java.util.List;
 
 public class MD5AnimHeader {
     private String version;
-
     private String commandLine;
 
-    private int numFrames;
-
-    private int numJoints;
+    private int framesAmount;
+    private int animatedComponentsAmount;
+    private int jointsAmount;
 
     private int frameRate;
-
-    private int numAnimatedComponents;
 
     public String getVersion() {
         return version;
@@ -31,20 +28,20 @@ public class MD5AnimHeader {
         this.commandLine = commandLine;
     }
 
-    public int getNumFrames() {
-        return numFrames;
+    public int getFramesAmount() {
+        return framesAmount;
     }
 
-    private void setNumFrames(int numFrames) {
-        this.numFrames = numFrames;
+    private void setFramesAmount(int framesAmount) {
+        this.framesAmount = framesAmount;
     }
 
-    public int getNumJoints() {
-        return numJoints;
+    public int getJointsAmount() {
+        return jointsAmount;
     }
 
-    private void setNumJoints(int numJoints) {
-        this.numJoints = numJoints;
+    private void setJointsAmount(int jointsAmount) {
+        this.jointsAmount = jointsAmount;
     }
 
     public int getFrameRate() {
@@ -55,22 +52,22 @@ public class MD5AnimHeader {
         this.frameRate = frameRate;
     }
 
-    public int getNumAnimatedComponents() {
-        return numAnimatedComponents;
+    public int getAnimatedComponentsAmount() {
+        return animatedComponentsAmount;
     }
 
-    private void setNumAnimatedComponents(int numAnimatedComponents) {
-        this.numAnimatedComponents = numAnimatedComponents;
+    private void setAnimatedComponentsAmount(int animatedComponentsAmount) {
+        this.animatedComponentsAmount = animatedComponentsAmount;
     }
 
     @Override
     public String toString() {
         return "animHeader: [version: " + version + ", commandLine: " + commandLine +
-                ", numFrames: " + numFrames + ", numJoints: " + numJoints +
-                ", frameRate: " + frameRate + ", numAnimatedComponents:" + numAnimatedComponents + "]";
+                ", numFrames: " + framesAmount + ", numJoints: " + jointsAmount +
+                ", frameRate: " + frameRate + ", numAnimatedComponents:" + animatedComponentsAmount + "]";
     }
 
-    public static MD5AnimHeader parse(List<String> lines) throws Exception  {
+    public static MD5AnimHeader parse(List<String> lines) throws Exception {
         MD5AnimHeader header = new MD5AnimHeader();
 
         int numLines = lines != null ? lines.size() : 0;
@@ -82,8 +79,10 @@ public class MD5AnimHeader {
         for (int i = 0; i < numLines && !finishHeader; i++) {
             String line = lines.get(i);
             String[] tokens = line.split("\\s+");
-            int numTokens = tokens != null ? tokens.length : 0;
-            if (numTokens > 1) {
+
+            int tokensAmount = tokens != null ? tokens.length : 0;
+
+            if (tokensAmount > 1) {
                 String paramName = tokens[0];
                 String paramValue = tokens[1];
 
@@ -95,16 +94,16 @@ public class MD5AnimHeader {
                         header.setCommandLine(paramValue);
                         break;
                     case "numFrames":
-                        header.setNumFrames(Integer.parseInt(paramValue));
+                        header.setFramesAmount(Integer.parseInt(paramValue));
                         break;
                     case "numJoints":
-                        header.setNumJoints(Integer.parseInt(paramValue));
+                        header.setJointsAmount(Integer.parseInt(paramValue));
                         break;
                     case "frameRate":
                         header.setFrameRate(Integer.parseInt(paramValue));
                         break;
                     case "numAnimatedComponents":
-                        header.setNumAnimatedComponents(Integer.parseInt(paramValue));
+                        header.setAnimatedComponentsAmount(Integer.parseInt(paramValue));
                         break;
                     case "hierarchy":
                         finishHeader = true;
@@ -112,6 +111,7 @@ public class MD5AnimHeader {
                 }
             }
         }
+
         return header;
     }
 }

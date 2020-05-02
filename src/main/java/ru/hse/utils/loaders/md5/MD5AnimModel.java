@@ -7,11 +7,8 @@ import ru.hse.utils.Utils;
 
 public class MD5AnimModel {
     private MD5AnimHeader header;
-
     private MD5Hierarchy hierarchy;
-
     private MD5BoundInfo boundInfo;
-
     private MD5BaseFrame baseFrame;
 
     private List<MD5Frame> frames;
@@ -28,7 +25,7 @@ public class MD5AnimModel {
         this.header = header;
     }
 
-    public MD5Hierarchy getHierarchy() {
+    MD5Hierarchy getHierarchy() {
         return hierarchy;
     }
 
@@ -44,7 +41,7 @@ public class MD5AnimModel {
         this.boundInfo = boundInfo;
     }
 
-    public MD5BaseFrame getBaseFrame() {
+    MD5BaseFrame getBaseFrame() {
         return baseFrame;
     }
 
@@ -52,7 +49,7 @@ public class MD5AnimModel {
         this.baseFrame = baseFrame;
     }
 
-    public List<MD5Frame> getFrames() {
+    List<MD5Frame> getFrames() {
         return frames;
     }
 
@@ -86,6 +83,7 @@ public class MD5AnimModel {
 
         // Parse Header
         boolean headerEnd = false;
+
         int start = 0;
         for (int i = 0; i < numLines && !headerEnd; i++) {
             String line = lines.get(i);

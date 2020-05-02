@@ -110,6 +110,7 @@ public class MD5LoaderWAnim {
     private static List<AnimatedFrame> processAnimationFrames(MD5Model md5Model, MD5AnimModel animModel, List<Matrix4f> invJointMatrices) {
         List<AnimatedFrame> animatedFrames = new ArrayList<>();
         List<MD5Frame> frames = animModel.getFrames();
+
         for (MD5Frame frame : frames) {
             AnimatedFrame data = processAnimationFrame(md5Model, animModel, frame, invJointMatrices);
             animatedFrames.add(data);

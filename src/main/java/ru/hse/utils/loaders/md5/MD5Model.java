@@ -6,10 +6,7 @@ import java.util.List;
 import ru.hse.utils.*;
 
 public class MD5Model {
-    private List<String> lines;
-
     private MD5JointInfo jointInfo;
-
     private MD5ModelHeader header;
 
     private List<MD5Mesh> meshes;
@@ -34,7 +31,7 @@ public class MD5Model {
         this.header = header;
     }
 
-    public List<MD5Mesh> getMeshes() {
+    List<MD5Mesh> getMeshes() {
         return meshes;
     }
 

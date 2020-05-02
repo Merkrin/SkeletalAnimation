@@ -4,17 +4,14 @@ import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 class MD5Utils {
-    public static final String FLOAT_REGEXP = "[+-]?\\d*\\.?\\d*";
+    static final String FLOAT_REGEXP = "[+-]?\\d*\\.?\\d*";
 
-    public static final String VECTOR3_REGEXP = "\\(\\s*(" + FLOAT_REGEXP +
+    static final String VECTOR3_REGEXP = "\\(\\s*(" + FLOAT_REGEXP +
             ")\\s*(" + FLOAT_REGEXP +
             ")\\s*(" + FLOAT_REGEXP +
             ")\\s*\\)";
 
-    private MD5Utils() {
-    }
-
-    public static Quaternionf calculateQuaternion(Vector3f vec) {
+    static Quaternionf calculateQuaternion(Vector3f vec) {
         Quaternionf orientation = new Quaternionf(vec.x, vec.y, vec.z, 0);
         return getQuaternionf(orientation);
     }
@@ -32,7 +29,7 @@ class MD5Utils {
         return orientation;
     }
 
-    public static Quaternionf calculateQuaternion(float x, float y, float z) {
+    static Quaternionf calculateQuaternion(float x, float y, float z) {
         Quaternionf orientation = new Quaternionf(x, y, z, 0);
         return getQuaternionf(orientation);
     }
