@@ -39,6 +39,7 @@ public class Program {
     private MD5JointInfo jointInfo;
     private MD5JointInfo firstJointsInfo;
 
+
     private int currentActiveJoint = 0;
     private int jointsAmount;
 
@@ -90,6 +91,7 @@ public class Program {
 
         jointInfo = md5MeshModel.getJointInfo();
         firstJointsInfo = MD5Model.parse(filePaths[0]).getJointInfo();
+
         jointsAmount = jointInfo.getJoints().size();
         models = new Model[jointsAmount + 1];
         models[0] = mainModel;
@@ -172,26 +174,7 @@ public class Program {
             }
             try {
                 if (window.isKeyPressed(GLFW_KEY_R)) {
-                    List<MD5JointInfo.MD5JointData> firstJoints =
-                            firstJointsInfo.getJoints();
-                    List<MD5JointInfo.MD5JointData> joints =
-                            jointInfo.getJoints();
-                    Vector3f currentJoint;
-
-                    for (int i = 0; i < jointsAmount; i++) {
-                        currentJoint = firstJoints.get(i).getPosition();
-                        joints.get(i).setPosition(new Vector3f(currentJoint.x,
-                                currentJoint.y, currentJoint.z));
-
-                        models[i + 1].setPosition(currentJoint.x,
-                                currentJoint.y, currentJoint.z);
-                    }
-
-                    jointInfo.setJoints(joints);
-                    md5MeshModel.setJointInfo(jointInfo);
-
-                    Model monster = MD5Loader.process(md5MeshModel);
-                    models[0] = monster;
+                    setRenewedJointsInfo(firstJointsInfo);
                 }
                 if (window.isKeyPressed(GLFW_KEY_F)) {
                     MD5Saver.save(md5MeshModel);
@@ -238,7 +221,30 @@ public class Program {
         }
     }
 
-    private void renewJointsPositions(Vector3f position) throws Exception {
+    private void setRenewedJointsInfo(MD5JointInfo firstJointsInfo) {
+        List<MD5JointInfo.MD5JointData> firstJoints =
+                firstJointsInfo.getJoints();
+        List<MD5JointInfo.MD5JointData> joints =
+                jointInfo.getJoints();
+        Vector3f currentJoint;
+
+        for (int i = 0; i < jointsAmount; i++) {
+            currentJoint = firstJoints.get(i).getPosition();
+            joints.get(i).setPosition(new Vector3f(currentJoint.x,
+                    currentJoint.y, currentJoint.z));
+
+            models[i + 1].setPosition(currentJoint.x,
+                    currentJoint.y, currentJoint.z);
+        }
+
+        jointInfo.setJoints(joints);
+        md5MeshModel.setJointInfo(jointInfo);
+
+        Model monster = MD5Loader.process(md5MeshModel);
+        models[0] = monster;
+    }
+
+    private void renewJointsPositions(Vector3f position) {
         jointInfo.getJoints().get(currentActiveJoint).setPosition(position);
         md5MeshModel.setJointInfo(jointInfo);
         Model monster = MD5Loader.process(md5MeshModel);
