@@ -37,7 +37,7 @@ public class Engine {
     private void init() throws Exception {
         window.init();
         mouseInput.init(window);
-        program.init(window);
+        program.init();
     }
 
     private void cleanup() {

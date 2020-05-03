@@ -24,7 +24,7 @@ public class Renderer {
     }
 
     // Go from program
-    public void init(Window window) throws Exception {
+    public void init() throws Exception {
         setupSceneShader();
     }
 

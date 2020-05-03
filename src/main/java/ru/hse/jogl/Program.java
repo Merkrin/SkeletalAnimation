@@ -68,8 +68,8 @@ public class Program {
     }
 
     // Go from engine
-    public void init(Window window) throws Exception {
-        renderer.init(window);
+    public void init() throws Exception {
+        renderer.init();
 
         if (fileType == 0)
             initObj();
