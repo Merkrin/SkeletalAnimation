@@ -42,20 +42,25 @@ public class MD5Mesh {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder("mesh {" + System.lineSeparator());
-        str.append("\tshader \"").append(texture).append("\"").append(System.lineSeparator());
+        StringBuilder str =
+                new StringBuilder("mesh {" + System.lineSeparator());
+        str.append("\tshader \"").append(texture).append("\"")
+                .append(System.lineSeparator());
 
-        str.append("\n\tnumverts " + vertices.size()).append(System.lineSeparator());
+        str.append("\n\tnumverts " + vertices.size())
+                .append(System.lineSeparator());
         for (MD5Vertex vertex : vertices) {
             str.append(vertex).append(System.lineSeparator());
         }
 
-        str.append("\n\tnumtris " + triangles.size()).append(System.lineSeparator());
+        str.append("\n\tnumtris " + triangles.size())
+                .append(System.lineSeparator());
         for (MD5Triangle triangle : triangles) {
             str.append(triangle).append(System.lineSeparator());
         }
 
-        str.append("\n\tnumweights " + weights.size()).append(System.lineSeparator());
+        str.append("\n\tnumweights " + weights.size())
+                .append(System.lineSeparator());
         for (MD5Weight weight : weights) {
             str.append(weight).append(System.lineSeparator());
         }
@@ -117,10 +122,6 @@ public class MD5Mesh {
         return mesh;
     }
 
-    public String getTexture() {
-        return texture;
-    }
-
     private void setTexture(String texture) {
         this.texture = texture;
     }
@@ -129,24 +130,12 @@ public class MD5Mesh {
         return vertices;
     }
 
-    public void setVertices(List<MD5Vertex> vertices) {
-        this.vertices = vertices;
-    }
-
     List<MD5Triangle> getTriangles() {
         return triangles;
     }
 
-    public void setTriangles(List<MD5Triangle> triangles) {
-        this.triangles = triangles;
-    }
-
     List<MD5Weight> getWeights() {
         return weights;
-    }
-
-    public void setWeights(List<MD5Weight> weights) {
-        this.weights = weights;
     }
 
     public static class MD5Vertex {
@@ -157,10 +146,6 @@ public class MD5Mesh {
 
         private int startWeight;
         private int weightCount;
-
-        public int getIndex() {
-            return index;
-        }
 
         void setIndex(int index) {
             this.index = index;
@@ -206,10 +191,6 @@ public class MD5Mesh {
         private int vertex1;
         private int vertex2;
 
-        public int getIndex() {
-            return index;
-        }
-
         void setIndex(int index) {
             this.index = index;
         }
@@ -254,10 +235,6 @@ public class MD5Mesh {
         private float bias;
 
         private Vector3f position;
-
-        public int getIndex() {
-            return index;
-        }
 
         void setIndex(int index) {
             this.index = index;
