@@ -8,21 +8,21 @@ class Transformation {
     private final Matrix4f modelViewMatrix;
     private final Matrix4f viewMatrix;
 
-    public Transformation() {
+    Transformation() {
         modelViewMatrix = new Matrix4f();
         projectionMatrix = new Matrix4f();
         viewMatrix = new Matrix4f();
     }
 
-    public final Matrix4f getProjectionMatrix(float fov,
-                                              float width,
-                                              float height,
-                                              float zNear,
-                                              float zFar) {
+    final Matrix4f getProjectionMatrix(float fov,
+                                       float width,
+                                       float height,
+                                       float zNear,
+                                       float zFar) {
         return projectionMatrix.setPerspective(fov, width / height, zNear, zFar);
     }
 
-    public Matrix4f getModelViewMatrix(Model model, Matrix4f viewMatrix) {
+    Matrix4f getModelViewMatrix(Model model, Matrix4f viewMatrix) {
         Vector3f rotation = model.getRotation();
 
         modelViewMatrix.set(viewMatrix).translate(model.getPosition()).
@@ -34,7 +34,7 @@ class Transformation {
         return modelViewMatrix;
     }
 
-    public Matrix4f getViewMatrix(Camera camera) {
+    Matrix4f getViewMatrix(Camera camera) {
         Vector3f cameraPos = camera.getPosition();
         Vector3f rotation = camera.getRotation();
 
