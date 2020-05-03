@@ -12,48 +12,24 @@ public class MD5AnimHeader {
 
     private int frameRate;
 
-    public String getVersion() {
-        return version;
-    }
-
     private void setVersion(String version) {
         this.version = version;
-    }
-
-    public String getCommandLine() {
-        return commandLine;
     }
 
     private void setCommandLine(String commandLine) {
         this.commandLine = commandLine;
     }
 
-    public int getFramesAmount() {
-        return framesAmount;
-    }
-
     private void setFramesAmount(int framesAmount) {
         this.framesAmount = framesAmount;
-    }
-
-    public int getJointsAmount() {
-        return jointsAmount;
     }
 
     private void setJointsAmount(int jointsAmount) {
         this.jointsAmount = jointsAmount;
     }
 
-    public int getFrameRate() {
-        return frameRate;
-    }
-
     private void setFrameRate(int frameRate) {
         this.frameRate = frameRate;
-    }
-
-    public int getAnimatedComponentsAmount() {
-        return animatedComponentsAmount;
     }
 
     private void setAnimatedComponentsAmount(int animatedComponentsAmount) {
@@ -62,9 +38,12 @@ public class MD5AnimHeader {
 
     @Override
     public String toString() {
-        return "animHeader: [version: " + version + ", commandLine: " + commandLine +
-                ", numFrames: " + framesAmount + ", numJoints: " + jointsAmount +
-                ", frameRate: " + frameRate + ", numAnimatedComponents:" + animatedComponentsAmount + "]";
+        return "animHeader: [version: " + version +
+                ", commandLine: " + commandLine +
+                ", numFrames: " + framesAmount +
+                ", numJoints: " + jointsAmount +
+                ", frameRate: " + frameRate +
+                ", numAnimatedComponents:" + animatedComponentsAmount + "]";
     }
 
     public static MD5AnimHeader parse(List<String> lines) throws Exception {

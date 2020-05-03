@@ -23,6 +23,7 @@ class Main {
                 "\t-Use <F> to save .md5mesh.");
         System.out.println("If you choose .md5mesh and .md5anim files:\n" +
                 "\t-Use <P> to show next frame.");
+        System.out.println("\nProgram by Irina Barciuc, HSE FCS BSE181, 2020");
     }
 
     private static byte getFileOption(String path) {
@@ -103,7 +104,7 @@ class Main {
                         program);
                 engine.run();
             } catch (Exception exc) {
-                if(exc.getMessage()!=null)
+                if (exc.getMessage() != null)
                     System.out.println(exc.getMessage());
             } finally {
                 System.out.println("Exit...");
