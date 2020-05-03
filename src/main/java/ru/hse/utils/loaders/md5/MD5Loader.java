@@ -23,7 +23,6 @@ public class MD5Loader {
 
     private static Mesh generateMesh(MD5Model md5Model, MD5Mesh md5Mesh) {
         List<VertexInfo> vertexInfoList = new ArrayList<>();
-        List<Float> textCoords = new ArrayList<>();
         List<Integer> indices = new ArrayList<>();
 
         List<MD5Mesh.MD5Vertex> vertices = md5Mesh.getVertices();
@@ -32,9 +31,6 @@ public class MD5Loader {
 
         for (MD5Mesh.MD5Vertex vertex : vertices) {
             Vector3f vertexPos = new Vector3f();
-            Vector2f vertexTextCoords = vertex.getTextCoords();
-            textCoords.add(vertexTextCoords.x);
-            textCoords.add(vertexTextCoords.y);
 
             int startWeight = vertex.getStartWeight();
             int numWeights = vertex.getWeightCount();
