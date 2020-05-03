@@ -33,6 +33,7 @@ public class MD5JointInfo {
 
     public static MD5JointInfo parse(List<String> blockBody) {
         MD5JointInfo result = new MD5JointInfo();
+
         List<MD5JointData> joints = new ArrayList<>();
         for (String line : blockBody) {
             MD5JointData jointData = MD5JointData.parseLine(line);
@@ -65,15 +66,11 @@ public class MD5JointInfo {
         private Vector3f position;
         private Quaternionf orientation;
 
-        public String getName() {
-            return name;
-        }
-
         void setName(String name) {
             this.name = name;
         }
 
-        public int getParentIndex() {
+        int getParentIndex() {
             return parentIndex;
         }
 
@@ -89,7 +86,7 @@ public class MD5JointInfo {
             this.position = position;
         }
 
-        public Quaternionf getOrientation() {
+        Quaternionf getOrientation() {
             return orientation;
         }
 

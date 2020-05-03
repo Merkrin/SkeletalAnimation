@@ -10,10 +10,6 @@ public class MD5Frame {
 
     private float[] frameData;
 
-    public int getId() {
-        return id;
-    }
-
     private void setId(int id) {
         this.id = id;
     }

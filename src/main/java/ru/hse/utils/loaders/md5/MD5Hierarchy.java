@@ -50,16 +50,8 @@ public class MD5Hierarchy {
         private int startIndex;
         private int flags;
 
-        public String getName() {
-            return name;
-        }
-
         void setName(String name) {
             this.name = name;
-        }
-
-        public int getParentIndex() {
-            return parentIndex;
         }
 
         void setParentIndex(int parentIndex) {
