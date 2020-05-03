@@ -77,7 +77,6 @@ public class MD5Loader {
         }
 
         float[] positionsArr = VertexInfo.toPositionsArr(vertexInfoList);
-        float[] textCoordsArr = Utils.listToArray(textCoords);
         float[] normalsArr = VertexInfo.toNormalArr(vertexInfoList);
         int[] indicesArr = indices.stream().mapToInt(i -> i).toArray();
 
@@ -91,11 +90,6 @@ public class MD5Loader {
 
         VertexInfo(Vector3f position) {
             this.position = position;
-            normal = new Vector3f();
-        }
-
-        public VertexInfo() {
-            position = new Vector3f();
             normal = new Vector3f();
         }
 
