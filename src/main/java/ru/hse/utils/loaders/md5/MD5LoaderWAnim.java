@@ -3,6 +3,7 @@ package ru.hse.utils.loaders.md5;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
@@ -13,7 +14,7 @@ import ru.hse.utils.Utils;
 
 public class MD5LoaderWAnim {
     public static AnimatedModel process(MD5Model md5Model,
-                                        MD5AnimModel animModel){
+                                        MD5AnimModel animModel) {
         List<Matrix4f> invJointMatrices = calcInJointMatrices(md5Model);
         List<AnimatedFrame> animatedFrames =
                 processAnimationFrames(md5Model, animModel, invJointMatrices);
@@ -69,9 +70,16 @@ public class MD5LoaderWAnim {
             Arrays.fill(vertex.weights, -1);
             for (int i = startWeight; i < startWeight + numWeights; i++) {
                 MD5Mesh.MD5Weight weight = weights.get(i);
-                MD5JointInfo.MD5JointData joint = joints.get(weight.getJointIndex());
-                Vector3f rotatedPos = new Vector3f(weight.getPosition()).rotate(joint.getOrientation());
-                Vector3f acumPos = new Vector3f(joint.getPosition()).add(rotatedPos);
+                MD5JointInfo.MD5JointData joint = joints.get(weight
+                        .getJointIndex());
+                Vector3f rotatedPos =
+                        new Vector3f(weight.getPosition())
+                                .rotate(joint
+                                        .getOrientation());
+                Vector3f acumPos =
+                        new Vector3f(joint
+                                .getPosition())
+                                .add(rotatedPos);
                 acumPos.mul(weight.getBias());
                 vertex.position.add(acumPos);
                 vertex.jointIndices[i - startWeight] = weight.getJointIndex();
@@ -100,36 +108,57 @@ public class MD5LoaderWAnim {
         }
 
         // Once the contributions have been added, normalize the result
-        for(AnimatedVertex v : vertices) {
+        for (AnimatedVertex v : vertices) {
             v.normal.normalize();
         }
 
         return createMesh(vertices, indices);
     }
 
-    private static List<AnimatedFrame> processAnimationFrames(MD5Model md5Model, MD5AnimModel animModel, List<Matrix4f> invJointMatrices) {
+    private static List<AnimatedFrame>
+    processAnimationFrames(MD5Model md5Model,
+                           MD5AnimModel animModel,
+                           List<Matrix4f> invJointMatrices) {
         List<AnimatedFrame> animatedFrames = new ArrayList<>();
         List<MD5Frame> frames = animModel.getFrames();
 
         for (MD5Frame frame : frames) {
-            AnimatedFrame data = processAnimationFrame(md5Model, animModel, frame, invJointMatrices);
+            AnimatedFrame data = processAnimationFrame(md5Model,
+                    animModel,
+                    frame,
+                    invJointMatrices);
             animatedFrames.add(data);
         }
         return animatedFrames;
     }
 
-    private static AnimatedFrame processAnimationFrame(MD5Model md5Model, MD5AnimModel animModel, MD5Frame frame, List<Matrix4f> invJointMatrices) {
+    private static AnimatedFrame
+    processAnimationFrame(MD5Model md5Model,
+                          MD5AnimModel animModel,
+                          MD5Frame frame,
+                          List<Matrix4f> invJointMatrices) {
         AnimatedFrame result = new AnimatedFrame();
 
         MD5BaseFrame baseFrame = animModel.getBaseFrame();
-        List<MD5Hierarchy.MD5HierarchyData> hierarchyList = animModel.getHierarchy().getHierarchyDataList();
+        List<MD5Hierarchy.MD5HierarchyData> hierarchyList =
+                animModel
+                        .getHierarchy()
+                        .getHierarchyDataList();
 
-        List<MD5JointInfo.MD5JointData> joints = md5Model.getJointInfo().getJoints();
+        List<MD5JointInfo.MD5JointData> joints =
+                md5Model
+                        .getJointInfo()
+                        .getJoints();
+
         int numJoints = joints.size();
         float[] frameData = frame.getFrameData();
+
         for (int i = 0; i < numJoints; i++) {
             MD5JointInfo.MD5JointData joint = joints.get(i);
-            MD5BaseFrame.MD5BaseFrameData baseFrameData = baseFrame.getFrameDataList().get(i);
+            MD5BaseFrame.MD5BaseFrameData baseFrameData =
+                    baseFrame
+                            .getFrameDataList()
+                            .get(i);
             Vector3f position = baseFrameData.getPosition();
             Quaternionf orientation = baseFrameData.getOrientation();
 
@@ -175,9 +204,9 @@ public class MD5LoaderWAnim {
         return result;
     }
 
-    private static Mesh createMesh(List<AnimatedVertex> vertices, List<Integer> indices) {
+    private static Mesh createMesh(List<AnimatedVertex> vertices,
+                                   List<Integer> indices) {
         List<Float> positions = new ArrayList<>();
-        List<Float> textCoords = new ArrayList<>();
         List<Float> normals = new ArrayList<>();
         List<Integer> jointIndices = new ArrayList<>();
         List<Float> weights = new ArrayList<>();
@@ -186,9 +215,6 @@ public class MD5LoaderWAnim {
             positions.add(vertex.position.x);
             positions.add(vertex.position.y);
             positions.add(vertex.position.z);
-
-            textCoords.add(vertex.textCoords.x);
-            textCoords.add(vertex.textCoords.y);
 
             normals.add(vertex.normal.x);
             normals.add(vertex.normal.y);
@@ -207,12 +233,13 @@ public class MD5LoaderWAnim {
         }
 
         float[] positionsArr = Utils.listToArray(positions);
-        float[] textCoordsArr = Utils.listToArray(textCoords);
         float[] normalsArr = Utils.listToArray(normals);
         int[] indicesArr = Utils.listIntToArray(indices);
         int[] jointIndicesArr = Utils.listIntToArray(jointIndices);
         float[] weightsArr = Utils.listToArray(weights);
 
-        return new Mesh(positionsArr, normalsArr, indicesArr, jointIndicesArr, weightsArr);
+        return new Mesh(positionsArr, normalsArr,
+                indicesArr, jointIndicesArr,
+                weightsArr);
     }
 }
