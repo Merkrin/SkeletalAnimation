@@ -9,18 +9,18 @@ public class Model {
     private float scale;
     private final Vector3f rotation;
 
-    protected Model() {
+    private Model() {
         position = new Vector3f();
         scale = 1;
         rotation = new Vector3f();
     }
 
-    public Model(Mesh mesh){
+    public Model(Mesh mesh) {
         this();
         meshes = new Mesh[]{mesh};
     }
 
-    public Model(Mesh[] meshes){
+    public Model(Mesh[] meshes) {
         this();
         this.meshes = meshes;
     }
@@ -35,7 +35,7 @@ public class Model {
         this.position.z = z;
     }
 
-    public float getScale() {
+    float getScale() {
         return scale;
     }
 
@@ -43,26 +43,12 @@ public class Model {
         this.scale = scale;
     }
 
-    public Vector3f getRotation() {
+    Vector3f getRotation() {
         return rotation;
-    }
-
-    public void setRotation(float x, float y, float z) {
-        this.rotation.x = x;
-        this.rotation.y = y;
-        this.rotation.z = z;
     }
 
     public Mesh getMesh() {
         return meshes[0];
-    }
-
-    public Mesh[] getMeshes() {
-        return meshes;
-    }
-
-    public void setMeshes(Mesh[] meshes) {
-        this.meshes = meshes;
     }
 
     public void setMesh(Mesh mesh) {
