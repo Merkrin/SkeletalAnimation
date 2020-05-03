@@ -9,32 +9,16 @@ public class MD5ModelHeader {
     private int jointsAmount;
     private int meshesAmount;
 
-    public String getVersion() {
-        return version;
-    }
-
     private void setVersion(String version) {
         this.version = version;
-    }
-
-    public String getCommandLine() {
-        return commandLine;
     }
 
     private void setCommandLine(String commandLine) {
         this.commandLine = commandLine;
     }
 
-    public int getJointsAmount() {
-        return jointsAmount;
-    }
-
     private void setJointsAmount(int jointsAmount) {
         this.jointsAmount = jointsAmount;
-    }
-
-    public int getMeshesAmount() {
-        return meshesAmount;
     }
 
     private void setMeshesAmount(int meshesAmount) {

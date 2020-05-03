@@ -9,7 +9,7 @@ public class MD5Model {
     private MD5JointInfo jointInfo;
     private MD5ModelHeader header;
 
-    private List<MD5Mesh> meshes;
+    private final List<MD5Mesh> meshes;
 
     private MD5Model() {
         meshes = new ArrayList<>();
@@ -33,10 +33,6 @@ public class MD5Model {
 
     List<MD5Mesh> getMeshes() {
         return meshes;
-    }
-
-    public void setMeshes(List<MD5Mesh> meshes) {
-        this.meshes = meshes;
     }
 
     @Override
