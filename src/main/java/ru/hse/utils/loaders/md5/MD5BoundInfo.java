@@ -10,10 +10,6 @@ import org.joml.Vector3f;
 public class MD5BoundInfo {
     private List<MD5Bound> bounds;
 
-    public List<MD5Bound> getBounds() {
-        return bounds;
-    }
-
     private void setBounds(List<MD5Bound> bounds) {
         this.bounds = bounds;
     }
@@ -50,16 +46,8 @@ public class MD5BoundInfo {
         private Vector3f minBound;
         private Vector3f maxBound;
 
-        public Vector3f getMinBound() {
-            return minBound;
-        }
-
         void setMinBound(Vector3f minBound) {
             this.minBound = minBound;
-        }
-
-        public Vector3f getMaxBound() {
-            return maxBound;
         }
 
         void setMaxBound(Vector3f maxBound) {

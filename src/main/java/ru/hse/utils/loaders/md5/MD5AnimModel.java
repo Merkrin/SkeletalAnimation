@@ -11,7 +11,7 @@ public class MD5AnimModel {
     private MD5BoundInfo boundInfo;
     private MD5BaseFrame baseFrame;
 
-    private List<MD5Frame> frames;
+    private final List<MD5Frame> frames;
 
     private MD5AnimModel() {
         frames = new ArrayList<>();
@@ -51,10 +51,6 @@ public class MD5AnimModel {
 
     List<MD5Frame> getFrames() {
         return frames;
-    }
-
-    public void setFrames(List<MD5Frame> frames) {
-        this.frames = frames;
     }
 
     @Override
@@ -117,7 +113,10 @@ public class MD5AnimModel {
         return result;
     }
 
-    private static void parseBlock(MD5AnimModel model, String blockId, List<String> blockBody) throws Exception {
+    private static void parseBlock(MD5AnimModel model,
+                                   String blockId,
+                                   List<String> blockBody)
+            throws Exception {
         switch (blockId) {
             case "hierarchy":
                 MD5Hierarchy hierarchy = MD5Hierarchy.parse(blockBody);
