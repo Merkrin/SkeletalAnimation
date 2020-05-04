@@ -18,7 +18,7 @@ public class Window {
 
     private boolean isResized;
 
-    private boolean vSync;
+    private final boolean vSync;
 
     Window(String title, boolean vSync) {
         this.title = title;
@@ -113,10 +113,6 @@ public class Window {
         return glfwWindowShouldClose(windowHandle);
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     public int getWidth() {
         return width;
     }
@@ -135,10 +131,6 @@ public class Window {
 
     private boolean isvSync() {
         return vSync;
-    }
-
-    public void setvSync(boolean vSync) {
-        this.vSync = vSync;
     }
 
     void update() {
