@@ -51,6 +51,8 @@ public class Model {
         return meshes[0];
     }
 
+    Mesh[] getMeshes(){return meshes;}
+
     public void setMesh(Mesh mesh) {
         if (this.meshes != null) {
             for (Mesh currMesh : meshes)

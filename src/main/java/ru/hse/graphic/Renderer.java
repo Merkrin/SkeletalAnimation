@@ -77,23 +77,40 @@ public class Renderer {
 
         // Render each gameItem
         for (Model model : models) {
-            Mesh mesh = model.getMesh();
+            for(Mesh mesh : model.getMeshes()){
+                // Set model view matrix for this item
+                Matrix4f modelViewMatrix = transformation
+                        .getModelViewMatrix(model, viewMatrix);
+                sceneShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
 
-            // Set model view matrix for this item
-            Matrix4f modelViewMatrix = transformation
-                    .getModelViewMatrix(model, viewMatrix);
-            sceneShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+                sceneShaderProgram.setUniform("colour", mesh.getColour());
 
-            sceneShaderProgram.setUniform("colour", mesh.getColour());
+                if (model instanceof AnimatedModel) {
+                    AnimatedModel animatedModel = (AnimatedModel) model;
+                    AnimatedFrame animatedFrame = animatedModel.getCurrentFrame();
+                    sceneShaderProgram.setUniform("jointsMatrix",
+                            animatedFrame.getJointMatrices());
+                }
 
-            if (model instanceof AnimatedModel) {
-                AnimatedModel animatedModel = (AnimatedModel) model;
-                AnimatedFrame animatedFrame = animatedModel.getCurrentFrame();
-                sceneShaderProgram.setUniform("jointsMatrix",
-                        animatedFrame.getJointMatrices());
+                mesh.render();
             }
-
-            mesh.render();
+//            Mesh mesh = model.getMesh();
+//
+//            // Set model view matrix for this item
+//            Matrix4f modelViewMatrix = transformation
+//                    .getModelViewMatrix(model, viewMatrix);
+//            sceneShaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+//
+//            sceneShaderProgram.setUniform("colour", mesh.getColour());
+//
+//            if (model instanceof AnimatedModel) {
+//                AnimatedModel animatedModel = (AnimatedModel) model;
+//                AnimatedFrame animatedFrame = animatedModel.getCurrentFrame();
+//                sceneShaderProgram.setUniform("jointsMatrix",
+//                        animatedFrame.getJointMatrices());
+//            }
+//
+//            mesh.render();
         }
 
         sceneShaderProgram.unbind();

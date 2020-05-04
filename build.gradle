@@ -22,7 +22,6 @@ javafx {
 }
 
 application {
-//    mainClassName = 'ru.hse.gui.GUI'
     mainClassName = 'ru.hse.jogl.Main'
     applicationDefaultJvmArgs = ['-XstartOnFirstThread']
 }
